@@ -1,17 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 
 export default function AdminLoginPage() {
   const [username, setUsername] = useState('fonok');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setIsSubmitting(true);
 
     try {
       const res = await fetch('/api/auth/login', {
@@ -26,18 +26,18 @@ export default function AdminLoginPage() {
         throw new Error(data.message || 'Something went wrong');
       }
 
-      // Store the token (e.g., in localStorage)
       localStorage.setItem('token', data.token);
 
-      // Redirect based on whether a password change is needed
+      // Use window.location.href for a more forceful redirect
       if (data.user.forcePasswordChange) {
-        router.push('/fonok/change-password');
+        window.location.href = '/fonok/change-password';
       } else {
-        router.push('/fonok/dashboard');
+        window.location.href = '/fonok/dashboard';
       }
 
     } catch (err) {
       setError(err.message);
+      setIsSubmitting(false);
     }
   };
 
@@ -78,9 +78,10 @@ export default function AdminLoginPage() {
           <div>
             <button
               type="submit"
-              className="w-full px-4 py-2 text-sm font-medium text-white bg-cyan-600 border border-transparent rounded-md shadow-sm hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500"
+              disabled={isSubmitting}
+              className="w-full px-4 py-2 text-sm font-medium text-white bg-cyan-600 border border-transparent rounded-md shadow-sm hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 disabled:bg-gray-400"
             >
-              Sign in
+              {isSubmitting ? 'Signing in...' : 'Sign in'}
             </button>
           </div>
         </form>
