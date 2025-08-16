@@ -15,10 +15,7 @@ export default function EditTripPage() {
     if (id) {
       const fetchTrip = async () => {
         try {
-          const token = localStorage.getItem('token');
-          const res = await fetch(`/api/cms/trips/${id}`, {
-            headers: { 'Authorization': `Bearer ${token}` },
-          });
+          const res = await fetch(`/api/cms/trips/${id}`); // No headers
           if (!res.ok) throw new Error('Failed to fetch trip data');
           const data = await res.json();
           setInitialData(data.data);
@@ -34,13 +31,11 @@ export default function EditTripPage() {
     setIsSaving(true);
     setError('');
     try {
-      const token = localStorage.getItem('token');
       const res = await fetch(`/api/cms/trips/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
+        }, // No auth header
         body: JSON.stringify(tripData),
       });
 

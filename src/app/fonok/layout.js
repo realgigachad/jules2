@@ -1,38 +1,24 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import "../globals.css"; // Import global styles
-
-// This function can be expanded to actually verify the token against an endpoint
-const isTokenValid = (token) => {
-  // For now, just check if the token exists.
-  return !!token;
-};
 
 export default function AdminLayout({ children }) {
   const router = useRouter();
   const pathname = usePathname();
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    // Allow access to login and change-password pages without a valid token
-    if (pathname === '/fonok' || pathname === '/fonok/change-password') {
-      return;
+  const handleLogout = async () => {
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+      // Force a full page reload to ensure all state is cleared
+      window.location.href = '/fonok';
+    } catch (error) {
+      console.error('Logout failed:', error);
     }
-    // For all other admin pages, require a valid token
-    if (!isTokenValid(token)) {
-      router.push('/fonok');
-    }
-  }, [pathname, router]);
-
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    router.push('/fonok');
   };
 
-  // For login/password change pages, render a simpler layout
+  // For login/password change pages, render a simpler layout without the dashboard sidebar
   if (pathname === '/fonok' || pathname === '/fonok/change-password') {
     return (
         <html lang="en">

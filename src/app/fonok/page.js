@@ -1,12 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function AdminLoginPage() {
   const [username, setUsername] = useState('fonok');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,13 +28,10 @@ export default function AdminLoginPage() {
         throw new Error(data.message || 'Something went wrong');
       }
 
-      localStorage.setItem('token', data.token);
-
-      // Use window.location.href for a more forceful redirect
       if (data.user.forcePasswordChange) {
-        window.location.href = '/fonok/change-password';
+        router.push('/fonok/change-password');
       } else {
-        window.location.href = '/fonok/dashboard';
+        router.push('/fonok/dashboard');
       }
 
     } catch (err) {

@@ -6,67 +6,57 @@ const PUBLIC_FILE = /\.(.*)$/;
 export async function middleware(req) {
   const { pathname } = req.nextUrl;
 
-  // 1. Redirect root path to /en
+  // Redirect root path to /en
   if (pathname === '/') {
     return NextResponse.redirect(new URL('/en', req.url));
   }
 
-  // 2. Skip middleware for static files, public routes, and framework routes
+  // Allow public routes and static assets to pass through
   if (
     pathname.startsWith('/_next') ||
     pathname.startsWith('/api/public') ||
+    pathname.startsWith('/api/auth/login') ||
+    pathname.startsWith('/api/auth/logout') ||
+    !pathname.startsWith('/api/cms') && !pathname.startsWith('/fonok') ||
     PUBLIC_FILE.test(pathname)
   ) {
     return NextResponse.next();
   }
 
-  // 3. Handle admin route protection
-  if (pathname.startsWith('/api/cms') || pathname.startsWith('/fonok')) {
-    // Allow access to login page
-    if (pathname === '/fonok' || pathname === '/fonok/login') {
-      return NextResponse.next();
+  // At this point, we are only dealing with protected routes.
+  // Get token from cookies
+  const tokenCookie = req.cookies.get('token');
+  const token = tokenCookie?.value;
+
+  if (!token) {
+    const url = req.nextUrl.clone();
+    url.pathname = '/fonok';
+    // For API routes, return 401 Unauthorized
+    if (pathname.startsWith('/api/cms')) {
+       return new NextResponse(JSON.stringify({ success: false, message: 'Authentication required' }), { status: 401, headers: { 'content-type': 'application/json' } });
     }
-
-    const token = req.headers.get('authorization')?.split(' ')[1];
-
-    if (!token) {
-      const url = req.nextUrl.clone();
-      url.pathname = '/fonok';
-      if (pathname.startsWith('/api/cms')) {
-         return new NextResponse(JSON.stringify({ success: false, message: 'Authentication required' }), { status: 401 });
-      }
-      return NextResponse.redirect(url);
-    }
-
-    try {
-      const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-      const { payload } = await jwtVerify(token, secret);
-
-      const requestHeaders = new Headers(req.headers);
-      requestHeaders.set('x-user-id', payload.userId);
-
-      return NextResponse.next({
-        request: {
-          headers: requestHeaders,
-        },
-      });
-    } catch (err) {
-      const url = req.nextUrl.clone();
-      url.pathname = '/fonok';
-       if (pathname.startsWith('/api/cms')) {
-         return new NextResponse(JSON.stringify({ success: false, message: 'Invalid token' }), { status: 401 });
-      }
-      return NextResponse.redirect(url);
-    }
+    // For page routes, redirect to login
+    return NextResponse.redirect(url);
   }
 
-  return NextResponse.next();
+  // Verify the token
+  try {
+    const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+    await jwtVerify(token, secret);
+    return NextResponse.next();
+  } catch (err) {
+    const url = req.nextUrl.clone();
+    url.pathname = '/fonok';
+    if (pathname.startsWith('/api/cms')) {
+       return new NextResponse(JSON.stringify({ success: false, message: 'Invalid or expired token' }), { status: 401, headers: { 'content-type': 'application/json' } });
+    }
+    // Clear the invalid cookie before redirecting
+    const response = NextResponse.redirect(url);
+    response.cookies.set('token', '', { expires: new Date(0) });
+    return response;
+  }
 }
 
 export const config = {
-  // Match all request paths except for the ones starting with /api/auth
-  // as those are handled within the middleware logic
-  matcher: [
-    '/((?!api/auth).*)'
-  ],
+  matcher: ['/((?!_next/static/favicon.ico|api/auth/login).*)'],
 };
