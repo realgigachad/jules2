@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function ChangePasswordPage() {
@@ -9,14 +9,6 @@ export default function ChangePasswordPage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const router = useRouter();
-
-  useEffect(() => {
-    // Redirect if no token is found
-    const token = localStorage.getItem('token');
-    if (!token) {
-      router.push('/fonok');
-    }
-  }, [router]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,12 +21,10 @@ export default function ChangePasswordPage() {
     }
 
     try {
-      const token = localStorage.getItem('token');
       const res = await fetch('/api/auth/change-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({ newPassword }),
       });

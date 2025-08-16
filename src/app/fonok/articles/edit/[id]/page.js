@@ -15,10 +15,7 @@ export default function EditArticlePage() {
     if (id) {
       const fetchArticle = async () => {
         try {
-          const token = localStorage.getItem('token');
-          const res = await fetch(`/api/cms/articles/${id}`, {
-            headers: { 'Authorization': `Bearer ${token}` },
-          });
+          const res = await fetch(`/api/cms/articles/${id}`); // No headers
           if (!res.ok) throw new Error('Failed to fetch article data');
           const data = await res.json();
           setInitialData(data.data);
@@ -34,13 +31,11 @@ export default function EditArticlePage() {
     setIsSaving(true);
     setError('');
     try {
-      const token = localStorage.getItem('token');
       const res = await fetch(`/api/cms/articles/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
+        }, // No auth header
         body: JSON.stringify(articleData),
       });
 

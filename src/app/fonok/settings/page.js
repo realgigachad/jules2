@@ -28,13 +28,9 @@ export default function SettingsPage() {
     const fetchSettings = async () => {
       setIsLoading(true);
       try {
-        const token = localStorage.getItem('token');
-        const res = await fetch('/api/cms/settings', {
-          headers: { 'Authorization': `Bearer ${token}` },
-        });
+        const res = await fetch('/api/cms/settings'); // No headers
         if (!res.ok) throw new Error('Failed to fetch settings');
         const data = await res.json();
-        // Ensure address object and all its language keys exist
         const address = { ...emptyMultilingual, ...(data.data.address || {}) };
         setSettings({ ...data.data, address });
       } catch (err) {
@@ -64,13 +60,11 @@ export default function SettingsPage() {
     setError('');
     setSuccess('');
     try {
-      const token = localStorage.getItem('token');
       const res = await fetch('/api/cms/settings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
+        }, // No auth header
         body: JSON.stringify(settings),
       });
       if (!res.ok) {
@@ -132,7 +126,7 @@ export default function SettingsPage() {
         </div>
 
         <div className="flex justify-end items-center gap-4">
-          {error && <p className="text-sm text-red-600">Error: {error}</p>}
+          {error && <p className="text-sm text-red-500">Error: {error}</p>}
           {success && <p className="text-sm text-green-600">{success}</p>}
           <button
             type="submit"

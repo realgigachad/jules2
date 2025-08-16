@@ -2,21 +2,16 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 export default function TripsListPage() {
   const [trips, setTrips] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const router = useRouter();
 
   useEffect(() => {
     const fetchTrips = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const res = await fetch('/api/cms/trips', {
-          headers: { 'Authorization': `Bearer ${token}` },
-        });
+        const res = await fetch('/api/cms/trips'); // No headers needed
         if (!res.ok) throw new Error('Failed to fetch trips');
         const data = await res.json();
         setTrips(data.data);
@@ -32,11 +27,9 @@ export default function TripsListPage() {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this trip?')) {
       try {
-        const token = localStorage.getItem('token');
         const res = await fetch(`/api/cms/trips/${id}`, {
           method: 'DELETE',
-          headers: { 'Authorization': `Bearer ${token}` },
-        });
+        }); // No headers needed
         if (!res.ok) throw new Error('Failed to delete trip');
         setTrips(trips.filter(trip => trip._id !== id));
       } catch (err) {

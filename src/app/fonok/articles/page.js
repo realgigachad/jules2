@@ -2,21 +2,16 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 export default function ArticlesListPage() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const router = useRouter();
 
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const res = await fetch('/api/cms/articles', {
-          headers: { 'Authorization': `Bearer ${token}` },
-        });
+        const res = await fetch('/api/cms/articles'); // No headers
         if (!res.ok) throw new Error('Failed to fetch articles');
         const data = await res.json();
         setArticles(data.data);
@@ -32,11 +27,9 @@ export default function ArticlesListPage() {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this article?')) {
       try {
-        const token = localStorage.getItem('token');
         const res = await fetch(`/api/cms/articles/${id}`, {
           method: 'DELETE',
-          headers: { 'Authorization': `Bearer ${token}` },
-        });
+        }); // No headers
         if (!res.ok) throw new Error('Failed to delete article');
         setArticles(articles.filter(article => article._id !== id));
       } catch (err) {

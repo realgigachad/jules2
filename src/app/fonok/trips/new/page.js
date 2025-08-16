@@ -13,13 +13,11 @@ export default function NewTripPage() {
     setIsSaving(true);
     setError('');
     try {
-      const token = localStorage.getItem('token');
       const res = await fetch('/api/cms/trips', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
+        }, // No auth header
         body: JSON.stringify(tripData),
       });
 

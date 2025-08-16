@@ -13,13 +13,11 @@ export default function NewArticlePage() {
     setIsSaving(true);
     setError('');
     try {
-      const token = localStorage.getItem('token');
       const res = await fetch('/api/cms/articles', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
+        }, // No auth header
         body: JSON.stringify(articleData),
       });
 

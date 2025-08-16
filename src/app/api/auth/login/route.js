@@ -30,14 +30,24 @@ export async function POST(req) {
       { expiresIn: '1h' }
     );
 
-    return NextResponse.json({
-      token,
+    const response = NextResponse.json({
+      success: true,
       user: {
         id: user._id,
         username: user.username,
         forcePasswordChange: user.forcePasswordChange,
       },
     });
+
+    // Set the token in a secure, httpOnly cookie
+    response.cookies.set('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV !== 'development',
+      maxAge: 60 * 60, // 1 hour in seconds
+      path: '/',
+    });
+
+    return response;
   } catch (error) {
     console.error('Login error:', error);
     return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
