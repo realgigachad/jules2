@@ -1,0 +1,96 @@
+{
+  "layout": {
+    "title": "Admin-Panel",
+    "dashboard": "Dashboard",
+    "trips": "Reisen",
+    "articles": "Artikel",
+    "settings": "Seiteneinstellungen",
+    "styling": "Styling",
+    "changePassword": "Passwort ändern",
+    "logout": "Abmelden"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Willkommen im Admin-Panel.",
+    "manageTrips": "Reisen verwalten",
+    "manageTripsDesc": "Erstellen, bearbeiten und löschen Sie kommende Reisen. Legen Sie Preise und Reisedaten fest.",
+    "manageArticles": "Artikel verwalten",
+    "manageArticlesDesc": "Schreiben und veröffentlichen Sie Artikel für den Blog der Hauptseite.",
+    "updateSettings": "Einstellungen aktualisieren",
+    "updateSettingsDesc": "Ändern Sie seitenweite Informationen wie Kontaktdaten.",
+    "updateStyling": "Stil anpassen",
+    "updateStylingDesc": "Ändern Sie die Farben, Schriftarten und das Layout der Website."
+  },
+  "trips": {
+    "manageTitle": "Reisen verwalten",
+    "createButton": "Neue Reise erstellen",
+    "loading": "Reisen werden geladen...",
+    "noTrips": "Keine Reisen gefunden.",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "deleteConfirm": "Möchten Sie diese Reise wirklich löschen?",
+    "createTitle": "Neue Reise erstellen",
+    "editTitle": "Reise bearbeiten"
+  },
+  "articles": {
+    "manageTitle": "Artikel verwalten",
+    "createButton": "Neuen Artikel schreiben",
+    "loading": "Artikel werden geladen...",
+    "noArticles": "Keine Artikel gefunden.",
+    "edit": "Bearbeiten",
+    "delete": "Löschen",
+    "deleteConfirm": "Möchten Sie diesen Artikel wirklich löschen?",
+    "createTitle": "Neuen Artikel schreiben",
+    "editTitle": "Artikel bearbeiten",
+    "publishedOn": "Veröffentlicht am"
+  },
+  "settings": {
+    "title": "Seiteneinstellungen",
+    "emailLabel": "Kontakt-E-Mail",
+    "phoneLabel": "Kontakt-Telefon",
+    "addressLabel": "Adresse",
+    "saveButton": "Einstellungen speichern",
+    "saving": "Speichern...",
+    "success": "Einstellungen erfolgreich gespeichert!",
+    "error": "Fehler"
+  },
+  "login": {
+    "title": "Admin-Anmeldung",
+    "usernameLabel": "Benutzername",
+    "passwordLabel": "Passwort",
+    "button": "Anmelden",
+    "signingIn": "Anmelden...",
+    "forgotPassword": "Passwort vergessen?"
+  },
+  "changePassword": {
+    "title": "Ändern Sie Ihr Passwort",
+    "titleLoggedIn": "Passwort ändern",
+    "intro": "Aus Sicherheitsgründen müssen Sie das Standardpasswort ändern.",
+    "newPasswordLabel": "Neues Passwort",
+    "confirmPasswordLabel": "Neues Passwort bestätigen",
+    "button": "Neues Passwort festlegen",
+    "success": "Passwort erfolgreich aktualisiert!",
+    "errorMatch": "Passwörter stimmen nicht überein.",
+    "errorLength": "Das Passwort muss mindestens 6 Zeichen lang sein."
+  },
+  "tripForm": {
+    "language": "Sprache",
+    "titleLabel": "Reisetitel",
+    "descriptionLabel": "Beschreibung",
+    "pricingTitle": "Preisgestaltung",
+    "convertButton": "Konv.",
+    "convertTitle": "Konvertieren von",
+    "priceReminder": "Erinnerung: Für das Marketing ist es am besten, wenn die Preise der lokalen Konvention folgen (z. B. auf .99 enden).",
+    "priceSourceError": "Bitte geben Sie zuerst einen gültigen Preis in der Quellwährung ein.",
+    "imageUrlLabel": "Bild-URL",
+    "startDateLabel": "Startdatum",
+    "endDateLabel": "Enddatum",
+    "saveButton": "Reise speichern"
+  },
+  "articleForm": {
+    "language": "Sprache",
+    "titleLabel": "Artikeltitel",
+    "contentLabel": "Inhalt",
+    "saveButton": "Artikel speichern"
+  }
+}

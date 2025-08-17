@@ -1,0 +1,96 @@
+{
+  "layout": {
+    "title": "Admin Felület",
+    "dashboard": "Irányítópult",
+    "trips": "Utazások",
+    "articles": "Cikkek",
+    "settings": "Oldalbeállítások",
+    "styling": "Stílus",
+    "changePassword": "Jelszó megváltoztatása",
+    "logout": "Kijelentkezés"
+  },
+  "dashboard": {
+    "title": "Irányítópult",
+    "welcome": "Üdvözöljük az admin felületen.",
+    "manageTrips": "Utazások kezelése",
+    "manageTripsDesc": "Hozzon létre, szerkesszen és töröljön közelgő utazásokat. Állítson be árakat és utazási dátumokat.",
+    "manageArticles": "Cikkek kezelése",
+    "manageArticlesDesc": "Írjon és tegyen közzé cikkeket a főoldal blogjához.",
+    "updateSettings": "Beállítások frissítése",
+    "updateSettingsDesc": "Módosítsa az egész webhelyre kiterjedő információkat, például a kapcsolattartási adatokat.",
+    "updateStyling": "Stílus testreszabása",
+    "updateStylingDesc": "Módosítsa a webhely színeit, betűtípusait és elrendezését."
+  },
+  "trips": {
+    "manageTitle": "Utazások kezelése",
+    "createButton": "Új utazás létrehozása",
+    "loading": "Utazások betöltése...",
+    "noTrips": "Nincsenek utazások.",
+    "edit": "Szerkesztés",
+    "delete": "Törlés",
+    "deleteConfirm": "Biztosan törölni szeretné ezt az utazást?",
+    "createTitle": "Új utazás létrehozása",
+    "editTitle": "Utazás szerkesztése"
+  },
+  "articles": {
+    "manageTitle": "Cikkek kezelése",
+    "createButton": "Új cikk írása",
+    "loading": "Cikkek betöltése...",
+    "noArticles": "Nincsenek cikkek.",
+    "edit": "Szerkesztés",
+    "delete": "Törlés",
+    "deleteConfirm": "Biztosan törölni szeretné ezt a cikket?",
+    "createTitle": "Új cikk írása",
+    "editTitle": "Cikk szerkesztése",
+    "publishedOn": "Közzétéve"
+  },
+  "settings": {
+    "title": "Oldalbeállítások",
+    "emailLabel": "Kapcsolati e-mail",
+    "phoneLabel": "Kapcsolati telefon",
+    "addressLabel": "Cím",
+    "saveButton": "Beállítások mentése",
+    "saving": "Mentés...",
+    "success": "Beállítások sikeresen mentve!",
+    "error": "Hiba"
+  },
+  "login": {
+    "title": "Admin Bejelentkezés",
+    "usernameLabel": "Felhasználónév",
+    "passwordLabel": "Jelszó",
+    "button": "Bejelentkezés",
+    "signingIn": "Bejelentkezés...",
+    "forgotPassword": "Elfelejtette a jelszavát?"
+  },
+  "changePassword": {
+    "title": "Változtassa meg a jelszavát",
+    "titleLoggedIn": "Jelszó megváltoztatása",
+    "intro": "Biztonsági okokból meg kell változtatnia az alapértelmezett jelszót.",
+    "newPasswordLabel": "Új jelszó",
+    "confirmPasswordLabel": "Új jelszó megerősítése",
+    "button": "Új jelszó beállítása",
+    "success": "Jelszó sikeresen frissítve!",
+    "errorMatch": "A jelszavak nem egyeznek.",
+    "errorLength": "A jelszónak legalább 6 karakter hosszúnak kell lennie."
+  },
+  "tripForm": {
+    "language": "Nyelv",
+    "titleLabel": "Utazás címe",
+    "descriptionLabel": "Leírás",
+    "pricingTitle": "Árképzés",
+    "convertButton": "Átv.",
+    "convertTitle": "Átváltás innen:",
+    "priceReminder": "Emlékeztető: Marketing szempontból a legjobb, ha az árak a helyi szokásoknak megfelelnek (pl. .99-re végződnek).",
+    "priceSourceError": "Kérjük, először adjon meg érvényes árat a forrásvalutában.",
+    "imageUrlLabel": "Kép URL",
+    "startDateLabel": "Kezdő dátum",
+    "endDateLabel": "Befejező dátum",
+    "saveButton": "Utazás mentése"
+  },
+  "articleForm": {
+    "language": "Nyelv",
+    "titleLabel": "Cikk címe",
+    "contentLabel": "Tartalom",
+    "saveButton": "Cikk mentése"
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "layout": {
+    "title": "Admin Panel",
+    "dashboard": "Dashboard",
+    "trips": "Trips",
+    "articles": "Articles",
+    "settings": "Site Settings",
+    "styling": "Styling",
+    "changePassword": "Change Password",
+    "logout": "Logout"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome to the admin panel.",
+    "manageTrips": "Manage Trips",
+    "manageTripsDesc": "Create, edit, and delete upcoming trips. Set prices and travel dates.",
+    "manageArticles": "Manage Articles",
+    "manageArticlesDesc": "Write and publish articles for the main page blog.",
+    "updateSettings": "Update Settings",
+    "updateSettingsDesc": "Change site-wide information like contact details.",
+    "updateStyling": "Customize Style",
+    "updateStylingDesc": "Change the site's colors, fonts, and layout."
+  },
+  "trips": {
+    "manageTitle": "Manage Trips",
+    "createButton": "Create New Trip",
+    "loading": "Loading trips...",
+    "noTrips": "No trips found.",
+    "edit": "Edit",
+    "delete": "Delete",
+    "deleteConfirm": "Are you sure you want to delete this trip?",
+    "createTitle": "Create New Trip",
+    "editTitle": "Edit Trip"
+  },
+  "articles": {
+    "manageTitle": "Manage Articles",
+    "createButton": "Write New Article",
+    "loading": "Loading articles...",
+    "noArticles": "No articles found.",
+    "edit": "Edit",
+    "delete": "Delete",
+    "deleteConfirm": "Are you sure you want to delete this article?",
+    "createTitle": "Write New Article",
+    "editTitle": "Edit Article",
+    "publishedOn": "Published on"
+  },
+  "settings": {
+    "title": "Site Settings",
+    "emailLabel": "Contact Email",
+    "phoneLabel": "Contact Phone",
+    "addressLabel": "Address",
+    "saveButton": "Save Settings",
+    "saving": "Saving...",
+    "success": "Settings saved successfully!",
+    "error": "Error"
+  },
+  "login": {
+    "title": "Admin Login",
+    "usernameLabel": "Username",
+    "passwordLabel": "Password",
+    "button": "Sign in",
+    "signingIn": "Signing in...",
+    "forgotPassword": "Forgot Password?"
+  },
+  "changePassword": {
+    "title": "Change Your Password",
+    "titleLoggedIn": "Change Password",
+    "intro": "As a security measure, you must change the default password.",
+    "newPasswordLabel": "New Password",
+    "confirmPasswordLabel": "Confirm New Password",
+    "button": "Set New Password",
+    "success": "Password updated successfully!",
+    "errorMatch": "Passwords do not match.",
+    "errorLength": "Password must be at least 6 characters long."
+  },
+  "tripForm": {
+    "language": "Language",
+    "titleLabel": "Trip Title",
+    "descriptionLabel": "Description",
+    "pricingTitle": "Pricing",
+    "convertButton": "Conv.",
+    "convertTitle": "Convert from",
+    "priceReminder": "Reminder: For marketing, it's best for prices to follow the local convention (e.g., end in .99).",
+    "priceSourceError": "Please enter a valid price in the source currency first.",
+    "imageUrlLabel": "Image URL",
+    "startDateLabel": "Start Date",
+    "endDateLabel": "End Date",
+    "saveButton": "Save Trip"
+  },
+  "articleForm": {
+    "language": "Language",
+    "titleLabel": "Article Title",
+    "contentLabel": "Content",
+    "saveButton": "Save Article"
+  }
+}

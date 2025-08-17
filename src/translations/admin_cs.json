@@ -1,0 +1,96 @@
+{
+  "layout": {
+    "title": "Admin Panel",
+    "dashboard": "Nástěnka",
+    "trips": "Cesty",
+    "articles": "Články",
+    "settings": "Nastavení stránky",
+    "styling": "Styling",
+    "changePassword": "Změnit heslo",
+    "logout": "Odhlásit se"
+  },
+  "dashboard": {
+    "title": "Nástěnka",
+    "welcome": "Vítejte v admin panelu.",
+    "manageTrips": "Spravovat cesty",
+    "manageTripsDesc": "Vytvářejte, upravujte a mažte připravované cesty. Nastavte ceny a data cest.",
+    "manageArticles": "Spravovat články",
+    "manageArticlesDesc": "Pište a publikujte články pro blog na hlavní stránce.",
+    "updateSettings": "Aktualizovat nastavení",
+    "updateSettingsDesc": "Změňte informace na celé stránce, jako jsou kontaktní údaje.",
+    "updateStyling": "Přizpůsobit styl",
+    "updateStylingDesc": "Změňte barvy, písma a rozložení webové stránky."
+  },
+  "trips": {
+    "manageTitle": "Spravovat cesty",
+    "createButton": "Vytvořit novou cestu",
+    "loading": "Načítání cest...",
+    "noTrips": "Nebyly nalezeny žádné cesty.",
+    "edit": "Upravit",
+    "delete": "Smazat",
+    "deleteConfirm": "Opravdu chcete smazat tuto cestu?",
+    "createTitle": "Vytvořit novou cestu",
+    "editTitle": "Upravit cestu"
+  },
+  "articles": {
+    "manageTitle": "Spravovat články",
+    "createButton": "Napsat nový článek",
+    "loading": "Načítání článků...",
+    "noArticles": "Nebyly nalezeny žádné články.",
+    "edit": "Upravit",
+    "delete": "Smazat",
+    "deleteConfirm": "Opravdu chcete smazat tento článek?",
+    "createTitle": "Napsat nový článek",
+    "editTitle": "Upravit článek",
+    "publishedOn": "Zveřejněno dne"
+  },
+  "settings": {
+    "title": "Nastavení stránky",
+    "emailLabel": "Kontaktní email",
+    "phoneLabel": "Kontaktní telefon",
+    "addressLabel": "Adresa",
+    "saveButton": "Uložit nastavení",
+    "saving": "Ukládání...",
+    "success": "Nastavení úspěšně uloženo!",
+    "error": "Chyba"
+  },
+  "login": {
+    "title": "Admin Přihlášení",
+    "usernameLabel": "Uživatelské jméno",
+    "passwordLabel": "Heslo",
+    "button": "Přihlásit se",
+    "signingIn": "Přihlašování...",
+    "forgotPassword": "Zapomněli jste heslo?"
+  },
+  "changePassword": {
+    "title": "Změňte si heslo",
+    "titleLoggedIn": "Změnit heslo",
+    "intro": "Z bezpečnostních důvodů si musíte změnit výchozí heslo.",
+    "newPasswordLabel": "Nové heslo",
+    "confirmPasswordLabel": "Potvrďte nové heslo",
+    "button": "Nastavit nové heslo",
+    "success": "Heslo úspěšně aktualizováno!",
+    "errorMatch": "Hesla se neshodují.",
+    "errorLength": "Heslo musí mít alespoň 6 znaků."
+  },
+  "tripForm": {
+    "language": "Jazyk",
+    "titleLabel": "Název cesty",
+    "descriptionLabel": "Popis",
+    "pricingTitle": "Ceník",
+    "convertButton": "Přev.",
+    "convertTitle": "Převést z",
+    "priceReminder": "Připomínka: Pro marketing je nejlepší, aby ceny odpovídaly místním zvyklostem (např. končily na .99).",
+    "priceSourceError": "Nejprve zadejte platnou cenu ve zdrojové měně.",
+    "imageUrlLabel": "URL obrázku",
+    "startDateLabel": "Datum zahájení",
+    "endDateLabel": "Datum ukončení",
+    "saveButton": "Uložit cestu"
+  },
+  "articleForm": {
+    "language": "Jazyk",
+    "titleLabel": "Název článku",
+    "contentLabel": "Obsah",
+    "saveButton": "Uložit článek"
+  }
+}
