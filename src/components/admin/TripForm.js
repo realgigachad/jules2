@@ -20,12 +20,12 @@ const emptyPrices = { eur: 0, gbp: 0, huf: 0, rub: 0, czk: 0, uah: 0 };
 const conversionRates = { eur: 1, gbp: 0.85, huf: 400, rub: 90, czk: 25, uah: 42 };
 
 const priceFormatRules = {
-  huf: (p) => Math.round(p / 1000) * 1000 - 10,
+  huf: (p) => Math.round(p / 1000) * 1000 - 10, // e.g. 12345 -> 12000 -> 11990
   eur: (p) => Math.floor(p) + 0.99,
   gbp: (p) => Math.floor(p) + 0.99,
-  rub: (p) => Math.floor(p) + 9.99,
+  rub: (p) => Math.floor(p / 100) * 100 + 99, // e.g. 1234 -> 1200 -> 1299
   czk: (p) => Math.floor(p) + 0.99,
-  uah: (p) => Math.floor(p) + 9.99,
+  uah: (p) => Math.floor(p) + 0.99, // UAH uses ,99 formatting, but the logic is the same as EUR
 };
 
 export default function TripForm({ initialData, onSubmit, isSaving }) {

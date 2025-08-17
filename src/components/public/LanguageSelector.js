@@ -50,7 +50,7 @@ export default function LanguageSelector() {
     <div className="relative" ref={wrapperRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-between w-56 px-3 py-2 text-gray-700 bg-white border rounded-md shadow-sm"
+        className="flex items-center justify-between w-64 px-3 py-2 text-gray-700 bg-white border rounded-md shadow-sm"
       >
         <div className="flex items-center gap-2 overflow-hidden">
           {currentLang.flags.map(code => <Flag key={code} code={code} />)}
