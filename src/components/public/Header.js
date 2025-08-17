@@ -26,6 +26,7 @@ export default function Header({ lang }) {
           <Link href={`/${lang}`} className="text-gray-600 hover:text-cyan-500">Home</Link>
           <Link href={`/${lang}/pricing`} className="text-gray-600 hover:text-cyan-500">Pricing</Link>
           <Link href={`/${lang}/trips`} className="text-gray-600 hover:text-cyan-500">Upcoming Trips</Link>
+          <Link href={`/${lang}/articles`} className="text-gray-600 hover:text-cyan-500">Articles</Link>
           <Link href={`/${lang}/about`} className="text-gray-600 hover:text-cyan-500">About Us</Link>
           <Link href={`/${lang}/contact`} className="text-gray-600 hover:text-cyan-500">Contact</Link>
         </div>

@@ -6,6 +6,8 @@ const MultilingualStringSchema = new mongoose.Schema({
   hu: { type: String, default: '' },
   ru: { type: String, default: '' },
   sk: { type: String, default: '' },
+  cs: { type: String, default: '' }, // Added Czech
+  uk: { type: String, default: '' }, // Added Ukrainian
 }, { _id: false });
 
 const SiteSettingsSchema = new mongoose.Schema({
