@@ -1,3 +1,5 @@
+import { getTranslations } from '@/lib/getTranslations';
+
 async function getTrip(id) {
   try {
     const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
@@ -12,24 +14,27 @@ async function getTrip(id) {
 }
 
 export default async function TripDetailPage({ params: { lang, id } }) {
+  const t = await getTranslations(lang);
   const trip = await getTrip(id);
 
   if (!trip) {
     return <div className="text-center">Trip not found.</div>;
   }
 
-  // Helper to display price based on language
   const renderPrice = () => {
+    if (!trip.prices) return 'Price not set';
     if (lang === 'en') {
       return (
         <>
-          <span className="block text-3xl font-bold text-cyan-600">€{trip.prices.eur.toFixed(2)}</span>
-          <span className="block text-xl font-bold text-cyan-700">£{trip.prices.gbp.toFixed(2)}</span>
+          <span className="block text-3xl font-bold text-cyan-600">€{(trip.prices.eur || 0).toFixed(2)}</span>
+          <span className="block text-xl font-bold text-cyan-700">£{(trip.prices.gbp || 0).toFixed(2)}</span>
         </>
       );
     }
-    const currencyCode = { de: 'eur', sk: 'eur', cs: 'czk', hu: 'huf', ru: 'rub', uk: 'uah' }[lang];
-    const price = trip.prices[currencyCode];
+    const currencyCodeMap = { de: 'eur', sk: 'eur', cs: 'czk', hu: 'huf', ru: 'rub', uk: 'uah' };
+    const currencyCode = currencyCodeMap[lang];
+    if (!currencyCode) return `€${(trip.prices.eur || 0).toFixed(2)}`;
+    const price = trip.prices[currencyCode] || 0;
     return <span className="text-3xl font-bold text-cyan-600">{price.toLocaleString(lang, { style: 'currency', currency: currencyCode.toUpperCase(), minimumFractionDigits: 2 })}</span>;
   };
 
@@ -45,16 +50,16 @@ export default async function TripDetailPage({ params: { lang, id } }) {
         </div>
         <div className="md:col-span-1">
           <div className="sticky top-24 bg-gray-50 p-6 rounded-lg shadow-inner">
-            <h2 className="text-2xl font-bold text-center mb-4">Book Your Journey</h2>
+            <h2 className="text-2xl font-bold text-center mb-4">{t.tripDetailPage.bookingTitle}</h2>
             <div className="text-center mb-4">
               {renderPrice()}
             </div>
             <div className="text-sm text-center text-gray-600">
-              <p>From: {new Date(trip.startDate).toLocaleDateString()}</p>
-              <p>To: {new Date(trip.endDate).toLocaleDateString()}</p>
+              <p>{t.tripDetailPage.from}: {trip.startDate ? new Date(trip.startDate).toLocaleDateString() : 'N/A'}</p>
+              <p>{t.tripDetailPage.to}: {trip.endDate ? new Date(trip.endDate).toLocaleDateString() : 'N/A'}</p>
             </div>
             <button className="w-full mt-6 px-6 py-3 text-white bg-cyan-600 rounded-lg hover:bg-cyan-700 font-bold">
-              Inquire Now
+              {t.tripDetailPage.inquireButton}
             </button>
           </div>
         </div>

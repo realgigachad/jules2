@@ -1,3 +1,5 @@
+import { getTranslations } from '@/lib/getTranslations';
+
 async function getArticle(id) {
   try {
     const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
@@ -12,6 +14,7 @@ async function getArticle(id) {
 }
 
 export default async function ArticleDetailPage({ params: { lang, id } }) {
+  const t = await getTranslations(lang);
   const article = await getArticle(id);
 
   if (!article) {
@@ -25,7 +28,7 @@ export default async function ArticleDetailPage({ params: { lang, id } }) {
           {article.title[lang] || article.title.en}
         </h1>
         <p className="mt-4 text-center text-gray-500">
-          Published on {new Date(article.createdAt).toLocaleDateString()} by {article.author}
+          {t.articleDetailPage.publishedOn} {new Date(article.createdAt).toLocaleDateString()} {t.articleDetailPage.by} {article.author}
         </p>
         <div
           className="prose lg:prose-xl mt-12 mx-auto"
