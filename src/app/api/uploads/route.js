@@ -1,9 +1,7 @@
 import { NextResponse } from 'next/server';
-import { writeFile } from 'fs/promises';
+import { writeFile, mkdir } from 'fs/promises';
 import { join } from 'path';
 
-// This route is protected by the middleware, which is configured to protect /api/cms/*
-// I need to update the middleware to also protect /api/uploads
 export async function POST(req) {
   const data = await req.formData();
   const file = data.get('file');
@@ -15,13 +13,14 @@ export async function POST(req) {
   const bytes = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);
 
-  // Create a unique filename
-  const filename = `${Date.now()}-${file.name}`;
+  const filename = `${Date.now()}-${file.name.replace(/\s/g, '_')}`;
   const uploadsDir = join(process.cwd(), 'public/uploads');
   const path = join(uploadsDir, filename);
 
   try {
-    // Note: The /public/uploads directory must exist. I will create it in a later step.
+    // Ensure the uploads directory exists
+    await mkdir(uploadsDir, { recursive: true });
+
     await writeFile(path, buffer);
     console.log(`File saved to ${path}`);
 

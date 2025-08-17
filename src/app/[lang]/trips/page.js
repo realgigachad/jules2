@@ -33,8 +33,8 @@ export default async function TripsPage({ params: { lang } }) {
   return (
     <div className="space-y-12">
       <div className="text-center">
-        <h1 className="text-4xl font-extrabold text-gray-900">{t.tripsPage.title}</h1>
-        <p className="mt-2 text-lg text-gray-600">{t.tripsPage.subtitle}</p>
+        <h1 className="text-4xl font-extrabold text-gray-900 font-header">{t.tripsPage.title}</h1>
+        <p className="mt-2 text-lg text-text/80">{t.tripsPage.subtitle}</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -46,17 +46,17 @@ export default async function TripsPage({ params: { lang } }) {
                 <span className="text-white text-lg font-bold opacity-0 group-hover:opacity-100 transition-opacity">{t.tripsPage.viewDetails}</span>
               </div>
               <div className="absolute bottom-0 left-0 p-4">
-                <h3 className="text-2xl font-bold text-white shadow-lg">{trip.title[lang] || trip.title.en}</h3>
+                <h3 className="text-2xl font-bold text-white shadow-lg font-header">{trip.title[lang] || trip.title.en}</h3>
               </div>
             </div>
             <div className="p-6 flex flex-col">
               <div
-                className="text-gray-700 line-clamp-4 flex-grow prose"
+                className="text-text/80 line-clamp-4 flex-grow prose"
                 dangerouslySetInnerHTML={{ __html: trip.description[lang] || trip.description.en }}
               />
               <div className="mt-4 flex justify-between items-center pt-4 border-t">
-                <p className="text-lg font-bold text-cyan-600">{getPriceDisplay(trip.prices)}</p>
-                <span className="text-gray-600 text-sm">
+                <p className="text-lg font-bold text-primary">{getPriceDisplay(trip.prices)}</p>
+                <span className="text-text/70 text-sm">
                   {trip.startDate ? new Date(trip.startDate).toLocaleDateString() : ''}
                 </span>
               </div>
@@ -64,7 +64,7 @@ export default async function TripsPage({ params: { lang } }) {
           </Link>
         ))}
         {trips.length === 0 && (
-          <p className="text-center text-gray-500 col-span-full">{t.tripsPage.noTrips}</p>
+          <p className="text-center text-text/70 col-span-full">{t.tripsPage.noTrips}</p>
         )}
       </div>
     </div>

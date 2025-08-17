@@ -24,10 +24,10 @@ export default async function ArticleDetailPage({ params: { lang, id } }) {
   return (
     <div className="bg-white p-8 sm:p-12 rounded-lg shadow-lg">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl lg:text-5xl font-extrabold text-gray-900 text-center">
+        <h1 className="text-4xl lg:text-5xl font-extrabold text-center font-header">
           {article.title[lang] || article.title.en}
         </h1>
-        <p className="mt-4 text-center text-gray-500">
+        <p className="mt-4 text-center text-text/80">
           {t.articleDetailPage.publishedOn} {new Date(article.createdAt).toLocaleDateString()} {t.articleDetailPage.by} {article.author}
         </p>
         <div

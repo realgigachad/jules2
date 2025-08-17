@@ -1,4 +1,5 @@
 import AdminLayoutClient from "@/components/admin/AdminLayoutClient";
+import AdminTranslationsProvider from "@/components/admin/AdminTranslationsProvider";
 import "../globals.css";
 
 export default function AdminLayout({ children }) {
@@ -8,9 +9,11 @@ export default function AdminLayout({ children }) {
         <title>Admin Panel</title>
       </head>
       <body>
-        <AdminLayoutClient>
-          {children}
-        </AdminLayoutClient>
+        <AdminTranslationsProvider>
+          <AdminLayoutClient>
+            {children}
+          </AdminLayoutClient>
+        </AdminTranslationsProvider>
       </body>
     </html>
   );

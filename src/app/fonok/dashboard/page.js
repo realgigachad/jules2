@@ -1,7 +1,12 @@
-import { getAdminTranslations } from "@/lib/getAdminTranslations";
+'use client';
 
-export default async function DashboardPage() {
-  const t = await getAdminTranslations('en'); // Hardcoded to English for now
+import { useAdminTranslations } from '@/components/admin/AdminTranslationsProvider';
+
+export default function DashboardPage() {
+  const { t } = useAdminTranslations();
+
+  // The provider shows a loading state, so t should not be null here.
+  if (!t) return null;
 
   return (
     <div>
