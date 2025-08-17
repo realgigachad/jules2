@@ -1,10 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import dynamic from 'next/dynamic';
-
-// CSS is now loaded in the root admin layout via a <link> tag
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const languages = [
   { code: 'en', name: 'English' },
@@ -25,18 +21,11 @@ export default function ArticleForm({ initialData, onSubmit, isSaving }) {
   });
   const [currentLang, setCurrentLang] = useState('en');
 
-  const handleContentChange = (content) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
     setArticle(prev => ({
       ...prev,
-      content: { ...prev.content, [currentLang]: content }
-    }));
-  };
-
-  const handleTitleChange = (e) => {
-    const { value } = e.target;
-    setArticle(prev => ({
-      ...prev,
-      title: { ...prev.title, [currentLang]: value }
+      [name]: { ...prev[name], [currentLang]: value }
     }));
   };
 
@@ -75,27 +64,28 @@ export default function ArticleForm({ initialData, onSubmit, isSaving }) {
             name="title"
             id="title"
             value={article.title[currentLang]}
-            onChange={handleTitleChange}
+            onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500"
             required
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label htmlFor="content" className="block text-sm font-medium text-gray-700">
             Content ({languages.find(l => l.code === currentLang).name})
           </label>
-          <div className="mt-1 h-64 bg-white">
-            <ReactQuill
-              theme="snow"
-              value={article.content[currentLang]}
-              onChange={handleContentChange}
-              className="h-full"
-            />
-          </div>
+          <textarea
+            name="content"
+            id="content"
+            rows="12"
+            value={article.content[currentLang]}
+            onChange={handleChange}
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-cyan-500 focus:border-cyan-500"
+            required
+          />
         </div>
       </div>
 
-      <div className="flex justify-end pt-8">
+      <div className="flex justify-end">
         <button
           type="submit"
           disabled={isSaving}
