@@ -1,3 +1,55 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-header);
+  }
+  body {
+    font-family: var(--font-body);
+  }
+  /* Style for Tiptap editor content */
+  .prose {
+    color: var(--color-text);
+  }
+  .prose h1, .prose h2, .prose h3 {
+    color: var(--color-text);
+  }
+}
+
+/* --- Theme: Compact --- */
+.theme-compact .container {
+  max-width: 960px;
+}
+.theme-compact header {
+  /* In a real implementation, moving the header to the side would require significant
+     restructuring of the layout component's JSX, not just CSS.
+     For this task, I will simulate a 'compact' feel with simpler CSS changes. */
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 4px solid var(--color-primary);
+}
+
+/* --- Theme: Playful --- */
+.theme-playful header, .theme-playful footer {
+  border-radius: 0 0 20px 20px;
+}
+.theme-playful footer {
+  border-radius: 20px 20px 0 0;
+}
+.theme-playful a:hover {
+  transform: translateY(-2px);
+  transition: transform 0.2s ease-in-out;
+}
+/* Add a playful animation to cards */
+.theme-playful .group:hover {
+  animation: playful-shake 0.5s;
+}
+
+@keyframes playful-shake {
+  10%, 90% { transform: translate3d(-1px, 0, 0); }
+  20%, 80% { transform: translate3d(2px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+  40%, 60% { transform: translate3d(4px, 0, 0); }
+}
