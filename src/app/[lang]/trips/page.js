@@ -1,9 +1,8 @@
 async function getTrips() {
   try {
     const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
-    const res = await fetch(`${baseUrl}/api/public/trips`, {
-      next: { revalidate: 3600 } // Revalidate every hour
-    });
+    // Removed the revalidate option to make it fully dynamic
+    const res = await fetch(`${baseUrl}/api/public/trips`, { cache: 'no-store' });
     if (!res.ok) {
       throw new Error('Failed to fetch trips');
     }
@@ -29,7 +28,7 @@ export default async function TripsPage({ params: { lang } }) {
         {trips.map(trip => (
           <div key={trip._id} className="bg-white rounded-lg shadow-lg overflow-hidden group">
             <div className="relative">
-              <img src={trip.imageUrl || 'https://via.placeholder.com/400x250'} alt={trip.title[lang] || trip.title.en} className="w-full h-56 object-cover" />
+              <img src={trip.imageUrl || 'https://images.unsplash.com/photo-1505923984062-552e3a4734d5?q=80&w=2070&auto=format&fit=crop'} alt={trip.title[lang] || trip.title.en} className="w-full h-56 object-cover" />
               <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-40 transition-all duration-300"></div>
               <div className="absolute bottom-0 left-0 p-4">
                 <h3 className="text-2xl font-bold text-white shadow-lg">{trip.title[lang] || trip.title.en}</h3>
