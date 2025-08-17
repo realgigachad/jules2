@@ -1,0 +1,77 @@
+{
+  "header": {
+    "home": "Kezdőlap",
+    "pricing": "Árak",
+    "trips": "Következő utak",
+    "articles": "Cikkek",
+    "about": "Rólunk",
+    "contact": "Kapcsolat"
+  },
+  "footer": {
+    "slogan": "Az utazás itt kezdődik.",
+    "rights": "Minden jog fenntartva."
+  },
+  "homePage": {
+    "heroTitle": "A következő utazása, vasúton",
+    "heroSubtitle": "Fedezze fel a világot egy másik szemszögből. Felejthetetlen tájak, kényelmes utazások és időtlen emlékek várják.",
+    "heroButton": "Következő utak felfedezése",
+    "journalTitle": "Utazási naplónkból",
+    "readMore": "Tovább olvasom",
+    "noArticles": "Még nincsenek megjeleníthető cikkek. Hozzon létre egyet az admin felületen!"
+  },
+  "pricingPage": {
+    "title": "Árképzési filozófiánk",
+    "body1": "A Train.Travel-nél átlátható és egyértelmű árképzésben hiszünk. Minden utazás költsége all-inclusive, amely magában foglalja az utazást, a fedélzeti szállást és a válogatott élményeket. Arra törekszünk, hogy kivételes értéket nyújtsunk, ötvözve a luxust és a kalandot minden csomagban.",
+    "standardClass": "Standard osztály",
+    "standardDesc": "Kényelmes ülések és panorámaablakok a kilátás élvezetéhez.",
+    "firstClass": "Első osztály",
+    "firstDesc": "Extra lábtér, ingyenes frissítők és elsőbbségi kiszolgálás.",
+    "sleeperCabin": "Hálófülke",
+    "sleeperDesc": "Privát fülkék éjszakai utazásokhoz, biztosítva a pihentető éjszakai alvást.",
+    "body2": "Az árak az úti céltól, az időtartamtól és az utazási osztálytól függően változnak. A válogatott utazásaink részletes áraiért kérjük, látogasson el a Következő utak oldalunkra.",
+    "button": "Következő utak és árak megtekintése"
+  },
+  "tripsPage": {
+    "title": "Következő utak",
+    "subtitle": "Vágjon bele a következő nagy kalandjába.",
+    "viewDetails": "Részletek megtekintése",
+    "noTrips": "Jelenleg nincsenek közelgő utak. Kérjük, nézzen vissza később!"
+  },
+  "articlesPage": {
+    "title": "Utazási napló",
+    "subtitle": "Történetek és betekintések utazásainkról."
+  },
+  "aboutPage": {
+    "title": "A Train.Travel-ről",
+    "subtitle": "Emberek és helyek összekötése, egy festői útvonalon.",
+    "body1": "A Train.Travel egy egyszerű alapelvre épült: az utazás ugyanolyan fontos, mint a célállomás. Egy olyan világban, amely A pontból B pontba rohan, lehetőséget kínálunk a lassításra, a táj szépségének felfedezésére és az utazás értelmesebb és fenntarthatóbb módon történő megtapasztalására.",
+    "body2": "Csapatunk szenvedélyes utazókból, logisztikai szakértőkből és vasúti rajongókból áll, akik fáradhatatlanul dolgoznak egyedi vonatutak összeállításán a világ minden táján. A svájci Alpok fenséges hegyeitől a Transzszibériai vasút hatalmas tájaiig olyan útvonalakat választunk ki, amelyek lélegzetelállító kilátást és felejthetetlen élményeket kínálnak.",
+    "missionTitle": "Küldetésünk",
+    "missionText": "Kényelmes, festői és környezetbarát utazási élményeket nyújtani, amelyek maradandó emlékeket teremtenek és elősegítik a körülöttünk lévő világ mélyebb megbecsülését.",
+    "body3": "A világ legjobb vasúti üzemeltetőivel működünk együtt, hogy biztosítsuk a legmagasabb szintű kényelmet, biztonságot és szolgáltatást. Legyen szó egyedülálló kalandorról, egy romantikus kiruccanást kereső párról vagy egy egyedi nyaralást kereső családról, nálunk megtalálja a tökéletes utazást.",
+    "body4": "Köszönjük, hogy fontolóra vette a Train.Travel-t. Várjuk, hogy a fedélzeten üdvözölhessük."
+  },
+  "contactPage": {
+    "title": "Lépjen velünk kapcsolatba",
+    "subtitle": "Szeretnénk hallani Önről. Kérdéseivel forduljon hozzánk bizalommal.",
+    "formTitle": "Küldjön nekünk üzenetet",
+    "nameLabel": "Teljes név",
+    "emailLabel": "E-mail cím",
+    "messageLabel": "Üzenet",
+    "submitButton": "Küldés",
+    "infoTitle": "Elérhetőségeink",
+    "emailHeader": "Email",
+    "phoneHeader": "Telefon",
+    "addressHeader": "Cím"
+  },
+  "tripDetailPage": {
+    "bookingTitle": "Foglalja le utazását",
+    "inquireButton": "Érdeklődés most",
+    "from": "Ettől",
+    "to": "Eddig"
+  },
+  "articleDetailPage": {
+    "publishedOn": "Közzétéve",
+    "by": "szerző"
+  }
+}
