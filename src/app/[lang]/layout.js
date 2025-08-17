@@ -1,5 +1,6 @@
 import "../globals.css";
 import Header from "@/components/public/Header";
+import CompactHeader from "@/components/public/CompactHeader"; // Import new header
 import Footer from "@/components/public/Footer";
 import { getTranslations } from "@/lib/getTranslations";
 import dbConnect from "@/lib/dbConnect";
@@ -14,23 +15,21 @@ async function getStyleSettings() {
   try {
     await dbConnect();
     const settings = await SiteSettings.findOne({}).lean();
-    // Provide a default style object if none is found
     return settings?.style || {
       themeName: 'Default',
-      primaryColor: '#00FFFF',
+      primaryColor: '#0891b2',
       backgroundColor: '#FFFFFF',
-      textColor: '#000000',
+      textColor: '#1f2937',
       headerFont: 'Georgia, serif',
       bodyFont: 'Arial, sans-serif',
     };
   } catch (error) {
     console.error("Failed to fetch style settings:", error);
-    // Return default styles on error
     return {
       themeName: 'Default',
-      primaryColor: '#00FFFF',
+      primaryColor: '#0891b2',
       backgroundColor: '#FFFFFF',
-      textColor: '#000000',
+      textColor: '#1f2937',
       headerFont: 'Georgia, serif',
       bodyFont: 'Arial, sans-serif',
     };
@@ -43,6 +42,9 @@ export default async function RootLayout({ children, params }) {
 
   const headerFontUrl = `https://fonts.googleapis.com/css2?family=${style.headerFont.split(',')[0].replace(/"/g, '').replace(/ /g, '+')}:wght@700&display=swap`;
   const bodyFontUrl = `https://fonts.googleapis.com/css2?family=${style.bodyFont.split(',')[0].replace(/"/g, '').replace(/ /g, '+')}&display=swap`;
+
+  const themeName = style.themeName.toLowerCase();
+  const mainContentClass = themeName === 'compact' ? 'ml-64' : ''; // Add margin for compact theme
 
   return (
     <html lang={params.lang}>
@@ -61,12 +63,17 @@ export default async function RootLayout({ children, params }) {
           }
         `}} />
       </head>
-      <body className={`flex flex-col min-h-screen bg-background text-text font-body theme-${style.themeName.toLowerCase()}`}>
-        <Header lang={params.lang} t={t.header} />
-        <main className="flex-grow container mx-auto px-6 py-12">
-          {children}
-        </main>
-        <Footer t={t.footer} />
+      <body className={`flex flex-col min-h-screen bg-background text-text font-body theme-${themeName}`}>
+        {themeName === 'compact'
+          ? <CompactHeader lang={params.lang} t={t.header} />
+          : <Header lang={params.lang} t={t.header} />
+        }
+        <div className={mainContentClass}>
+          <main className="flex-grow container mx-auto px-6 py-12">
+            {children}
+          </main>
+          <Footer t={t.footer} />
+        </div>
       </body>
     </html>
   );

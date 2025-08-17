@@ -11,11 +11,11 @@ const MultilingualStringSchema = new mongoose.Schema({
 }, { _id: false });
 
 const StyleSettingsSchema = new mongoose.Schema({
-  themeName: { type: String, default: 'Default' }, // 'Default', 'Compact', 'Playful'
-  primaryColor: { type: String, default: '#00FFFF' }, // Cyan
-  backgroundColor: { type: String, default: '#FFFFFF' }, // White
-  textColor: { type: String, default: '#000000' }, // Black
-  headerFont: { type: String, default: 'Arial, sans-serif' },
+  themeName: { type: String, default: 'Default' },
+  primaryColor: { type: String, default: '#0891b2' }, // Changed to a calmer cyan
+  backgroundColor: { type: String, default: '#FFFFFF' },
+  textColor: { type: String, default: '#1f2937' }, // Changed to a softer dark gray
+  headerFont: { type: String, default: 'Georgia, serif' },
   bodyFont: { type: String, default: 'Arial, sans-serif' },
 }, { _id: false });
 
@@ -33,7 +33,13 @@ const SiteSettingsSchema = new mongoose.Schema({
   },
   style: {
     type: StyleSettingsSchema,
-    default: () => ({}) // Ensures a default object is created
+    default: () => ({
+      primaryColor: '#0891b2',
+      backgroundColor: '#FFFFFF',
+      textColor: '#1f2937',
+      headerFont: 'Georgia, serif',
+      bodyFont: 'Arial, sans-serif',
+    })
   }
 });
 

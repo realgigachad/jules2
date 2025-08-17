@@ -12,10 +12,20 @@ const MenuBar = ({ editor }) => {
   if (!editor) return null
   const fileInputRef = useRef(null);
 
-  const addImageFromUrl = () => {
-    const url = window.prompt('URL');
+  const addMedia = (url, type) => {
     if (url) {
-      editor.chain().focus().setImage({ src: url }).run();
+      if (type.startsWith('image/')) {
+        editor.chain().focus().setImage({ src: url }).run();
+      } else if (type.startsWith('video/')) {
+        const videoHtml = `<video controls src="${url}" width="100%"></video>`;
+        editor.chain().focus().insertContent(videoHtml).run();
+      } else if (type === 'application/pdf') {
+        const pdfHtml = `<a href="${url}" target="_blank" rel="noopener noreferrer">View PDF</a>`;
+        editor.chain().focus().insertContent(pdfHtml).run();
+      } else {
+        const linkHtml = `<a href="${url}" target="_blank" rel="noopener noreferrer">View File</a>`;
+        editor.chain().focus().insertContent(linkHtml).run();
+      }
     }
   };
 
@@ -30,13 +40,22 @@ const MenuBar = ({ editor }) => {
       const res = await fetch('/api/uploads', { method: 'POST', body: formData });
       const data = await res.json();
       if (data.success) {
-        editor.chain().focus().setImage({ src: data.url }).run();
+        addMedia(data.url, file.type);
       } else {
         throw new Error(data.message || 'File upload failed');
       }
     } catch (error) {
       console.error(error);
       alert(error.message);
+    }
+  };
+
+  const addMediaFromUrl = () => {
+    const url = window.prompt('Enter URL');
+    // We don't know the file type from a URL, so we'll default to image for now.
+    // A more advanced implementation might inspect the URL ending.
+    if (url) {
+      editor.chain().focus().setImage({ src: url }).run();
     }
   };
 
@@ -60,13 +79,13 @@ const MenuBar = ({ editor }) => {
       <input type="color" onInput={event => editor.chain().focus().setColor(event.target.value).run()} value={editor.getAttributes('textStyle').color || '#000000'} />
 
       {/* Media Buttons */}
-      <button type="button" onClick={addImageFromUrl}>Image from URL</button>
+      <button type="button" onClick={addMediaFromUrl}>Image from URL</button>
       <input type="file" ref={fileInputRef} onChange={handleFileChange} className="hidden" accept="image/*,video/*,.pdf" />
       <button type="button" onClick={() => fileInputRef.current.click()}>Upload File</button>
 
       <style jsx>{`
         button { padding: 4px 8px; border-radius: 4px; border: 1px solid #ccc; background: white; }
-        button.is-active { background-color: #06b6d4; color: white; border-color: #0891b2; }
+        button.is-active { background-color: #0891b2; color: white; border-color: #06b6d4; }
         button:disabled { opacity: 0.5; }
         input[type="color"] { width: 2.5rem; padding: 2px; border-radius: 4px; border: 1px solid #ccc; background: white; }
       `}</style>
@@ -81,7 +100,7 @@ const RichTextEditor = ({ content, onChange }) => {
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
       TextStyle,
       Color,
-      Image, // Add the Image extension
+      Image,
     ],
     content: content,
     onUpdate: ({ editor }) => {
