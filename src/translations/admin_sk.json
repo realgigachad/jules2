@@ -1,0 +1,96 @@
+{
+  "layout": {
+    "title": "Admin Panel",
+    "dashboard": "Dashboard",
+    "trips": "Cesty",
+    "articles": "Články",
+    "settings": "Nastavenia stránky",
+    "styling": "Štýl",
+    "changePassword": "Zmeniť heslo",
+    "logout": "Odhlásiť sa"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Vitajte v admin paneli.",
+    "manageTrips": "Spravovať cesty",
+    "manageTripsDesc": "Vytvárajte, upravujte a mažte pripravované cesty. Nastavte ceny a dátumy ciest.",
+    "manageArticles": "Spravovať články",
+    "manageArticlesDesc": "Píšte a publikujte články pre blog na hlavnej stránke.",
+    "updateSettings": "Aktualizovať nastavenia",
+    "updateSettingsDesc": "Zmeňte informácie na celej stránke, ako sú kontaktné údaje.",
+    "updateStyling": "Prispôsobiť štýl",
+    "updateStylingDesc": "Zmeňte farby, písma a rozloženie webovej stránky."
+  },
+  "trips": {
+    "manageTitle": "Spravovať cesty",
+    "createButton": "Vytvoriť novú cestu",
+    "loading": "Načítavanie ciest...",
+    "noTrips": "Nenašli sa žiadne cesty.",
+    "edit": "Upraviť",
+    "delete": "Odstrániť",
+    "deleteConfirm": "Naozaj chcete odstrániť túto cestu?",
+    "createTitle": "Vytvoriť novú cestu",
+    "editTitle": "Upraviť cestu"
+  },
+  "articles": {
+    "manageTitle": "Spravovať články",
+    "createButton": "Napísať nový článok",
+    "loading": "Načítavanie článkov...",
+    "noArticles": "Nenašli sa žiadne články.",
+    "edit": "Upraviť",
+    "delete": "Odstrániť",
+    "deleteConfirm": "Naozaj chcete odstrániť tento článok?",
+    "createTitle": "Napísať nový článok",
+    "editTitle": "Upraviť článok",
+    "publishedOn": "Uverejnené dňa"
+  },
+  "settings": {
+    "title": "Nastavenia stránky",
+    "emailLabel": "Kontaktný email",
+    "phoneLabel": "Kontaktný telefón",
+    "addressLabel": "Adresa",
+    "saveButton": "Uložiť nastavenia",
+    "saving": "Ukladanie...",
+    "success": "Nastavenia úspešne uložené!",
+    "error": "Chyba"
+  },
+  "login": {
+    "title": "Admin Prihlásenie",
+    "usernameLabel": "Používateľské meno",
+    "passwordLabel": "Heslo",
+    "button": "Prihlásiť sa",
+    "signingIn": "Prihlasovanie...",
+    "forgotPassword": "Zabudli ste heslo?"
+  },
+  "changePassword": {
+    "title": "Zmeňte si heslo",
+    "titleLoggedIn": "Zmeniť heslo",
+    "intro": "Z bezpečnostných dôvodov si musíte zmeniť predvolené heslo.",
+    "newPasswordLabel": "Nové heslo",
+    "confirmPasswordLabel": "Potvrďte nové heslo",
+    "button": "Nastaviť nové heslo",
+    "success": "Heslo úspešne aktualizované!",
+    "errorMatch": "Heslá sa nezhodujú.",
+    "errorLength": "Heslo musí mať aspoň 6 znakov."
+  },
+  "tripForm": {
+    "language": "Jazyk",
+    "titleLabel": "Názov cesty",
+    "descriptionLabel": "Popis",
+    "pricingTitle": "Cenník",
+    "convertButton": "Prev.",
+    "convertTitle": "Previesť z",
+    "priceReminder": "Pripomienka: Pre marketing je najlepšie, aby ceny zodpovedali miestnym zvyklostiam (napr. končili na .99).",
+    "priceSourceError": "Najprv zadajte platnú cenu v zdrojovej mene.",
+    "imageUrlLabel": "URL obrázka",
+    "startDateLabel": "Dátum začiatku",
+    "endDateLabel": "Dátum konca",
+    "saveButton": "Uložiť cestu"
+  },
+  "articleForm": {
+    "language": "Jazyk",
+    "titleLabel": "Názov článku",
+    "contentLabel": "Obsah",
+    "saveButton": "Uložiť článok"
+  }
+}

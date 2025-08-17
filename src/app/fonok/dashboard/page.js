@@ -1,24 +1,28 @@
-'use client';
+import { getAdminTranslations } from "@/lib/getAdminTranslations";
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const t = await getAdminTranslations('en'); // Hardcoded to English for now
+
   return (
     <div>
-      <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-      <p className="mt-4 text-lg text-gray-600">
-        Welcome to the admin panel.
-      </p>
+      <h1 className="text-3xl font-bold text-gray-900">{t.dashboard.title}</h1>
+      <p className="mt-4 text-lg text-gray-600">{t.dashboard.welcome}</p>
       <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div className="p-6 bg-white rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold">Manage Trips</h2>
-          <p className="mt-2 text-gray-600">Create, edit, and delete upcoming trips. Set prices and travel dates.</p>
+          <h2 className="text-xl font-semibold">{t.dashboard.manageTrips}</h2>
+          <p className="mt-2 text-gray-600">{t.dashboard.manageTripsDesc}</p>
         </div>
         <div className="p-6 bg-white rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold">Manage Articles</h2>
-          <p className="mt-2 text-gray-600">Write and publish articles for the main page blog.</p>
+          <h2 className="text-xl font-semibold">{t.dashboard.manageArticles}</h2>
+          <p className="mt-2 text-gray-600">{t.dashboard.manageArticlesDesc}</p>
         </div>
         <div className="p-6 bg-white rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold">Update Settings</h2>
-          <p className="mt-2 text-gray-600">Change site-wide information like contact details.</p>
+          <h2 className="text-xl font-semibold">{t.dashboard.updateSettings}</h2>
+          <p className="mt-2 text-gray-600">{t.dashboard.updateSettingsDesc}</p>
+        </div>
+        <div className="p-6 bg-white rounded-lg shadow-md">
+          <h2 className="text-xl font-semibold">{t.dashboard.updateStyling}</h2>
+          <p className="mt-2 text-gray-600">{t.dashboard.updateStylingDesc}</p>
         </div>
       </div>
     </div>
