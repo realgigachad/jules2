@@ -1,4 +1,5 @@
-import Link from 'next/link'; // <--- ADDED THIS IMPORT
+import Link from 'next/link';
+import { getTranslations } from '@/lib/getTranslations';
 
 async function getArticles() {
   try {
@@ -14,13 +15,14 @@ async function getArticles() {
 }
 
 export default async function ArticlesPage({ params: { lang } }) {
+  const t = await getTranslations(lang);
   const articles = await getArticles();
 
   return (
     <div className="space-y-12">
       <div className="text-center">
-        <h1 className="text-4xl font-extrabold text-gray-900">Travel Journal</h1>
-        <p className="mt-2 text-lg text-gray-600">Stories and insights from our journeys.</p>
+        <h1 className="text-4xl font-extrabold text-gray-900">{t.articlesPage.title}</h1>
+        <p className="mt-2 text-lg text-gray-600">{t.articlesPage.subtitle}</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -30,19 +32,19 @@ export default async function ArticlesPage({ params: { lang } }) {
               <p className="text-sm text-gray-500">{new Date(article.createdAt).toLocaleDateString()}</p>
               <h3 className="text-xl font-semibold my-2">{article.title[lang] || article.title.en}</h3>
               <div
-                className="text-gray-600 line-clamp-4 flex-grow"
+                className="text-gray-600 line-clamp-4 flex-grow prose"
                 dangerouslySetInnerHTML={{ __html: article.content[lang] || article.content.en }}
               />
               <div className="mt-4">
                 <Link href={`/${lang}/articles/${article._id}`} className="text-cyan-600 hover:underline font-semibold">
-                  Read more &rarr;
+                  {t.homePage.readMore} &rarr;
                 </Link>
               </div>
             </div>
           </div>
         ))}
         {articles.length === 0 && (
-          <p className="text-center text-gray-500 col-span-full">No articles to display yet.</p>
+          <p className="text-center text-gray-500 col-span-full">{t.homePage.noArticles}</p>
         )}
       </div>
     </div>

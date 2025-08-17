@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import RichTextEditor from './RichTextEditor';
 
 const languages = [
   { code: 'en', name: 'English (British/International)' },
@@ -16,7 +17,6 @@ const currencies = ['eur', 'gbp', 'huf', 'rub', 'czk', 'uah'];
 const emptyMultilingual = { en: '', de: '', hu: '', ru: '', sk: '', cs: '', uk: '' };
 const emptyPrices = { eur: 0, gbp: 0, huf: 0, rub: 0, czk: 0, uah: 0 };
 
-// Placeholder conversion rates relative to EUR
 const conversionRates = { eur: 1, gbp: 0.85, huf: 400, rub: 90, czk: 25, uah: 42 };
 
 const priceFormatRules = {
@@ -45,6 +45,10 @@ export default function TripForm({ initialData, onSubmit, isSaving }) {
   const handleMultilingualChange = (e) => {
     const { name, value } = e.target;
     setTrip(prev => ({ ...prev, [name]: { ...prev[name], [currentLang]: value } }));
+  };
+
+  const handleDescriptionChange = (content) => {
+    setTrip(prev => ({ ...prev, description: { ...prev.description, [currentLang]: content } }));
   };
 
   const handlePriceChange = (e) => {
@@ -85,7 +89,6 @@ export default function TripForm({ initialData, onSubmit, isSaving }) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8 bg-white p-8 rounded-lg shadow-md">
-      {/* Language Switcher */}
       <div className="flex items-center border-b border-gray-200 pb-4">
         <label className="mr-4 font-medium">Language:</label>
         <div className="flex gap-2 flex-wrap">
@@ -97,26 +100,24 @@ export default function TripForm({ initialData, onSubmit, isSaving }) {
         </div>
       </div>
 
-      {/* Multilingual Fields */}
       <div className="space-y-4">
         <div>
           <label htmlFor="title" className="block text-sm font-medium text-gray-700">Trip Title ({languages.find(l => l.code === currentLang).name})</label>
           <input type="text" name="title" id="title" value={trip.title[currentLang]} onChange={handleMultilingualChange} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" required />
         </div>
         <div>
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description ({languages.find(l => l.code === currentLang).name})</label>
-          <textarea
-            name="description"
-            id="description"
-            rows="10"
-            value={trip.description[currentLang]}
-            onChange={handleMultilingualChange}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
-          />
+          <label className="block text-sm font-medium text-gray-700">Description ({languages.find(l => l.code === currentLang).name})</label>
+          <div className="mt-1 h-64 bg-white">
+            <RichTextEditor
+              content={trip.description[currentLang]}
+              onChange={handleDescriptionChange}
+            />
+          </div>
         </div>
       </div>
 
-      {/* Prices Section */}
+      <div className="pt-8"></div>
+
       <div className="border-t pt-8">
         <h3 className="text-xl font-bold mb-4">Pricing</h3>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -132,7 +133,6 @@ export default function TripForm({ initialData, onSubmit, isSaving }) {
         </div>
       </div>
 
-      {/* General Fields */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 border-t pt-8">
         <div>
           <label htmlFor="imageUrl" className="block text-sm font-medium text-gray-700">Image URL</label>
