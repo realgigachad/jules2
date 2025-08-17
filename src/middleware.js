@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
 
 const PUBLIC_FILE = /\.(.*)$/;
+const PROTECTED_ROUTES = ['/fonok/dashboard', '/fonok/trips', '/fonok/articles', '/fonok/settings', '/api/cms'];
 
 export async function middleware(req) {
   const { pathname } = req.nextUrl;
@@ -11,19 +12,14 @@ export async function middleware(req) {
     return NextResponse.redirect(new URL('/en', req.url));
   }
 
-  // Allow public routes and static assets to pass through
-  if (
-    pathname.startsWith('/_next') ||
-    pathname.startsWith('/api/public') ||
-    pathname.startsWith('/api/auth/login') ||
-    pathname.startsWith('/api/auth/logout') ||
-    !pathname.startsWith('/api/cms') && !pathname.startsWith('/fonok') ||
-    PUBLIC_FILE.test(pathname)
-  ) {
+  // Check if the route is a protected admin route
+  const isProtectedRoute = PROTECTED_ROUTES.some(route => pathname.startsWith(route));
+
+  if (!isProtectedRoute) {
     return NextResponse.next();
   }
 
-  // At this point, we are only dealing with protected routes.
+  // At this point, we are dealing with a protected route.
   // Get token from cookies
   const tokenCookie = req.cookies.get('token');
   const token = tokenCookie?.value;
@@ -58,5 +54,6 @@ export async function middleware(req) {
 }
 
 export const config = {
-  matcher: ['/((?!_next/static/favicon.ico|api/auth/login).*)'],
+  // This matcher is broad, the logic inside the middleware handles specifics.
+  matcher: ['/((?!_next/static/favicon.ico).*)'],
 };
