@@ -5,7 +5,7 @@ import Link from 'next/link';
 import TrainLogo from './TrainLogo';
 import LanguageSelector from './LanguageSelector';
 
-export default function Header({ lang }) {
+export default function Header({ lang, t }) {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -23,12 +23,12 @@ export default function Header({ lang }) {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-6">
-          <Link href={`/${lang}`} className="text-gray-600 hover:text-cyan-500">Home</Link>
-          <Link href={`/${lang}/pricing`} className="text-gray-600 hover:text-cyan-500">Pricing</Link>
-          <Link href={`/${lang}/trips`} className="text-gray-600 hover:text-cyan-500">Upcoming Trips</Link>
-          <Link href={`/${lang}/articles`} className="text-gray-600 hover:text-cyan-500">Articles</Link>
-          <Link href={`/${lang}/about`} className="text-gray-600 hover:text-cyan-500">About Us</Link>
-          <Link href={`/${lang}/contact`} className="text-gray-600 hover:text-cyan-500">Contact</Link>
+          <Link href={`/${lang}`} className="text-gray-600 hover:text-cyan-500">{t.home}</Link>
+          <Link href={`/${lang}/pricing`} className="text-gray-600 hover:text-cyan-500">{t.pricing}</Link>
+          <Link href={`/${lang}/trips`} className="text-gray-600 hover:text-cyan-500">{t.trips}</Link>
+          <Link href={`/${lang}/articles`} className="text-gray-600 hover:text-cyan-500">{t.articles}</Link>
+          <Link href={`/${lang}/about`} className="text-gray-600 hover:text-cyan-500">{t.about}</Link>
+          <Link href={`/${lang}/contact`} className="text-gray-600 hover:text-cyan-500">{t.contact}</Link>
         </div>
 
         <div className="flex items-center gap-4">

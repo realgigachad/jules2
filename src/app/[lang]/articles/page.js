@@ -25,13 +25,14 @@ export default async function ArticlesPage({ params: { lang } }) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {articles.map(article => (
-          <div key={article._id} className="bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
-            <div className="p-6">
+          <div key={article._id} className="bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 flex flex-col">
+            <div className="p-6 flex-grow flex flex-col">
               <p className="text-sm text-gray-500">{new Date(article.createdAt).toLocaleDateString()}</p>
               <h3 className="text-xl font-semibold my-2">{article.title[lang] || article.title.en}</h3>
-              <p className="text-gray-600 line-clamp-4">
-                {article.content[lang] || article.content.en}
-              </p>
+              <div
+                className="text-gray-600 line-clamp-4 flex-grow"
+                dangerouslySetInnerHTML={{ __html: article.content[lang] || article.content.en }}
+              />
               <div className="mt-4">
                 <Link href={`/${lang}/articles/${article._id}`} className="text-cyan-600 hover:underline font-semibold">
                   Read more &rarr;

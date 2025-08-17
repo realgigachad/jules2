@@ -2,9 +2,8 @@
 
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
-// CSS will be imported in the layout now
-// import 'react-quill/dist/quill.snow.css';
 
+// CSS is now loaded in the root admin layout via a <link> tag
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const languages = [
@@ -25,7 +24,7 @@ const emptyPrices = { eur: 0, gbp: 0, huf: 0, rub: 0, czk: 0, uah: 0 };
 const conversionRates = { eur: 1, gbp: 0.85, huf: 400, rub: 90, czk: 25, uah: 42 };
 
 const priceFormatRules = {
-  huf: (p) => Math.round(p / 1000) * 1000 - 10, // e.g., 12345 -> 12000 -> 11990
+  huf: (p) => Math.round(p / 1000) * 1000 - 10,
   eur: (p) => Math.floor(p) + 0.99,
   gbp: (p) => Math.floor(p) + 0.99,
   rub: (p) => Math.floor(p) + 9.99,
@@ -80,7 +79,9 @@ export default function TripForm({ initialData, onSubmit, isSaving }) {
     const newPrices = { ...trip.prices };
     for (const currency of currencies) {
       const converted = baseInEur * conversionRates[currency];
-      newPrices[currency] = priceFormatRules[currency](converted);
+      if (currency !== sourceCurrency) {
+        newPrices[currency] = priceFormatRules[currency](converted);
+      }
     }
     setTrip(prev => ({ ...prev, prices: newPrices }));
   };

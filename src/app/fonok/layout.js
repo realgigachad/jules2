@@ -3,7 +3,7 @@
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import "../globals.css"; // Import global styles
-import 'react-quill/dist/quill.snow.css'; // Import Quill styles
+// The react-quill CSS is now loaded via a <link> tag in the <head> below
 
 export default function AdminLayout({ children }) {
   const router = useRouter();
@@ -12,17 +12,18 @@ export default function AdminLayout({ children }) {
   const handleLogout = async () => {
     try {
       await fetch('/api/auth/logout', { method: 'POST' });
-      // Force a full page reload to ensure all state is cleared
       window.location.href = '/fonok';
     } catch (error) {
       console.error('Logout failed:', error);
     }
   };
 
-  // For login/password change pages, render a simpler layout without the dashboard sidebar
   if (pathname === '/fonok' || pathname === '/fonok/change-password') {
     return (
         <html lang="en">
+            <head>
+              <title>Admin Login</title>
+            </head>
             <body>
                 {children}
             </body>
@@ -30,9 +31,15 @@ export default function AdminLayout({ children }) {
     );
   }
 
-  // For all other admin pages, render the full dashboard layout
   return (
     <html lang="en">
+      <head>
+        <title>Admin Panel</title>
+        <link
+          rel="stylesheet"
+          href="https://unpkg.com/react-quill@2.0.0/dist/quill.snow.css"
+        />
+      </head>
       <body>
         <div className="flex h-screen bg-gray-100">
           <aside className="w-64 bg-gray-800 text-white flex flex-col">

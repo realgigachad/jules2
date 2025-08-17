@@ -2,9 +2,8 @@
 
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
-// CSS will be imported in the layout now
-// import 'react-quill/dist/quill.snow.css';
 
+// CSS is now loaded in the root admin layout via a <link> tag
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const languages = [
