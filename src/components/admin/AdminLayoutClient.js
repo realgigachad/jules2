@@ -2,14 +2,13 @@
 
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
-import "../app/globals.css";
-import LanguageSelector from '@/components/public/LanguageSelector';
+// import "../app/globals.css"; // This was incorrect and is removed. The root layout handles it.
 import { useAdminTranslations } from './AdminTranslationsProvider';
 
 export default function AdminLayoutClient({ children }) {
   const router = useRouter();
   const pathname = usePathname();
-  const { t, setLang } = useAdminTranslations(); // Use the hook
+  const { t, setLang } = useAdminTranslations();
 
   const handleLogout = async () => {
     try {
@@ -21,13 +20,19 @@ export default function AdminLayoutClient({ children }) {
   };
 
   if (pathname === '/fonok' || pathname.startsWith('/fonok/change-password')) {
-    // This part of the UI doesn't need the full layout or translations
     return <>{children}</>;
   }
 
-  // A simple language selector for the admin panel
+  if (!t) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <p>Loading Admin Interface...</p>
+      </div>
+    );
+  }
+
   const AdminLangSelector = () => (
-    <select onChange={(e) => setLang(e.target.value)} defaultValue="en" className="bg-gray-700 text-white p-1 rounded">
+    <select onChange={(e) => setLang(e.target.value)} defaultValue="en" className="bg-gray-700 text-white p-1 rounded w-full">
       <option value="en">English</option>
       <option value="de">Deutsch</option>
       <option value="hu">Magyar</option>
@@ -43,12 +48,12 @@ export default function AdminLayoutClient({ children }) {
       <aside className="w-64 bg-gray-800 text-white flex flex-col">
         <div className="p-4 text-xl font-bold border-b border-gray-700">{t.layout.title}</div>
         <nav className="flex-grow p-4 space-y-2">
-          <Link href="/fonok/dashboard" className={`block px-4 py-2 rounded hover:bg-gray-700 ${pathname === '/fonok/dashboard' ? 'bg-cyan-600' : ''}`}>{t.layout.dashboard}</Link>
-          <Link href="/fonok/trips" className={`block px-4 py-2 rounded hover:bg-gray-700 ${pathname.startsWith('/fonok/trips') ? 'bg-cyan-600' : ''}`}>{t.layout.trips}</Link>
-          <Link href="/fonok/articles" className={`block px-4 py-2 rounded hover:bg-gray-700 ${pathname.startsWith('/fonok/articles') ? 'bg-cyan-600' : ''}`}>{t.layout.articles}</Link>
-          <Link href="/fonok/settings" className={`block px-4 py-2 rounded hover:bg-gray-700 ${pathname === '/fonok/settings' ? 'bg-cyan-600' : ''}`}>{t.layout.settings}</Link>
-          <Link href="/fonok/styling" className={`block px-4 py-2 rounded hover:bg-gray-700 ${pathname === '/fonok/styling' ? 'bg-cyan-600' : ''}`}>{t.layout.styling}</Link>
-          <Link href="/fonok/password" className={`block px-4 py-2 rounded hover:bg-gray-700 ${pathname === '/fonok/password' ? 'bg-cyan-600' : ''}`}>{t.layout.changePassword}</Link>
+          <Link href="/fonok/dashboard" className={`block px-4 py-2 rounded hover:bg-gray-700 ${pathname === '/fonok/dashboard' ? 'bg-primary' : ''}`}>{t.layout.dashboard}</Link>
+          <Link href="/fonok/trips" className={`block px-4 py-2 rounded hover:bg-gray-700 ${pathname.startsWith('/fonok/trips') ? 'bg-primary' : ''}`}>{t.layout.trips}</Link>
+          <Link href="/fonok/articles" className={`block px-4 py-2 rounded hover:bg-gray-700 ${pathname.startsWith('/fonok/articles') ? 'bg-primary' : ''}`}>{t.layout.articles}</Link>
+          <Link href="/fonok/settings" className={`block px-4 py-2 rounded hover:bg-gray-700 ${pathname === '/fonok/settings' ? 'bg-primary' : ''}`}>{t.layout.settings}</Link>
+          <Link href="/fonok/styling" className={`block px-4 py-2 rounded hover:bg-gray-700 ${pathname === '/fonok/styling' ? 'bg-primary' : ''}`}>{t.layout.styling}</Link>
+          <Link href="/fonok/password" className={`block px-4 py-2 rounded hover:bg-gray-700 ${pathname === '/fonok/password' ? 'bg-primary' : ''}`}>{t.layout.changePassword}</Link>
         </nav>
         <div className="p-4 border-t border-gray-700">
           <AdminLangSelector />
