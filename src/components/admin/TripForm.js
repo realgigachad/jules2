@@ -1,10 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import dynamic from 'next/dynamic';
-
-// CSS is now loaded in the root admin layout via a <link> tag
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const languages = [
   { code: 'en', name: 'English (British/International)' },
@@ -49,10 +45,6 @@ export default function TripForm({ initialData, onSubmit, isSaving }) {
   const handleMultilingualChange = (e) => {
     const { name, value } = e.target;
     setTrip(prev => ({ ...prev, [name]: { ...prev[name], [currentLang]: value } }));
-  };
-
-  const handleDescriptionChange = (content) => {
-    setTrip(prev => ({ ...prev, description: { ...prev.description, [currentLang]: content } }));
   };
 
   const handlePriceChange = (e) => {
@@ -112,12 +104,17 @@ export default function TripForm({ initialData, onSubmit, isSaving }) {
           <input type="text" name="title" id="title" value={trip.title[currentLang]} onChange={handleMultilingualChange} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" required />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Description ({languages.find(l => l.code === currentLang).name})</label>
-          <div className="mt-1 h-64 bg-white"><ReactQuill theme="snow" value={trip.description[currentLang]} onChange={handleDescriptionChange} className="h-full" /></div>
+          <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description ({languages.find(l => l.code === currentLang).name})</label>
+          <textarea
+            name="description"
+            id="description"
+            rows="10"
+            value={trip.description[currentLang]}
+            onChange={handleMultilingualChange}
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
+          />
         </div>
       </div>
-
-      <div className="pt-8"></div>
 
       {/* Prices Section */}
       <div className="border-t pt-8">

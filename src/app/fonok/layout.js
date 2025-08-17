@@ -3,7 +3,6 @@
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import "../globals.css"; // Import global styles
-// The react-quill CSS is now loaded via a <link> tag in the <head> below
 
 export default function AdminLayout({ children }) {
   const router = useRouter();
@@ -35,10 +34,6 @@ export default function AdminLayout({ children }) {
     <html lang="en">
       <head>
         <title>Admin Panel</title>
-        <link
-          rel="stylesheet"
-          href="https://unpkg.com/react-quill@2.0.0/dist/quill.snow.css"
-        />
       </head>
       <body>
         <div className="flex h-screen bg-gray-100">
