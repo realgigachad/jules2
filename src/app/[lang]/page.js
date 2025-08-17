@@ -1,15 +1,11 @@
 import Link from 'next/link';
 
 // This function fetches data on the server side.
-// It's called from the Page component.
 async function getRecentArticles() {
   try {
-    // Using the full URL is important for server-side fetching in Next.js
     const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
-    const res = await fetch(`${baseUrl}/api/public/articles?limit=3`, {
-      // Revalidate every hour
-      next: { revalidate: 3600 }
-    });
+    // Removed the revalidate option to make it fully dynamic
+    const res = await fetch(`${baseUrl}/api/public/articles?limit=3`, { cache: 'no-store' });
     if (!res.ok) {
       throw new Error('Failed to fetch articles');
     }
@@ -51,13 +47,14 @@ export default async function HomePage({ params: { lang } }) {
                   {article.content[lang] || article.content.en}
                 </p>
                 <div className="mt-4">
-                  <span className="text-cyan-600 hover:underline">Read more &rarr;</span>
+                  {/* The user might want to click to a full article page, which doesn't exist yet. For now, this link does nothing. */}
+                  <span className="text-cyan-600 hover:underline cursor-pointer">Read more &rarr;</span>
                 </div>
               </div>
             </div>
           ))}
           {recentArticles.length === 0 && (
-            <p className="text-center text-gray-500 col-span-3">No articles to display yet.</p>
+            <p className="text-center text-gray-500 col-span-3">No articles to display yet. Create one in the admin panel!</p>
           )}
         </div>
       </section>
