@@ -6,6 +6,17 @@ const MultilingualStringSchema = new mongoose.Schema({
   hu: { type: String, default: '' },
   ru: { type: String, default: '' },
   sk: { type: String, default: '' },
+  cs: { type: String, default: '' }, // Added Czech
+  uk: { type: String, default: '' }, // Added Ukrainian
+}, { _id: false });
+
+const PriceSchema = new mongoose.Schema({
+  eur: { type: Number, default: 0 },
+  gbp: { type: Number, default: 0 },
+  huf: { type: Number, default: 0 },
+  rub: { type: Number, default: 0 },
+  czk: { type: Number, default: 0 },
+  uah: { type: Number, default: 0 },
 }, { _id: false });
 
 const TripSchema = new mongoose.Schema({
@@ -17,8 +28,8 @@ const TripSchema = new mongoose.Schema({
     type: MultilingualStringSchema,
     required: true,
   },
-  price: {
-    type: Number,
+  prices: { // Changed from 'price' to 'prices'
+    type: PriceSchema,
     required: true,
   },
   startDate: {
