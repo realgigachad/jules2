@@ -3,6 +3,7 @@
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import "../globals.css"; // Import global styles
+import 'react-quill/dist/quill.snow.css'; // Import Quill styles
 
 export default function AdminLayout({ children }) {
   const router = useRouter();

@@ -17,10 +17,17 @@ export default async function TripsPage({ params: { lang } }) {
   const trips = await getTrips();
 
   const getPriceDisplay = (prices) => {
+    // Handle English case first
     if (lang === 'en') {
       return `€${prices.eur.toFixed(2)} / £${prices.gbp.toFixed(2)}`;
     }
-    const currencyCode = { de: 'eur', sk: 'eur', cs: 'czk', hu: 'huf', ru: 'rub', uk: 'uah' }[lang];
+    // Then handle other languages
+    const currencyCodeMap = { de: 'eur', sk: 'eur', cs: 'czk', hu: 'huf', ru: 'rub', uk: 'uah' };
+    const currencyCode = currencyCodeMap[lang];
+    // Safeguard in case of an unexpected language
+    if (!currencyCode) {
+      return `€${prices.eur.toFixed(2)}`;
+    }
     const price = prices[currencyCode];
     return price.toLocaleString(lang, { style: 'currency', currency: currencyCode.toUpperCase(), minimumFractionDigits: 2 });
   };
@@ -44,13 +51,13 @@ export default async function TripsPage({ params: { lang } }) {
                 <h3 className="text-2xl font-bold text-white shadow-lg">{trip.title[lang] || trip.title.en}</h3>
               </div>
             </div>
-            <div className="p-6">
+            <div className="p-6 flex flex-col">
               <div
-                className="text-gray-700 line-clamp-4"
+                className="text-gray-700 line-clamp-4 flex-grow"
                 dangerouslySetInnerHTML={{ __html: trip.description[lang] || trip.description.en }}
               />
-              <div className="mt-4 flex justify-between items-center">
-                <p className="text-xl font-bold text-cyan-600">{getPriceDisplay(trip.prices)}</p>
+              <div className="mt-4 flex justify-between items-center pt-4 border-t">
+                <p className="text-lg font-bold text-cyan-600">{getPriceDisplay(trip.prices)}</p>
                 <span className="text-gray-600 text-sm">
                   {new Date(trip.startDate).toLocaleDateString()}
                 </span>

@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
-import 'react-quill/dist/quill.snow.css';
+// CSS will be imported in the layout now
+// import 'react-quill/dist/quill.snow.css';
 
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -111,7 +112,7 @@ export default function TripForm({ initialData, onSubmit, isSaving }) {
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">Description ({languages.find(l => l.code === currentLang).name})</label>
-          <div className="mt-1 h-64"><ReactQuill theme="snow" value={trip.description[currentLang]} onChange={handleDescriptionChange} className="h-full" /></div>
+          <div className="mt-1 h-64 bg-white"><ReactQuill theme="snow" value={trip.description[currentLang]} onChange={handleDescriptionChange} className="h-full" /></div>
         </div>
       </div>
 
