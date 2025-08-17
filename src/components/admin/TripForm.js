@@ -29,12 +29,16 @@ const priceFormatRules = {
 };
 
 export default function TripForm({ initialData, onSubmit, isSaving }) {
-  const [trip, setTrip] = useState(initialData || {
+  // Defensive state initialization to handle legacy data without a 'prices' object
+  const [trip, setTrip] = useState({
     title: { ...emptyMultilingual },
     description: { ...emptyMultilingual },
     prices: { ...emptyPrices },
     startDate: '', endDate: '', imageUrl: '',
+    ...initialData,
+    prices: initialData?.prices || { ...emptyPrices },
   });
+
   const [currentLang, setCurrentLang] = useState('en');
 
   const handleChange = (e) => {
