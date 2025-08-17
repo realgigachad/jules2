@@ -1,3 +1,5 @@
+import Link from 'next/link'; // <--- ADDED THIS IMPORT
+
 async function getArticles() {
   try {
     const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';

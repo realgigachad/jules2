@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
-import 'react-quill/dist/quill.snow.css'; // Import styles
+// CSS will be imported in the layout now
+// import 'react-quill/dist/quill.snow.css';
 
-// Dynamically import ReactQuill to ensure it's only loaded on the client side
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const languages = [
@@ -85,7 +85,7 @@ export default function ArticleForm({ initialData, onSubmit, isSaving }) {
           <label className="block text-sm font-medium text-gray-700">
             Content ({languages.find(l => l.code === currentLang).name})
           </label>
-          <div className="mt-1 h-64">
+          <div className="mt-1 h-64 bg-white">
             <ReactQuill
               theme="snow"
               value={article.content[currentLang]}
