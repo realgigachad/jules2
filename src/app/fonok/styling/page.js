@@ -8,26 +8,28 @@ const fontOptions = [
   'Georgia, serif',
   '"Times New Roman", serif',
   '"Courier New", monospace',
+  '"Roboto", sans-serif',
+  '"Open Sans", sans-serif',
 ];
 
-const defaultSchemes = {
-  "Default": { primaryColor: '#00FFFF', backgroundColor: '#FFFFFF', textColor: '#000000' },
-  "Dark": { primaryColor: '#00FFFF', backgroundColor: '#1a202c', textColor: '#FFFFFF' },
-  "Mint": { primaryColor: '#34D399', backgroundColor: '#F0FFF4', textColor: '#1a202c' },
-  "Plum": { primaryColor: '#8B5CF6', backgroundColor: '#F5F3FF', textColor: '#1a202c' },
-};
-
-const emptyStyle = {
+const newDefaultStyle = {
   themeName: 'Default',
-  primaryColor: '#00FFFF',
+  primaryColor: '#0891b2',
   backgroundColor: '#FFFFFF',
-  textColor: '#000000',
-  headerFont: 'Arial, sans-serif',
+  textColor: '#1f2937',
+  headerFont: 'Georgia, serif',
   bodyFont: 'Arial, sans-serif',
 };
 
+const defaultSchemes = {
+  "Default": { primaryColor: '#0891b2', backgroundColor: '#FFFFFF', textColor: '#1f2937' },
+  "Dark": { primaryColor: '#22d3ee', backgroundColor: '#1f2937', textColor: '#e5e7eb' },
+  "Mint": { primaryColor: '#10b981', backgroundColor: '#f0fdf4', textColor: '#1f2937' },
+  "Plum": { primaryColor: '#a78bfa', backgroundColor: '#f5f3ff', textColor: '#1f2937' },
+};
+
 export default function StylingPage() {
-  const [styleSettings, setStyleSettings] = useState(emptyStyle);
+  const [styleSettings, setStyleSettings] = useState(newDefaultStyle);
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
@@ -40,7 +42,8 @@ export default function StylingPage() {
         const res = await fetch('/api/cms/settings');
         const data = await res.json();
         if (data.success && data.data.style) {
-          setStyleSettings(prev => ({ ...prev, ...data.data.style }));
+          // Ensure all fields are present, falling back to new defaults
+          setStyleSettings({ ...newDefaultStyle, ...data.data.style });
         }
       } catch (err) {
         setError('Failed to load settings.');
@@ -88,7 +91,6 @@ export default function StylingPage() {
   return (
     <div className="bg-white p-8 rounded-lg shadow-md">
       <h1 className="text-2xl font-bold mb-6">Site Styling</h1>
-
       <div className="space-y-8">
         <div>
           <h3 className="text-lg font-semibold mb-2">Color Schemes</h3>
@@ -98,7 +100,6 @@ export default function StylingPage() {
             ))}
           </div>
         </div>
-
         <div>
           <h3 className="text-lg font-semibold mb-2">Custom Colors</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -107,33 +108,30 @@ export default function StylingPage() {
             <div className="flex items-center gap-2"><label htmlFor="textColor">Text:</label><input type="color" id="textColor" name="textColor" value={styleSettings.textColor} onChange={handleChange} /></div>
           </div>
         </div>
-
         <div>
           <h3 className="text-lg font-semibold mb-2">Background Presets</h3>
           <select name="backgroundColor" value={styleSettings.backgroundColor} onChange={handleChange} className="p-2 border rounded-md bg-white">
-            <option value="#FFFFFF">White</option><option value="#F7FAFC">Light Gray</option><option value="#4A5568">Dark Gray</option><option value="#1A202C">Black</option>
+            <option value="#FFFFFF">White</option><option value="#f3f4f6">Light Gray</option><option value="#4b5563">Dark Gray</option><option value="#111827">Black</option>
           </select>
         </div>
-
         <div>
           <h3 className="text-lg font-semibold mb-2">Fonts</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label htmlFor="headerFont">Header Font:</label>
               <select id="headerFont" name="headerFont" value={styleSettings.headerFont} onChange={handleChange} className="mt-1 block w-full p-2 border rounded-md bg-white">
-                {fontOptions.map(font => <option key={font} value={font}>{font.split(',')[0]}</option>)}
+                {fontOptions.map(font => <option key={font} value={font}>{font.split(',')[0].replace(/"/g, '')}</option>)}
               </select>
             </div>
             <div>
               <label htmlFor="bodyFont">Body Font:</label>
               <select id="bodyFont" name="bodyFont" value={styleSettings.bodyFont} onChange={handleChange} className="mt-1 block w-full p-2 border rounded-md bg-white">
-                {fontOptions.map(font => <option key={font} value={font}>{font.split(',')[0]}</option>)}
+                {fontOptions.map(font => <option key={font} value={font}>{font.split(',')[0].replace(/"/g, '')}</option>)}
               </select>
             </div>
           </div>
         </div>
       </div>
-
       <div className="mt-8 flex justify-end items-center gap-4">
         {error && <p className="text-sm text-red-500">{error}</p>}
         {success && <p className="text-sm text-green-600">{success}</p>}
