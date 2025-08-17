@@ -2,7 +2,16 @@ import { NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
 
 const PUBLIC_FILE = /\.(.*)$/;
-const PROTECTED_ROUTES = ['/fonok/dashboard', '/fonok/trips', '/fonok/articles', '/fonok/settings', '/api/cms'];
+// ADDED change-password routes to this list
+const PROTECTED_ROUTES = [
+  '/fonok/dashboard',
+  '/fonok/trips',
+  '/fonok/articles',
+  '/fonok/settings',
+  '/fonok/change-password', // Page route
+  '/api/cms',
+  '/api/auth/change-password' // API route
+];
 
 export async function middleware(req) {
   const { pathname } = req.nextUrl;
@@ -28,7 +37,7 @@ export async function middleware(req) {
     const url = req.nextUrl.clone();
     url.pathname = '/fonok';
     // For API routes, return 401 Unauthorized
-    if (pathname.startsWith('/api/cms')) {
+    if (pathname.startsWith('/api/')) {
        return new NextResponse(JSON.stringify({ success: false, message: 'Authentication required' }), { status: 401, headers: { 'content-type': 'application/json' } });
     }
     // For page routes, redirect to login
@@ -43,7 +52,7 @@ export async function middleware(req) {
   } catch (err) {
     const url = req.nextUrl.clone();
     url.pathname = '/fonok';
-    if (pathname.startsWith('/api/cms')) {
+    if (pathname.startsWith('/api/')) {
        return new NextResponse(JSON.stringify({ success: false, message: 'Invalid or expired token' }), { status: 401, headers: { 'content-type': 'application/json' } });
     }
     // Clear the invalid cookie before redirecting
