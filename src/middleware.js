@@ -10,7 +10,8 @@ const PROTECTED_ROUTES = [
   '/fonok/settings',
   '/fonok/change-password', // Page route
   '/api/cms',
-  '/api/auth/change-password' // API route
+  '/api/auth/change-password', // API route
+  '/api/uploads' // Added uploads API route
 ];
 
 export async function middleware(req) {

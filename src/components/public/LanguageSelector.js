@@ -21,6 +21,18 @@ const Flag = ({ code }) => {
   return <img src={flagUrl} alt={`${code} flag`} className="w-5 h-5 rounded-sm object-cover" />;
 };
 
+const FlagGroup = ({ codes }) => (
+  <div className="flex items-center gap-1">
+    <Flag code={codes[0]} />
+    {codes.length > 1 && (
+      <>
+        <span className="text-gray-400">/</span>
+        <Flag code={codes[1]} />
+      </>
+    )}
+  </div>
+);
+
 export default function LanguageSelector() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
@@ -53,7 +65,7 @@ export default function LanguageSelector() {
         className="flex items-center justify-between w-64 px-3 py-2 text-gray-700 bg-white border rounded-md shadow-sm"
       >
         <div className="flex items-center gap-2 overflow-hidden">
-          {currentLang.flags.map(code => <Flag key={code} code={code} />)}
+          <FlagGroup codes={currentLang.flags} />
           <span className="text-sm font-medium truncate">{currentLang.native}</span>
         </div>
         <svg className={`w-5 h-5 transition-transform ${isOpen ? 'transform rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor">
@@ -68,11 +80,9 @@ export default function LanguageSelector() {
                 key={lang.code}
                 href={getLocalizedPath(lang.code)}
                 onClick={() => setIsOpen(false)}
-                className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
               >
-                <div className="flex items-center gap-2 w-8">
-                  {lang.flags.map(code => <Flag key={code} code={code} />)}
-                </div>
+                <FlagGroup codes={lang.flags} />
                 <span>{lang.native}</span>
               </Link>
             ))}
