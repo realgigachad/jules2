@@ -1,0 +1,77 @@
+{
+  "header": {
+    "home": "Startseite",
+    "pricing": "Preise",
+    "trips": "Kommende Reisen",
+    "articles": "Artikel",
+    "about": "Über uns",
+    "contact": "Kontakt"
+  },
+  "footer": {
+    "slogan": "Ihre Reise beginnt hier.",
+    "rights": "Alle Rechte vorbehalten."
+  },
+  "homePage": {
+    "heroTitle": "Ihre nächste Reise, mit der Bahn",
+    "heroSubtitle": "Entdecken Sie die Welt aus einer anderen Perspektive. Unvergessliche Landschaften, komfortable Reisen und zeitlose Erinnerungen erwarten Sie.",
+    "heroButton": "Kommende Reisen erkunden",
+    "journalTitle": "Aus unserem Reisetagebuch",
+    "readMore": "Weiterlesen",
+    "noArticles": "Noch keine Artikel zum Anzeigen vorhanden. Erstellen Sie einen im Admin-Bereich!"
+  },
+  "pricingPage": {
+    "title": "Unsere Preisphilosophie",
+    "body1": "Bei Train.Travel glauben wir an eine transparente und unkomplizierte Preisgestaltung. Die Kosten jeder Reise sind all-inclusive und decken Ihre Reise, die Unterkunft an Bord und kuratierte Erlebnisse ab. Wir bemühen uns, einen außergewöhnlichen Wert zu bieten und Luxus und Abenteuer in jedem Paket zu vereinen.",
+    "standardClass": "Standardklasse",
+    "standardDesc": "Bequeme Sitze und Panoramafenster, um die Aussicht zu genießen.",
+    "firstClass": "Erste Klasse",
+    "firstDesc": "Zusätzliche Beinfreiheit, kostenlose Erfrischungen und bevorzugter Service.",
+    "sleeperCabin": "Schlafkabine",
+    "sleeperDesc": "Private Kabinen für Nachtfahrten, die eine erholsame Nachtruhe gewährleisten.",
+    "body2": "Die Preise variieren je nach Reiseziel, Dauer und Reiseklasse. Detaillierte Preise für unsere kuratierten Reisen finden Sie auf unserer Seite „Kommende Reisen“.",
+    "button": "Kommende Reisen & Preise anzeigen"
+  },
+  "tripsPage": {
+    "title": "Kommende Reisen",
+    "subtitle": "Begeben Sie sich auf Ihr nächstes großes Abenteuer.",
+    "viewDetails": "Details anzeigen",
+    "noTrips": "Im Moment gibt es keine bevorstehenden Reisen. Bitte schauen Sie bald wieder vorbei!"
+  },
+  "articlesPage": {
+    "title": "Reisetagebuch",
+    "subtitle": "Geschichten und Einblicke von unseren Reisen."
+  },
+  "aboutPage": {
+    "title": "Über Train.Travel",
+    "subtitle": "Menschen mit Orten verbinden, eine malerische Route nach der anderen.",
+    "body1": "Train.Travel wurde aus einer einfachen Prämisse gegründet: Die Reise ist genauso wichtig wie das Ziel. In einer Welt, die von Punkt A nach Punkt B eilt, bieten wir die Möglichkeit, zu entschleunigen, die Schönheit der Landschaft zu entdecken und das Reisen auf eine sinnvollere und nachhaltigere Weise zu erleben.",
+    "body2": "Unser Team besteht aus leidenschaftlichen Reisenden, Logistikexperten und Eisenbahnenthusiasten, die unermüdlich daran arbeiten, einzigartige Zugreisen auf der ganzen Welt zu kuratieren. Von den majestätischen Bergen der Schweiz bis zu den weiten Landschaften der Transsibirischen Eisenbahn wählen wir Routen aus, die atemberaubende Ausblicke und unvergessliche Erlebnisse bieten.",
+    "missionTitle": "Unsere Mission",
+    "missionText": "Bequeme, malerische und umweltfreundliche Reiseerlebnisse zu bieten, die bleibende Erinnerungen schaffen und eine tiefere Wertschätzung für die Welt um uns herum fördern.",
+    "body3": "Wir arbeiten mit den besten Bahnbetreibern der Welt zusammen, um die höchsten Standards in Bezug auf Komfort, Sicherheit und Service zu gewährleisten. Ob Sie ein Solo-Abenteurer, ein Paar auf der Suche nach einem romantischen Kurzurlaub oder eine Familie auf der Suche nach einem einzigartigen Urlaub sind, wir haben eine Reise, die perfekt für Sie ist.",
+    "body4": "Vielen Dank, dass Sie Train.Travel in Betracht ziehen. Wir freuen uns darauf, Sie an Bord begrüßen zu dürfen."
+  },
+  "contactPage": {
+    "title": "Kontaktieren Sie uns",
+    "subtitle": "Wir würden uns freuen, von Ihnen zu hören. Wenden Sie sich bei Fragen an uns.",
+    "formTitle": "Senden Sie uns eine Nachricht",
+    "nameLabel": "Vollständiger Name",
+    "emailLabel": "E-Mail-Adresse",
+    "messageLabel": "Nachricht",
+    "submitButton": "Absenden",
+    "infoTitle": "Unsere Informationen",
+    "emailHeader": "Email",
+    "phoneHeader": "Telefon",
+    "addressHeader": "Adresse"
+  },
+  "tripDetailPage": {
+    "bookingTitle": "Buchen Sie Ihre Reise",
+    "inquireButton": "Jetzt anfragen",
+    "from": "Von",
+    "to": "Bis"
+  },
+  "articleDetailPage": {
+    "publishedOn": "Veröffentlicht am",
+    "by": "von"
+  }
+}

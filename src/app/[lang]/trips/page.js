@@ -17,18 +17,26 @@ export default async function TripsPage({ params: { lang } }) {
   const trips = await getTrips();
 
   const getPriceDisplay = (prices) => {
+    // Guard clause to prevent crash if prices object is missing on old data
+    if (!prices) {
+      return 'Price not set';
+    }
+
     // Handle English case first
     if (lang === 'en') {
-      return `€${prices.eur.toFixed(2)} / £${prices.gbp.toFixed(2)}`;
+      return `€${(prices.eur || 0).toFixed(2)} / £${(prices.gbp || 0).toFixed(2)}`;
     }
+
     // Then handle other languages
     const currencyCodeMap = { de: 'eur', sk: 'eur', cs: 'czk', hu: 'huf', ru: 'rub', uk: 'uah' };
     const currencyCode = currencyCodeMap[lang];
+
     // Safeguard in case of an unexpected language
     if (!currencyCode) {
-      return `€${prices.eur.toFixed(2)}`;
+      return `€${(prices.eur || 0).toFixed(2)}`;
     }
-    const price = prices[currencyCode];
+
+    const price = prices[currencyCode] || 0;
     return price.toLocaleString(lang, { style: 'currency', currency: currencyCode.toUpperCase(), minimumFractionDigits: 2 });
   };
 
@@ -59,7 +67,7 @@ export default async function TripsPage({ params: { lang } }) {
               <div className="mt-4 flex justify-between items-center pt-4 border-t">
                 <p className="text-lg font-bold text-cyan-600">{getPriceDisplay(trip.prices)}</p>
                 <span className="text-gray-600 text-sm">
-                  {new Date(trip.startDate).toLocaleDateString()}
+                  {trip.startDate ? new Date(trip.startDate).toLocaleDateString() : ''}
                 </span>
               </div>
             </div>

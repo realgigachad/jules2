@@ -1,0 +1,77 @@
+{
+  "header": {
+    "home": "Domů",
+    "pricing": "Ceny",
+    "trips": "Připravované cesty",
+    "articles": "Články",
+    "about": "O nás",
+    "contact": "Kontakt"
+  },
+  "footer": {
+    "slogan": "Vaše cesta začíná zde.",
+    "rights": "Všechna práva vyhrazena."
+  },
+  "homePage": {
+    "heroTitle": "Vaše další cesta, po železnici",
+    "heroSubtitle": "Objevte svět z jiné perspektivy. Čekají na vás nezapomenutelné krajiny, pohodlné cesty a věčné vzpomínky.",
+    "heroButton": "Prozkoumat připravované cesty",
+    "journalTitle": "Z našeho cestovního deníku",
+    "readMore": "Číst dále",
+    "noArticles": "Zatím žádné články k zobrazení. Vytvořte jeden v administračním panelu!"
+  },
+  "pricingPage": {
+    "title": "Naše cenová filozofie",
+    "body1": "V Train.Travel věříme v transparentní a jednoduché ceny. Cena každé cesty je all-inclusive a zahrnuje vaši cestu, ubytování na palubě a kurátorské zážitky. Snažíme se poskytovat výjimečnou hodnotu, spojující luxus a dobrodružství v každém balíčku.",
+    "standardClass": "Standardní třída",
+    "standardDesc": "Pohodlná sedadla a panoramatická okna pro vychutnání si výhledu.",
+    "firstClass": "První třída",
+    "firstDesc": "Více místa na nohy, bezplatné občerstvení a přednostní služby.",
+    "sleeperCabin": "Spací kabina",
+    "sleeperDesc": "Soukromé kabiny pro noční cesty, které zaručují klidný noční spánek.",
+    "body2": "Ceny se liší v závislosti na destinaci, délce a třídě cestování. Podrobné ceny našich kurátorských cest najdete na naší stránce „Připravované cesty“.",
+    "button": "Zobrazit připravované cesty a ceny"
+  },
+  "tripsPage": {
+    "title": "Připravované cesty",
+    "subtitle": "Vydejte se на své další velké dobrodružství.",
+    "viewDetails": "Zobrazit podrobnosti",
+    "noTrips": "Momentálně nejsou žádné připravované cesty. Zkuste to prosím později!"
+  },
+  "articlesPage": {
+    "title": "Cestovní deník",
+    "subtitle": "Příběhy a postřehy z našich cest."
+  },
+  "aboutPage": {
+    "title": "O Train.Travel",
+    "subtitle": "Spojování lidí s místy, jedna malebná trasa za druhou.",
+    "body1": "Train.Travel byl založen na jednoduchém předpokladu: cesta je stejně důležitá jako cíl. Ve světě, který spěchá z bodu A do bodu B, nabízíme možnost zpomalit, vidět krásu krajiny a zažít cestování smysluplnějším a udržitelnějším způsobem.",
+    "body2": "Náš tým tvoří vášniví cestovatelé, odborníci na logistiku a železniční nadšenci, kteří neúnavně pracují na vytváření jedinečných vlakových cest po celém světě. Od majestátních Alp ve Švýcarsku po rozsáhlé krajiny Transsibiřské magistrály vybíráme trasy, které nabízejí dechberoucí výhledy a nezapomenutelné zážitky.",
+    "missionTitle": "Naše mise",
+    "missionText": "Poskytovat pohodlné, malebné a ekologické cestovatelské zážitky, které vytvářejí trvalé vzpomínky a podporují hlubší ocenění světa kolem nás.",
+    "body3": "Spolupracujeme s nejlepšími železničními operátory na světě, abychom zajistili nejvyšší standardy pohodlí, bezpečnosti a služeb. Ať už jste sólo dobrodruh, pár hledající romantický útěk, nebo rodina hledající jedinečnou dovolenou, máme pro vás ideální cestu.",
+    "body4": "Děkujeme, že jste zvážili Train.Travel. Těšíme se na vás na palubě."
+  },
+  "contactPage": {
+    "title": "Kontaktujte nás",
+    "subtitle": "Rádi bychom od vás slyšeli. V případě jakýchkoli dotazů nás kontaktujte.",
+    "formTitle": "Pošlete nám zprávu",
+    "nameLabel": "Celé jméno",
+    "emailLabel": "E-mailová adresa",
+    "messageLabel": "Zpráva",
+    "submitButton": "Odeslat",
+    "infoTitle": "Naše informace",
+    "emailHeader": "Email",
+    "phoneHeader": "Telefon",
+    "addressHeader": "Adresa"
+  },
+  "tripDetailPage": {
+    "bookingTitle": "Zarezervujte si cestu",
+    "inquireButton": "Informujte se nyní",
+    "from": "Od",
+    "to": "Do"
+  },
+  "articleDetailPage": {
+    "publishedOn": "Zveřejněno dne",
+    "by": "od"
+  }
+}
