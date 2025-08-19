@@ -51,7 +51,7 @@ export default async function TripsPage({ params: { lang } }) {
             </div>
             <div className="p-6 flex flex-col">
               <div
-                className="text-text/80 line-clamp-4 flex-grow prose"
+                className="prose text-text/80 line-clamp-4 flex-grow"
                 dangerouslySetInnerHTML={{ __html: trip.description[lang] || trip.description.en }}
               />
               <div className="mt-4 flex justify-between items-center pt-4 border-t">
