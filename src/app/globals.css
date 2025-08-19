@@ -8,54 +8,59 @@
   }
   body {
     font-family: var(--font-body);
+    transition: background-color 0.5s ease;
   }
-  /* Style for Tiptap editor content */
   .prose {
     color: var(--color-text);
   }
-  .prose h1, .prose h2, .prose h3 {
-    color: var(--color-text);
+  .prose h1, .prose h2, .prose h3, .prose a, .prose strong {
+    color: inherit;
+  }
+  .prose a {
+    color: var(--color-primary);
   }
 }
 
+/* --- Theme: Default --- */
+/* (No extra styles needed) */
+
+
 /* --- Theme: Compact --- */
-.theme-compact .container {
-  max-width: 960px;
+/* This theme is primarily handled by swapping the Header component in the layout */
+.theme-compact main {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
-.theme-compact header {
-  /* In a real implementation, moving the header to the side would require significant
-     restructuring of the layout component's JSX, not just CSS.
-     For this task, I will simulate a 'compact' feel with simpler CSS changes. */
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 4px solid var(--color-primary);
-}
+
 
 /* --- Theme: Playful --- */
-.theme-playful header, .theme-playful footer {
-  border-radius: 0 0 20px 20px;
+.theme-playful a, .theme-playful button {
+  transition: transform 0.2s cubic-bezier(.34,1.56,.64,1);
 }
-.theme-playful footer {
-  border-radius: 20px 20px 0 0;
+.theme-playful a:hover, .theme-playful button:hover {
+  transform: scale(1.05);
 }
-.theme-playful a:hover {
-  transform: translateY(-2px);
-  transition: transform 0.2s ease-in-out;
-}
-/* Add a playful animation to cards */
 .theme-playful .group:hover {
-  animation: playful-shake 0.6s cubic-bezier(.36,.07,.19,.97) both;
+  animation: playful-float 0.8s ease-in-out infinite alternate;
 }
 .theme-playful header {
-  transition: all 0.3s cubic-bezier(.17,.67,.83,.67);
+  border-bottom-left-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05), 0 0 0 4px var(--color-primary);
 }
-.theme-playful header:hover {
-  transform: translateY(-2px) scale(1.01);
+.theme-playful footer {
+  border-top-left-radius: 2rem;
+  border-top-right-radius: 2rem;
 }
 
-@keyframes playful-shake {
-  10%, 90% { transform: translate3d(-1px, 0, 0) rotate(-1deg); }
-  20%, 80% { transform: translate3d(2px, 0, 0) rotate(2deg); }
-  30%, 50%, 70% { transform: translate3d(-3px, 0, 0) rotate(-2deg); }
-  40%, 60% { transform: translate3d(3px, 0, 0) rotate(2deg); }
+@keyframes playful-float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
 }
