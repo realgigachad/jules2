@@ -1,6 +1,6 @@
 import "../globals.css";
 import Header from "@/components/public/Header";
-import CompactHeader from "@/components/public/CompactHeader"; // Import new header
+import CompactHeader from "@/components/public/CompactHeader";
 import Footer from "@/components/public/Footer";
 import { getTranslations } from "@/lib/getTranslations";
 import dbConnect from "@/lib/dbConnect";
@@ -44,7 +44,7 @@ export default async function RootLayout({ children, params }) {
   const bodyFontUrl = `https://fonts.googleapis.com/css2?family=${style.bodyFont.split(',')[0].replace(/"/g, '').replace(/ /g, '+')}&display=swap`;
 
   const themeName = style.themeName.toLowerCase();
-  const mainContentClass = themeName === 'compact' ? 'ml-64' : ''; // Add margin for compact theme
+  const mainContentClass = themeName === 'compact' ? 'ml-64' : '';
 
   return (
     <html lang={params.lang}>

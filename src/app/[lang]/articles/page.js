@@ -32,7 +32,7 @@ export default async function ArticlesPage({ params: { lang } }) {
               <p className="text-sm text-gray-500">{new Date(article.createdAt).toLocaleDateString()}</p>
               <h3 className="text-xl font-semibold my-2">{article.title[lang] || article.title.en}</h3>
               <div
-                className="text-gray-600 line-clamp-4 flex-grow prose"
+                className="prose text-gray-600 line-clamp-4 flex-grow"
                 dangerouslySetInnerHTML={{ __html: article.content[lang] || article.content.en }}
               />
               <div className="mt-4">

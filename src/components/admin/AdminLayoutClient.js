@@ -2,13 +2,13 @@
 
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
-// import "../app/globals.css"; // This was incorrect and is removed. The root layout handles it.
+import "../../app/globals.css";
 import { useAdminTranslations } from './AdminTranslationsProvider';
 
 export default function AdminLayoutClient({ children }) {
   const router = useRouter();
   const pathname = usePathname();
-  const { t, setLang } = useAdminTranslations();
+  const { t, setLang, lang } = useAdminTranslations();
 
   const handleLogout = async () => {
     try {
@@ -32,15 +32,23 @@ export default function AdminLayoutClient({ children }) {
   }
 
   const AdminLangSelector = () => (
-    <select onChange={(e) => setLang(e.target.value)} defaultValue="en" className="bg-gray-700 text-white p-1 rounded w-full">
-      <option value="en">English</option>
-      <option value="de">Deutsch</option>
-      <option value="hu">Magyar</option>
-      <option value="ru">Русский</option>
-      <option value="sk">Slovenčina</option>
-      <option value="cs">Čeština</option>
-      <option value="uk">Українська</option>
-    </select>
+    <div className="text-white">
+      <label htmlFor="admin-lang" className="text-xs">UI Language</label>
+      <select
+        id="admin-lang"
+        onChange={(e) => setLang(e.target.value)}
+        value={lang}
+        className="bg-gray-700 text-white p-1 rounded w-full mt-1 text-sm"
+      >
+        <option value="en">English</option>
+        <option value="de">Deutsch</option>
+        <option value="hu">Magyar</option>
+        <option value="ru">Русский</option>
+        <option value="sk">Slovenčina</option>
+        <option value="cs">Čeština</option>
+        <option value="uk">Українська</option>
+      </select>
+    </div>
   );
 
   return (
