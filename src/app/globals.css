@@ -2,13 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-primary: #0891b2;
+  --color-background: #ffffff;
+  --color-text: #1f2937;
+  --font-header: 'Georgia', serif;
+  --font-body: 'Arial', sans-serif;
+}
+
+[data-theme="dark"] {
+  --color-primary: #22d3ee;
+  --color-background: #1f2937;
+  --color-text: #e5e7eb;
+}
+
+[data-theme="mint"] {
+  --color-primary: #10b981;
+  --color-background: #f0fdf4;
+  --color-text: #1f2937;
+}
+
+[data-theme="plum"] {
+  --color-primary: #a78bfa;
+  --color-background: #f5f3ff;
+  --color-text: #1f2937;
+}
+
 @layer base {
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-header);
   }
   body {
     font-family: var(--font-body);
-    transition: background-color 0.5s ease;
+    background-color: var(--color-background);
+    color: var(--color-text);
+    transition: background-color 0.5s ease, color 0.5s ease;
   }
   .prose {
     color: var(--color-text);
@@ -18,49 +46,5 @@
   }
   .prose a {
     color: var(--color-primary);
-  }
-}
-
-/* --- Theme: Default --- */
-/* (No extra styles needed) */
-
-
-/* --- Theme: Compact --- */
-/* This theme is primarily handled by swapping the Header component in the layout */
-.theme-compact main {
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-}
-
-
-/* --- Theme: Playful --- */
-.theme-playful a, .theme-playful button {
-  transition: transform 0.2s cubic-bezier(.34,1.56,.64,1);
-}
-.theme-playful a:hover, .theme-playful button:hover {
-  transform: scale(1.05);
-}
-.theme-playful .group:hover {
-  animation: playful-float 0.8s ease-in-out infinite alternate;
-}
-.theme-playful header {
-  border-bottom-left-radius: 2rem;
-  border-bottom-right-radius: 2rem;
-  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05), 0 0 0 4px var(--color-primary);
-}
-.theme-playful footer {
-  border-top-left-radius: 2rem;
-  border-top-right-radius: 2rem;
-}
-
-@keyframes playful-float {
-  0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
-  100% {
-    transform: translateY(0px);
   }
 }
