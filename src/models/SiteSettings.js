@@ -40,6 +40,10 @@ const SiteSettingsSchema = new mongoose.Schema({
       headerFont: 'Georgia, serif',
       bodyFont: 'Arial, sans-serif',
     })
+  },
+  appearance: {
+    type: String,
+    default: 'default',
   }
 });
 

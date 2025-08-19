@@ -1,14 +1,14 @@
 'use client';
 
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import "../../app/globals.css";
 import { useAdminTranslations } from './AdminTranslationsProvider';
+import { useAppearance } from './AppearanceSettings';
 
 export default function AdminLayoutClient({ children }) {
-  const router = useRouter();
   const pathname = usePathname();
   const { t, setLang, lang } = useAdminTranslations();
+  const { appearance, isLoading } = useAppearance();
 
   const handleLogout = async () => {
     try {
@@ -23,7 +23,7 @@ export default function AdminLayoutClient({ children }) {
     return <>{children}</>;
   }
 
-  if (!t) {
+  if (isLoading || !t) {
     return (
       <div className="flex h-screen items-center justify-center">
         <p>Loading Admin Interface...</p>
@@ -31,8 +31,38 @@ export default function AdminLayoutClient({ children }) {
     );
   }
 
+  const navLinks = [
+    { href: "/fonok/dashboard", label: t.layout.dashboard },
+    { href: "/fonok/trips", label: t.layout.trips },
+    { href: "/fonok/articles", label: t.layout.articles },
+    { href: "/fonok/settings", label: t.layout.settings },
+    { href: "/fonok/styling", label: t.layout.styling },
+    { href: "/fonok/password", label: t.layout.changePassword },
+  ];
+
+  const mainContent = <main className="flex-1 p-8 overflow-y-auto">{children}</main>;
+
+  const layoutClasses = {
+    default: "flex h-screen bg-gray-100 text-black",
+    compact: "flex flex-col h-screen bg-gray-50 text-black",
+    playful: "flex h-screen bg-yellow-50 text-black overflow-hidden",
+  };
+
+  const asideClasses = {
+    default: "w-64 bg-gray-800 text-white flex flex-col",
+    compact: "hidden", // Sidebar is hidden in compact view
+    playful: "w-72 bg-indigo-800 text-white flex flex-col transform -rotate-3 -ml-4",
+  };
+
+  const navLinkClasses = (href) => {
+    const base = "block px-4 py-2 rounded";
+    const hover = "hover:bg-gray-700";
+    const active = pathname.startsWith(href) ? "bg-primary" : "";
+    return `${base} ${hover} ${active}`;
+  };
+
   const AdminLangSelector = () => (
-    <div className="text-white">
+    <div className={appearance === 'playful' ? "text-white" : "text-white"}>
       <label htmlFor="admin-lang" className="text-xs">UI Language</label>
       <select
         id="admin-lang"
@@ -51,28 +81,41 @@ export default function AdminLayoutClient({ children }) {
     </div>
   );
 
+  const Sidebar = () => (
+    <aside className={asideClasses[appearance]}>
+      <div className={`p-4 text-xl font-bold border-b ${appearance === 'playful' ? 'border-indigo-700' : 'border-gray-700'}`}>{t.layout.title}</div>
+      <nav className="flex-grow p-4 space-y-2">
+        {navLinks.map(link => (
+          <Link key={link.href} href={link.href} className={navLinkClasses(link.href)}>{link.label}</Link>
+        ))}
+      </nav>
+      <div className={`p-4 border-t ${appearance === 'playful' ? 'border-indigo-700' : 'border-gray-700'}`}>
+        <AdminLangSelector />
+      </div>
+      <div className={`p-4 border-t ${appearance === 'playful' ? 'border-indigo-700' : 'border-gray-700'}`}>
+        <button onClick={handleLogout} className="w-full px-4 py-2 text-left rounded hover:bg-gray-700">{t.layout.logout}</button>
+      </div>
+    </aside>
+  );
+
+  const Topbar = () => (
+    <header className="bg-white shadow-md p-4 flex justify-between items-center">
+      <h1 className="text-xl font-bold">{t.layout.title}</h1>
+      <nav className="flex gap-4 items-center">
+        {navLinks.map(link => (
+          <Link key={link.href} href={link.href} className={`text-sm ${pathname.startsWith(link.href) ? 'text-primary font-bold' : 'text-gray-600'}`}>{link.label}</Link>
+        ))}
+        <AdminLangSelector />
+        <button onClick={handleLogout} className="text-sm text-gray-600 hover:text-primary">{t.layout.logout}</button>
+      </nav>
+    </header>
+  );
+
   return (
-    <div className="flex h-screen bg-gray-100 text-black">
-      <aside className="w-64 bg-gray-800 text-white flex flex-col">
-        <div className="p-4 text-xl font-bold border-b border-gray-700">{t.layout.title}</div>
-        <nav className="flex-grow p-4 space-y-2">
-          <Link href="/fonok/dashboard" className={`block px-4 py-2 rounded hover:bg-gray-700 ${pathname === '/fonok/dashboard' ? 'bg-primary' : ''}`}>{t.layout.dashboard}</Link>
-          <Link href="/fonok/trips" className={`block px-4 py-2 rounded hover:bg-gray-700 ${pathname.startsWith('/fonok/trips') ? 'bg-primary' : ''}`}>{t.layout.trips}</Link>
-          <Link href="/fonok/articles" className={`block px-4 py-2 rounded hover:bg-gray-700 ${pathname.startsWith('/fonok/articles') ? 'bg-primary' : ''}`}>{t.layout.articles}</Link>
-          <Link href="/fonok/settings" className={`block px-4 py-2 rounded hover:bg-gray-700 ${pathname === '/fonok/settings' ? 'bg-primary' : ''}`}>{t.layout.settings}</Link>
-          <Link href="/fonok/styling" className={`block px-4 py-2 rounded hover:bg-gray-700 ${pathname === '/fonok/styling' ? 'bg-primary' : ''}`}>{t.layout.styling}</Link>
-          <Link href="/fonok/password" className={`block px-4 py-2 rounded hover:bg-gray-700 ${pathname === '/fonok/password' ? 'bg-primary' : ''}`}>{t.layout.changePassword}</Link>
-        </nav>
-        <div className="p-4 border-t border-gray-700">
-          <AdminLangSelector />
-        </div>
-        <div className="p-4 border-t border-gray-700">
-          <button onClick={handleLogout} className="w-full px-4 py-2 text-left rounded hover:bg-gray-700">{t.layout.logout}</button>
-        </div>
-      </aside>
-      <main className="flex-1 p-8 overflow-y-auto">
-        {children}
-      </main>
+    <div className={layoutClasses[appearance]}>
+      {appearance !== 'compact' && <Sidebar />}
+      {appearance === 'compact' && <Topbar />}
+      {mainContent}
     </div>
   );
 }
