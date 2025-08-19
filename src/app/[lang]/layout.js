@@ -63,7 +63,7 @@ export default async function RootLayout({ children, params }) {
           }
         `}} />
       </head>
-      <body className={`flex flex-col min-h-screen bg-background text-text font-body theme-${themeName}`}>
+      <body className={`bg-background text-text font-body theme-${themeName}`}>
         {themeName === 'compact'
           ? <CompactHeader lang={params.lang} t={t.header} />
           : <Header lang={params.lang} t={t.header} />
@@ -72,6 +72,7 @@ export default async function RootLayout({ children, params }) {
           <main className="flex-grow container mx-auto px-6 py-12">
             {children}
           </main>
+          {/* Footer is part of the main content div now, so it's not overlapped by the compact header */}
           <Footer t={t.footer} />
         </div>
       </body>
