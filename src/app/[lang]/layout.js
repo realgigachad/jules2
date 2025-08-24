@@ -3,6 +3,7 @@ import { getTranslations } from "@/lib/getTranslations";
 import dbConnect from "@/lib/dbConnect";
 import SiteSettings from "@/models/SiteSettings";
 import PublicLayoutClient from "@/components/public/PublicLayoutClient";
+import { unstable_noStore as noStore } from 'next/cache';
 
 export const metadata = {
   title: "Train.Travel - Your Journey Begins Here",
@@ -10,6 +11,7 @@ export const metadata = {
 };
 
 async function getStyleSettings() {
+  noStore();
   try {
     await dbConnect();
     const settings = await SiteSettings.findOne({}).lean();
