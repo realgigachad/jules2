@@ -1,22 +1,30 @@
 import { NextResponse } from 'next/server';
-import { getToken } from 'next-auth/jwt';
-import { headers } from 'next/headers';
+import jwt from 'jsonwebtoken';
+import { cookies } from 'next/headers';
 
-const secret = process.env.NEXTAUTH_SECRET;
+const secret = process.env.JWT_SECRET;
 
 export async function getSession() {
-  const token = await getToken({
-    req: {
-      headers: Object.fromEntries(headers()),
-    },
-    secret,
-    raw: true
-  });
-  return token;
+  const cookieStore = cookies();
+  const token = cookieStore.get('token')?.value;
+
+  if (!token) {
+    return null;
+  }
+
+  try {
+    const decoded = jwt.verify(token, secret);
+    return decoded;
+  } catch (error) {
+    // This will catch invalid/expired tokens
+    console.error('Session verification failed:', error.message);
+    return null;
+  }
 }
 
 export function unauthorizedResponse() {
-  return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+  const responseBody = { success: false, message: 'Invalid or expired token' };
+  return NextResponse.json(responseBody, { status: 401 });
 }
 
 export function failedResponse(error, message = 'An unknown error occurred.', status = 500) {
