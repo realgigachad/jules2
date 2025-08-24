@@ -8,42 +8,53 @@ export function useAppearance() {
   return useContext(AppearanceContext);
 }
 
-export function AppearanceProvider({ children, initialAppearance }) {
-  const [appearance, setAppearance] = useState(initialAppearance || 'default');
-  // If we have an initial appearance, we are not loading. Otherwise, we are.
-  const [isLoading, setIsLoading] = useState(!initialAppearance);
+export function AppearanceProvider({ children, initialPublicAppearance }) {
+  const [adminAppearance, setAdminAppearance] = useState('default');
+  // Initialize public appearance from server prop if available, otherwise use default
+  const [publicAppearance, setPublicAppearance] = useState(initialPublicAppearance || 'default');
+
+  // Loading is only for the admin panel's initial fetch. Public site gets data from server.
+  const [isLoading, setIsLoading] = useState(!initialPublicAppearance);
 
   useEffect(() => {
-    const fetchAppearance = async () => {
-      try {
-        const res = await fetch('/api/cms/appearance');
-        const data = await res.json();
-        if (data.success && data.data && data.data.appearance) {
-          setAppearance(data.data.appearance);
+    // This effect now only runs in the admin panel context (where initialPublicAppearance is not passed)
+    // to fetch the initial state for both themes.
+    if (!initialPublicAppearance) {
+      const fetchAllAppearances = async () => {
+        setIsLoading(true);
+        try {
+          const res = await fetch('/api/cms/appearance');
+          const data = await res.json();
+          if (data.success && data.data) {
+            setAdminAppearance(data.data.adminAppearance || 'default');
+            setPublicAppearance(data.data.publicAppearance || 'default');
+          }
+        } catch (error) {
+          console.error('Failed to load appearance settings:', error);
+        } finally {
+          setIsLoading(false);
         }
-      } catch (error) {
-        console.error('Failed to load appearance settings:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    // Only fetch if we didn't get an initial value (i.e., in the admin panel)
-    if (!initialAppearance) {
-      fetchAppearance();
+      };
+      fetchAllAppearances();
     }
-  }, [initialAppearance]);
+  }, [initialPublicAppearance]);
 
-  const saveAppearance = async (newAppearance) => {
+  // The save function now takes theme and target, and updates state based on API response
+  const saveAppearance = async (theme, target) => {
     try {
       const res = await fetch('/api/cms/appearance', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ appearance: newAppearance }),
+        body: JSON.stringify({ theme, target }),
       });
 
       if (res.ok) {
-        setAppearance(newAppearance);
+        const data = await res.json();
+        if (data.success && data.data) {
+          // Update local state to match the new persisted state
+          setAdminAppearance(data.data.adminAppearance);
+          setPublicAppearance(data.data.publicAppearance);
+        }
         return true;
       } else {
         console.error('Failed to save appearance settings:', await res.text());
@@ -56,7 +67,8 @@ export function AppearanceProvider({ children, initialAppearance }) {
   };
 
   const value = {
-    appearance,
+    adminAppearance,
+    publicAppearance,
     setAppearance: saveAppearance,
     isLoading,
   };

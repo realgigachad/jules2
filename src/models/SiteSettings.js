@@ -41,7 +41,11 @@ const SiteSettingsSchema = new mongoose.Schema({
       bodyFont: 'Arial, sans-serif',
     })
   },
-  appearance: {
+  adminAppearance: {
+    type: String,
+    default: 'default',
+  },
+  publicAppearance: {
     type: String,
     default: 'default',
   }

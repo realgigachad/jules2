@@ -9,11 +9,12 @@ import SinglePage from "@/components/public/SinglePage";
 // This new component will be the consumer of the context
 // and can safely call the useAppearance hook.
 function AppBody({ lang, t, trips, articles, children }) {
-  const { appearance, isLoading } = useAppearance();
+  const { publicAppearance, isLoading } = useAppearance();
+  const appearance = publicAppearance; // Use public apearance for the public site
 
   // We can show a loading state or a default state while the theme is being determined client-side
   if (isLoading) {
-    // Render a default, non-themed layout to prevent layout shifts
+    // This case should ideally not be hit for the public site anymore since we pass initial props
     return (
       <body className="bg-background text-text font-body theme-default">
         <Header lang={lang} t={t.header} />
@@ -39,7 +40,6 @@ function AppBody({ lang, t, trips, articles, children }) {
     if (appearance === 'playful') {
       return <PlayfulHeader lang={lang} t={t.header} />;
     }
-    // The default header is no longer theme-aware
     return <Header lang={lang} t={t.header} />;
   };
 
@@ -78,7 +78,7 @@ export default function PublicLayoutClient({ lang, t, style, initialAppearance, 
           }
         `}} />
       </head>
-      <AppearanceProvider initialAppearance={initialAppearance}>
+      <AppearanceProvider initialPublicAppearance={initialAppearance}>
         <AppBody lang={lang} t={t} trips={trips} articles={articles}>
           {children}
         </AppBody>

@@ -8,7 +8,8 @@ import { useAppearance } from './AppearanceSettings';
 export default function AdminLayoutClient({ children }) {
   const pathname = usePathname();
   const { t, setLang, lang } = useAdminTranslations();
-  const { appearance, isLoading } = useAppearance();
+  const { adminAppearance, isLoading } = useAppearance();
+  const appearance = adminAppearance; // for minimal changes below
 
   const handleLogout = async () => {
     try {
