@@ -55,9 +55,9 @@ export default function AdminAppearanceEditor() {
               </div>
               <div className="p-2 bg-gray-100 rounded-b-md">
                 <p className="text-xs text-center mb-2">Public Site</p>
-                <img src={`https://placehold.co/600x400/EEE/31343C?text=${theme.name}+Public`} alt={`${theme.name} Public Preview`} className="w-full rounded shadow" />
+                <img src={`/img/theme-previews/public-${theme.id}.png`} alt={`${theme.name} Public Preview`} className="w-full rounded shadow" />
                 <p className="text-xs text-center mt-4 mb-2">Admin Panel</p>
-                <img src={`https://placehold.co/600x400/31343C/EEE?text=${theme.name}+Admin`} alt={`${theme.name} Admin Preview`} className="w-full rounded shadow" />
+                <img src={`/img/theme-previews/admin-${theme.id}.png`} alt={`${theme.name} Admin Preview`} className="w-full rounded shadow" />
               </div>
             </div>
           ))}
