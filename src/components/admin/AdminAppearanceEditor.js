@@ -3,33 +3,58 @@
 import { useState, useEffect } from 'react';
 import { useAppearance } from '@/components/admin/AppearanceSettings';
 
-// Helper function to create a base64 encoded SVG placeholder
-const createSvgPlaceholder = (text, bgColor, textColor) => {
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400"><rect width="100%" height="100%" fill="${bgColor}"/><text x="50%" y="50%" font-family="Arial, sans-serif" font-size="30" dy=".3em" fill="${textColor}" text-anchor="middle">${text}</text></svg>`;
-  // Use Buffer for universal base64 encoding (works in Node.js and browser)
-  const base64 = Buffer.from(svg).toString('base64');
-  return `data:image/svg+xml;base64,${base64}`;
+// --- SVG Illustration Generators ---
+
+const createAdminSvg = (theme) => {
+  let header, mainContent;
+  const bgColor = '#1f2937'; // Admin background
+  const primaryColor = '#4f46e5'; // A generic primary for previews
+  const textColor = '#FFFFFF';
+
+  switch (theme) {
+    case 'playful':
+      header = `<rect x="5" y="15" width="90" height="370" fill="${primaryColor}" rx="8" transform="rotate(-2 50 185)" />`;
+      mainContent = `<rect x="110" y="15" width="475" height="370" fill="#E5E7EB" rx="8" />`;
+      break;
+    case 'single-page': // In admin, single-page (formerly compact) has no sidebar
+    default: // Default also has a sidebar
+      header = `<rect x="15" y="15" width="120" height="370" fill="${bgColor}" rx="8" />`;
+      mainContent = `<rect x="150" y="15" width="435" height="370" fill="#E5E7EB" rx="8" />`;
+      break;
+  }
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400"><rect width="100%" height="100%" fill="#F3F4F6"/><g>${header}${mainContent}</g><text x="50%" y="90%" font-family="Arial" font-size="20" fill="#6B7280" text-anchor="middle">Admin Panel</text></svg>`;
+  return `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`;
 };
 
+const createPublicSvg = (theme) => {
+  let header, mainContent;
+  const bgColor = '#FFFFFF';
+  const primaryColor = '#0891b2';
+  const textColor = '#374151';
+
+  switch (theme) {
+    case 'playful':
+       header = `<rect x="5" y="15" width="90" height="370" fill="${primaryColor}" rx="8" transform="rotate(-2 50 185)" />`;
+       mainContent = `<rect x="110" y="15" width="475" height="370" fill="${bgColor}" rx="8" />`;
+       break;
+    case 'single-page':
+      header = `<rect x="15" y="15" width="570" height="50" fill="${bgColor}" rx="8" />`;
+      mainContent = `<g><rect x="15" y="80" width="570" height="80" fill="#F3F4F6" rx="8" /><rect x="15" y="175" width="570" height="80" fill="#F3F4F6" rx="8" /><rect x="15" y="270" width="570" height="80" fill="#F3F4F6" rx="8" /></g>`;
+      break;
+    default:
+      header = `<rect x="15" y="15" width="570" height="50" fill="${bgColor}" rx="8" />`;
+      mainContent = `<rect x="15" y="80" width="570" height="305" fill="#F3F4F6" rx="8" />`;
+      break;
+  }
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400"><rect width="100%" height="100%" fill="#E5E7EB"/><g>${header}${mainContent}</g><text x="50%" y="90%" font-family="Arial" font-size="20" fill="#6B7280" text-anchor="middle">Public Site</text></svg>`;
+  return `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`;
+};
+
+
 const themes = [
-  {
-    id: 'default',
-    name: 'Default',
-    publicPreview: createSvgPlaceholder('Default Public', '#EEE', '#31343C'),
-    adminPreview: createSvgPlaceholder('Default Admin', '#31343C', '#EEE'),
-  },
-  {
-    id: 'single-page',
-    name: 'Single Page',
-    publicPreview: createSvgPlaceholder('Single Page Public', '#EEE', '#31343C'),
-    adminPreview: createSvgPlaceholder('Single Page Admin', '#31343C', '#EEE'),
-  },
-  {
-    id: 'playful',
-    name: 'Playful',
-    publicPreview: createSvgPlaceholder('Playful Public', '#fffef5', '#4f46e5'),
-    adminPreview: createSvgPlaceholder('Playful Admin', '#4f46e5', '#fff'),
-  },
+  { id: 'default', name: 'Default' },
+  { id: 'single-page', name: 'Single Page' },
+  { id: 'playful', name: 'Playful' },
 ];
 
 export default function AdminAppearanceEditor() {
@@ -54,7 +79,7 @@ export default function AdminAppearanceEditor() {
       const themeName = themes.find(t => t.id === selectedTheme)?.name || selectedTheme;
       setMessage(`Theme set to '${themeName}' for '${target}' target.`);
     } else {
-      setMessage(`Error: Failed to set theme. Please check server logs or browser console.`);
+      setMessage(`Error: Failed to save theme. Please check server logs or browser console.`);
     }
     setIsSaving(false);
     setTimeout(() => setMessage(''), 5000);
@@ -62,7 +87,8 @@ export default function AdminAppearanceEditor() {
 
   return (
     <div className="mt-8">
-      <h2 className="text-xl font-bold mb-4">Themes</h2>
+      <h1 className="text-2xl font-bold mb-6">Appearance</h1>
+      <h2 className="text-xl font-semibold mb-4">Global Themes</h2>
       <div className="space-y-6">
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -75,11 +101,9 @@ export default function AdminAppearanceEditor() {
               <div className="bg-gray-200 p-4 rounded-t-md">
                 <h3 className="font-bold text-lg text-center">{theme.name}</h3>
               </div>
-              <div className="p-2 bg-gray-100 rounded-b-md space-y-2">
-                <p className="text-xs text-center">Public Site Preview</p>
-                <img src={theme.publicPreview} alt={`${theme.name} Public Preview`} className="w-full rounded shadow" />
-                <p className="text-xs text-center mt-2">Admin Panel Preview</p>
-                <img src={theme.adminPreview} alt={`${theme.name} Admin Preview`} className="w-full rounded shadow" />
+              <div className="p-4 bg-gray-100 rounded-b-md space-y-4">
+                <img src={createPublicSvg(theme.id)} alt={`${theme.name} Public Preview`} className="w-full rounded shadow-inner" />
+                <img src={createAdminSvg(theme.id)} alt={`${theme.name} Admin Preview`} className="w-full rounded shadow-inner" />
               </div>
             </div>
           ))}
