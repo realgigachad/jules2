@@ -48,3 +48,19 @@
     color: var(--color-primary);
   }
 }
+
+/* --- Public Site Themes --- */
+
+/* --- Theme: Compact --- */
+.theme-compact main {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+/* --- Theme: Playful --- */
+.theme-playful a, .theme-playful button {
+  transition: transform 0.2s cubic-bezier(.34,1.56,.64,1);
+}
+.theme-playful a:hover, .theme-playful button:hover {
+  transform: scale(1.05);
+}
