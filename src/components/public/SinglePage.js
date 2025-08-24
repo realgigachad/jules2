@@ -46,7 +46,7 @@ function PricingSection({ t }) {
   );
 }
 
-function TripsSection({ trips, isLoading, lang, t }) {
+function TripsSection({ trips, lang, t }) {
   const getPriceDisplay = (prices) => {
     if (!prices) return 'Price not set';
     if (lang === 'en') {
@@ -63,7 +63,7 @@ function TripsSection({ trips, isLoading, lang, t }) {
     <section id="trips" className="min-h-screen py-20 bg-gray-50">
       <div className="container mx-auto px-6">
         <h2 className="text-4xl font-bold text-center mb-12">{t.tripsPage.title}</h2>
-        {isLoading ? <LoadingSpinner /> : (
+        {(trips && trips.length > 0) ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {trips.map(trip => (
               <div key={trip._id} className="block bg-white rounded-lg shadow-lg overflow-hidden group">
@@ -85,22 +85,21 @@ function TripsSection({ trips, isLoading, lang, t }) {
                 </div>
               </div>
             ))}
-            {trips.length === 0 && (
-              <p className="text-center text-text/70 col-span-full">{t.tripsPage.noTrips}</p>
-            )}
           </div>
+        ) : (
+          <p className="text-center text-text/70 col-span-full">{t.tripsPage.noTrips}</p>
         )}
       </div>
     </section>
   );
 }
 
-function ArticlesSection({ articles, isLoading, lang, t }) {
+function ArticlesSection({ articles, lang, t }) {
   return (
     <section id="articles" className="min-h-screen py-20 bg-white">
       <div className="container mx-auto px-6">
         <h2 className="text-4xl font-bold text-center mb-12">{t.articlesPage.title}</h2>
-        {isLoading ? <LoadingSpinner /> : (
+        {(articles && articles.length > 0) ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {articles.map(article => (
               <div key={article._id} className="bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 flex flex-col">
@@ -111,14 +110,12 @@ function ArticlesSection({ articles, isLoading, lang, t }) {
                     className="prose text-gray-600 line-clamp-4 flex-grow"
                     dangerouslySetInnerHTML={{ __html: article.content[lang] || article.content.en }}
                   />
-                  {/* The "Read More" link doesn't make sense in a single-page context, so it's omitted. */}
                 </div>
               </div>
             ))}
-            {articles.length === 0 && (
-              <p className="text-center text-gray-500 col-span-full">{t.homePage.noArticles}</p>
-            )}
           </div>
+        ) : (
+          <p className="text-center text-gray-500 col-span-full">{t.homePage.noArticles}</p>
         )}
       </div>
     </section>
@@ -212,50 +209,14 @@ function SinglePageHeader({ t }) {
   );
 }
 
-export default function SinglePage({ lang, t }) {
-  const [trips, setTrips] = useState([]);
-  const [articles, setArticles] = useState([]);
-  const [tripsLoading, setTripsLoading] = useState(true);
-  const [articlesLoading, setArticlesLoading] = useState(true);
-
-  useEffect(() => {
-    async function getTrips() {
-      setTripsLoading(true);
-      try {
-        const res = await fetch(`/api/public/trips`);
-        if (!res.ok) throw new Error('Failed to fetch trips');
-        const data = await res.json();
-        setTrips(data.data || []);
-      } catch (error) {
-        console.error("Error fetching trips for single page:", error);
-      } finally {
-        setTripsLoading(false);
-      }
-    }
-    async function getArticles() {
-      setArticlesLoading(true);
-      try {
-        const res = await fetch(`/api/public/articles`);
-        if (!res.ok) throw new Error('Failed to fetch articles');
-        const data = await res.json();
-        setArticles(data.data || []);
-      } catch (error) {
-        console.error("Error fetching articles for single page:", error);
-      } finally {
-        setArticlesLoading(false);
-      }
-    }
-    getTrips();
-    getArticles();
-  }, []);
-
+export default function SinglePage({ lang, t, trips, articles }) {
   return (
     <div className="bg-white">
       <SinglePageHeader t={t} />
       <HeroSection />
       <AnimatedSection><PricingSection t={t} /></AnimatedSection>
-      <AnimatedSection><TripsSection trips={trips} isLoading={tripsLoading} lang={lang} t={t} /></AnimatedSection>
-      <AnimatedSection><ArticlesSection articles={articles} isLoading={articlesLoading} lang={lang} t={t} /></AnimatedSection>
+      <AnimatedSection><TripsSection trips={trips} lang={lang} t={t} /></AnimatedSection>
+      <AnimatedSection><ArticlesSection articles={articles} lang={lang} t={t} /></AnimatedSection>
       <AnimatedSection><AboutSection t={t} /></AnimatedSection>
       <AnimatedSection><ContactSection t={t} /></AnimatedSection>
     </div>

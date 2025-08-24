@@ -2,6 +2,8 @@ import "../globals.css";
 import { getTranslations } from "@/lib/getTranslations";
 import dbConnect from "@/lib/dbConnect";
 import SiteSettings from "@/models/SiteSettings";
+import Trip from "@/models/Trip";
+import Article from "@/models/Article";
 import PublicLayoutClient from "@/components/public/PublicLayoutClient";
 import { unstable_noStore as noStore } from 'next/cache';
 
@@ -44,9 +46,39 @@ async function getStyleSettings() {
   }
 }
 
+async function getTrips() {
+  noStore();
+  try {
+    const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
+    const res = await fetch(`${baseUrl}/api/public/trips`, { cache: 'no-store' });
+    if (!res.ok) throw new Error('Failed to fetch trips');
+    const data = await res.json();
+    return data.data || [];
+  } catch (error) {
+    console.error("Error fetching trips in root layout:", error);
+    return [];
+  }
+}
+
+async function getArticles() {
+  noStore();
+  try {
+    const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
+    const res = await fetch(`${baseUrl}/api/public/articles`, { cache: 'no-store' });
+    if (!res.ok) throw new Error('Failed to fetch articles');
+    const data = await res.json();
+    return data.data || [];
+  } catch (error) {
+    console.error("Error fetching articles in root layout:", error);
+    return [];
+  }
+}
+
 export default async function RootLayout({ children, params }) {
   const t = await getTranslations(params.lang);
   const settings = await getStyleSettings();
+  const trips = await getTrips();
+  const articles = await getArticles();
 
   return (
     <PublicLayoutClient
@@ -54,6 +86,8 @@ export default async function RootLayout({ children, params }) {
       t={t}
       style={settings.style}
       initialAppearance={settings.appearance}
+      trips={trips}
+      articles={articles}
     >
       {children}
     </PublicLayoutClient>
