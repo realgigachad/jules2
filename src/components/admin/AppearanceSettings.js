@@ -44,12 +44,14 @@ export function AppearanceProvider({ children, initialAppearance }) {
 
       if (res.ok) {
         setAppearance(newAppearance);
+        return true;
       } else {
         console.error('Failed to save appearance settings:', await res.text());
-        // Optionally: add state to show an error message to the user
+        return false;
       }
     } catch (error) {
       console.error('Failed to save appearance settings:', error);
+      return false;
     }
   };
 
