@@ -47,7 +47,12 @@ export default async function RootLayout({ children, params }) {
   const settings = await getStyleSettings();
 
   return (
-    <PublicLayoutClient lang={params.lang} t={t} style={settings.style}>
+    <PublicLayoutClient
+      lang={params.lang}
+      t={t}
+      style={settings.style}
+      initialAppearance={settings.appearance}
+    >
       {children}
     </PublicLayoutClient>
   );

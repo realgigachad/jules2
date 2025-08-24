@@ -43,7 +43,7 @@ function AppBody({ lang, t, children }) {
 }
 
 
-export default function PublicLayoutClient({ lang, t, style, children }) {
+export default function PublicLayoutClient({ lang, t, style, initialAppearance, children }) {
   const headerFontUrl = `https://fonts.googleapis.com/css2?family=${style.headerFont.split(',')[0].replace(/"/g, '').replace(/ /g, '+')}:wght@700&display=swap`;
   const bodyFontUrl = `https://fonts.googleapis.com/css2?family=${style.bodyFont.split(',')[0].replace(/"/g, '').replace(/ /g, '+')}&display=swap`;
 
@@ -64,7 +64,7 @@ export default function PublicLayoutClient({ lang, t, style, children }) {
           }
         `}} />
       </head>
-      <AppearanceProvider>
+      <AppearanceProvider initialAppearance={initialAppearance}>
         <AppBody lang={lang} t={t}>
           {children}
         </AppBody>
