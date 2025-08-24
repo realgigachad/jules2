@@ -2,7 +2,7 @@
 
 import { AppearanceProvider, useAppearance } from '@/components/admin/AppearanceSettings';
 import Header from "@/components/public/Header";
-import CompactHeader from "@/components/public/CompactHeader";
+import PlayfulHeader from "@/components/public/PlayfulHeader";
 import Footer from "@/components/public/Footer";
 
 // This new component will be the consumer of the context
@@ -24,14 +24,18 @@ function AppBody({ lang, t, children }) {
     );
   }
 
-  const mainContentClass = appearance === 'compact' ? 'ml-64' : '';
+  const mainContentClass = appearance === 'playful' ? 'ml-64' : '';
+
+  const renderHeader = () => {
+    if (appearance === 'playful') {
+      return <PlayfulHeader lang={lang} t={t.header} />;
+    }
+    return <Header lang={lang} t={t.header} appearance={appearance} />;
+  };
 
   return (
     <body className={`bg-background text-text font-body theme-${appearance}`}>
-      {appearance === 'compact'
-        ? <CompactHeader lang={lang} t={t.header} />
-        : <Header lang={lang} t={t.header} />
-      }
+      {renderHeader()}
       <div className={mainContentClass}>
         <main className="flex-grow container mx-auto px-6 py-12">
           {children}
