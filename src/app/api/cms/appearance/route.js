@@ -8,35 +8,54 @@ import {
   successResponse,
 } from '@/lib/api_helpers';
 
+// GET handler now returns both appearance settings
 export async function GET(request) {
-  const session = await getSession(request);
-  if (!session) return unauthorizedResponse();
-
+  // This is a public endpoint now, as the public site needs to know the theme.
+  // We will rely on the server-side layout to fetch this, which doesn't have a session.
+  // The POST route will remain protected.
   try {
     await dbConnect();
-    const settings = await SiteSettings.findOne({});
-    return successResponse(settings ? { appearance: settings.appearance } : { appearance: 'default' });
+    const settings = await SiteSettings.findOne({}).lean();
+    return successResponse({
+      adminAppearance: settings?.adminAppearance || 'default',
+      publicAppearance: settings?.publicAppearance || 'default',
+    });
   } catch (error) {
     return failedResponse(error);
   }
 }
 
+// POST handler saves the appearance setting for a specific target
 export async function POST(request) {
   const session = await getSession(request);
   if (!session) return unauthorizedResponse();
 
   try {
     const body = await request.json();
-    const { appearance } = body;
+    const { theme, target } = body; // Expect 'theme' and 'target'
 
-    if (!['default', 'single-page', 'playful'].includes(appearance)) {
-      return failedResponse(null, 'Invalid appearance value.', 400);
+    if (!['default', 'single-page', 'playful'].includes(theme)) {
+      return failedResponse(null, 'Invalid theme value.', 400);
+    }
+    if (!['admin', 'public', 'both'].includes(target)) {
+      return failedResponse(null, 'Invalid target value.', 400);
     }
 
     await dbConnect();
-    await SiteSettings.findOneAndUpdate({}, { appearance }, { upsert: true, new: true });
+    const update = {};
+    if (target === 'admin' || target === 'both') {
+      update.adminAppearance = theme;
+    }
+    if (target === 'public' || target === 'both') {
+      update.publicAppearance = theme;
+    }
 
-    return successResponse({ appearance });
+    const newSettings = await SiteSettings.findOneAndUpdate({}, { $set: update }, { new: true, upsert: true });
+
+    return successResponse({
+      adminAppearance: newSettings.adminAppearance,
+      publicAppearance: newSettings.publicAppearance,
+    });
   } catch (error) {
     return failedResponse(error);
   }
