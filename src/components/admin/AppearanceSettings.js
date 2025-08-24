@@ -8,9 +8,10 @@ export function useAppearance() {
   return useContext(AppearanceContext);
 }
 
-export function AppearanceProvider({ children }) {
-  const [appearance, setAppearance] = useState('default');
-  const [isLoading, setIsLoading] = useState(true);
+export function AppearanceProvider({ children, initialAppearance }) {
+  const [appearance, setAppearance] = useState(initialAppearance || 'default');
+  // If we have an initial appearance, we are not loading. Otherwise, we are.
+  const [isLoading, setIsLoading] = useState(!initialAppearance);
 
   useEffect(() => {
     const fetchAppearance = async () => {
@@ -26,8 +27,12 @@ export function AppearanceProvider({ children }) {
         setIsLoading(false);
       }
     };
-    fetchAppearance();
-  }, []);
+
+    // Only fetch if we didn't get an initial value (i.e., in the admin panel)
+    if (!initialAppearance) {
+      fetchAppearance();
+    }
+  }, [initialAppearance]);
 
   const saveAppearance = async (newAppearance) => {
     try {
