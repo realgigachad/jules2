@@ -29,7 +29,7 @@ export async function POST(request) {
     const body = await request.json();
     const { appearance } = body;
 
-    if (!['default', 'compact', 'playful'].includes(appearance)) {
+    if (!['default', 'single-page', 'playful'].includes(appearance)) {
       return failedResponse(null, 'Invalid appearance value.', 400);
     }
 

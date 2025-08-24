@@ -1,0 +1,243 @@
+'use client';
+
+import { useState, useEffect, useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+
+// A reusable component to animate sections as they scroll into view
+function AnimatedSection({ children }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px 0px" });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 50 }}
+      transition={{ duration: 0.8, ease: "easeOut" }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function HeroSection() {
+  return (
+    <section id="home" className="h-screen flex items-center justify-center bg-gray-100">
+      <div className="text-center">
+        <h1 className="text-5xl font-bold">Train.Travel</h1>
+        <p className="mt-4 text-xl text-gray-600">Your Journey Begins Here. Scroll down to explore.</p>
+      </div>
+    </section>
+  );
+}
+
+function PricingSection({ t }) {
+  return (
+    <section id="pricing" className="min-h-screen py-20 bg-white">
+      <div className="container mx-auto px-6">
+        <h2 className="text-4xl font-bold text-center mb-12">{t.pricingPage.title}</h2>
+        <p className="text-center text-xl">{t.pricingPage.subtitle}</p>
+        <p className="text-center mt-4">{t.pricingPage.viewTrips}</p>
+      </div>
+    </section>
+  );
+}
+
+function TripsSection({ trips, lang, t }) {
+  const getPriceDisplay = (prices) => {
+    if (!prices) return 'Price not set';
+    if (lang === 'en') {
+      return `€${(prices.eur || 0).toFixed(2)} / £${(prices.gbp || 0).toFixed(2)}`;
+    }
+    const currencyCodeMap = { de: 'eur', sk: 'eur', cs: 'czk', hu: 'huf', ru: 'rub', uk: 'uah' };
+    const currencyCode = currencyCodeMap[lang];
+    if (!currencyCode) return `€${(prices.eur || 0).toFixed(2)}`;
+    const price = prices[currencyCode] || 0;
+    return price.toLocaleString(lang, { style: 'currency', currency: currencyCode.toUpperCase(), minimumFractionDigits: 2 });
+  };
+
+  return (
+    <section id="trips" className="min-h-screen py-20 bg-gray-50">
+      <div className="container mx-auto px-6">
+        <h2 className="text-4xl font-bold text-center mb-12">{t.tripsPage.title}</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {trips.map(trip => (
+            <div key={trip._id} className="block bg-white rounded-lg shadow-lg overflow-hidden group">
+              <div className="relative">
+                <img src={trip.imageUrl || 'https://images.unsplash.com/photo-1505923984062-552e3a4734d5?q=80&w=2070&auto=format&fit=crop'} alt={trip.title[lang] || trip.title.en} className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105" />
+              </div>
+              <div className="p-6 flex flex-col">
+                <h3 className="text-2xl font-bold text-gray-900 font-header">{trip.title[lang] || trip.title.en}</h3>
+                <div
+                  className="prose text-text/80 line-clamp-4 flex-grow mt-2"
+                  dangerouslySetInnerHTML={{ __html: trip.description[lang] || trip.description.en }}
+                />
+                <div className="mt-4 flex justify-between items-center pt-4 border-t">
+                  <p className="text-lg font-bold text-primary">{getPriceDisplay(trip.prices)}</p>
+                  <span className="text-text/70 text-sm">
+                    {trip.startDate ? new Date(trip.startDate).toLocaleDateString() : ''}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+          {trips.length === 0 && (
+            <p className="text-center text-text/70 col-span-full">{t.tripsPage.noTrips}</p>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ArticlesSection({ articles, lang, t }) {
+  return (
+    <section id="articles" className="min-h-screen py-20 bg-white">
+      <div className="container mx-auto px-6">
+        <h2 className="text-4xl font-bold text-center mb-12">{t.articlesPage.title}</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {articles.map(article => (
+            <div key={article._id} className="bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 flex flex-col">
+              <div className="p-6 flex-grow flex flex-col">
+                <p className="text-sm text-gray-500">{new Date(article.createdAt).toLocaleDateString()}</p>
+                <h3 className="text-xl font-semibold my-2">{article.title[lang] || article.title.en}</h3>
+                <div
+                  className="prose text-gray-600 line-clamp-4 flex-grow"
+                  dangerouslySetInnerHTML={{ __html: article.content[lang] || article.content.en }}
+                />
+                {/* The "Read More" link doesn't make sense in a single-page context, so it's omitted. */}
+              </div>
+            </div>
+          ))}
+          {articles.length === 0 && (
+            <p className="text-center text-gray-500 col-span-full">{t.homePage.noArticles}</p>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function AboutSection({ t }) {
+  return (
+    <section id="about" className="min-h-screen py-20 bg-gray-50">
+      <div className="container mx-auto px-6">
+        <h2 className="text-4xl font-bold text-center mb-12">{t.aboutPage.title}</h2>
+        <div className="prose lg:prose-xl mx-auto">
+          <p>{t.aboutPage.intro}</p>
+          <p>{t.aboutPage.mission}</p>
+          <p>{t.aboutPage.team}</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ContactSection({ t }) {
+  return (
+    <section id="contact" className="min-h-screen py-20 bg-white">
+      <div className="container mx-auto px-6">
+        <h2 className="text-4xl font-bold text-center mb-12">{t.contactPage.title}</h2>
+        <div className="max-w-lg mx-auto text-center">
+          <p className="text-lg">{t.contactPage.intro}</p>
+          <p className="mt-4 font-semibold text-primary">{t.contactPage.email}: <a href={`mailto:${t.contactPage.emailAddress}`}>{t.contactPage.emailAddress}</a></p>
+          <p className="font-semibold text-primary">{t.contactPage.phone}: {t.contactPage.phoneNumber}</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+function SinglePageHeader({ t }) {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const toggleVisibility = () => {
+      if (window.pageYOffset > window.innerHeight * 0.8) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+    window.addEventListener('scroll', toggleVisibility);
+    return () => window.removeEventListener('scroll', toggleVisibility);
+  }, []);
+
+  const handleScrollTo = (e, id) => {
+    e.preventDefault();
+    document.getElementById(id)?.scrollIntoView({
+      behavior: 'smooth'
+    });
+  };
+
+  const navLinks = [
+    { id: 'pricing', label: t.header.pricing },
+    { id: 'trips', label: t.header.trips },
+    { id: 'articles', label: t.header.articles },
+    { id: 'about', label: t.header.about },
+    { id: 'contact', label: t.header.contact },
+  ];
+
+  return (
+    <motion.header
+      initial={{ y: -100 }}
+      animate={{ y: isVisible ? 0 : -100 }}
+      transition={{ duration: 0.5, ease: 'easeInOut' }}
+      className="bg-white/80 backdrop-blur-md shadow-md sticky top-0 z-50"
+    >
+      <div className="container mx-auto px-6 py-3 flex justify-between items-center">
+        <h2 className="text-2xl font-bold text-primary">Train.Travel</h2>
+        <nav className="hidden md:flex items-center space-x-6">
+          {navLinks.map(link => (
+            <a key={link.id} href={`#${link.id}`} onClick={(e) => handleScrollTo(e, link.id)} className="text-gray-600 hover:text-primary transition-colors">
+              {link.label}
+            </a>
+          ))}
+        </nav>
+      </div>
+    </motion.header>
+  );
+}
+
+export default function SinglePage({ lang, t }) {
+  const [trips, setTrips] = useState([]);
+  const [articles, setArticles] = useState([]);
+
+  useEffect(() => {
+    async function getTrips() {
+      try {
+        const res = await fetch(`/api/public/trips`);
+        if (!res.ok) throw new Error('Failed to fetch trips');
+        const data = await res.json();
+        setTrips(data.data);
+      } catch (error) {
+        console.error("Error fetching trips for single page:", error);
+      }
+    }
+    async function getArticles() {
+      try {
+        const res = await fetch(`/api/public/articles`);
+        if (!res.ok) throw new Error('Failed to fetch articles');
+        const data = await res.json();
+        setArticles(data.data);
+      } catch (error) {
+        console.error("Error fetching articles for single page:", error);
+      }
+    }
+    getTrips();
+    getArticles();
+  }, []);
+
+  return (
+    <div className="bg-white">
+      <SinglePageHeader t={t} />
+      <HeroSection />
+      <AnimatedSection><PricingSection t={t} /></AnimatedSection>
+      <AnimatedSection><TripsSection trips={trips} lang={lang} t={t} /></AnimatedSection>
+      <AnimatedSection><ArticlesSection articles={articles} lang={lang} t={t} /></AnimatedSection>
+      <AnimatedSection><AboutSection t={t} /></AnimatedSection>
+      <AnimatedSection><ContactSection t={t} /></AnimatedSection>
+    </div>
+  );
+}

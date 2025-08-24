@@ -4,6 +4,7 @@ import { AppearanceProvider, useAppearance } from '@/components/admin/Appearance
 import Header from "@/components/public/Header";
 import PlayfulHeader from "@/components/public/PlayfulHeader";
 import Footer from "@/components/public/Footer";
+import SinglePage from "@/components/public/SinglePage";
 
 // This new component will be the consumer of the context
 // and can safely call the useAppearance hook.
@@ -24,13 +25,22 @@ function AppBody({ lang, t, children }) {
     );
   }
 
+  if (appearance === 'single-page') {
+    return (
+      <body className={`bg-background text-text font-body theme-single-page`}>
+        <SinglePage lang={lang} t={t} />
+      </body>
+    );
+  }
+
   const mainContentClass = appearance === 'playful' ? 'ml-64' : '';
 
   const renderHeader = () => {
     if (appearance === 'playful') {
       return <PlayfulHeader lang={lang} t={t.header} />;
     }
-    return <Header lang={lang} t={t.header} appearance={appearance} />;
+    // The default header is no longer theme-aware
+    return <Header lang={lang} t={t.header} />;
   };
 
   return (
