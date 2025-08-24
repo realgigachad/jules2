@@ -58,9 +58,18 @@
 }
 
 /* --- Theme: Playful --- */
+.theme-playful {
+  --color-background: #fffef5;
+  --font-header: 'Comic Sans MS', cursive;
+}
 .theme-playful a, .theme-playful button {
   transition: transform 0.2s cubic-bezier(.34,1.56,.64,1);
 }
 .theme-playful a:hover, .theme-playful button:hover {
-  transform: scale(1.05);
+  transform: scale(1.05) rotate(-1deg);
+}
+.theme-playful img {
+  border: 4px solid white;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 8px;
 }
