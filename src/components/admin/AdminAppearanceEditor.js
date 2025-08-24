@@ -6,7 +6,8 @@ import { useAppearance } from '@/components/admin/AppearanceSettings';
 // Helper function to create a base64 encoded SVG placeholder
 const createSvgPlaceholder = (text, bgColor, textColor) => {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400"><rect width="100%" height="100%" fill="${bgColor}"/><text x="50%" y="50%" font-family="Arial, sans-serif" font-size="30" dy=".3em" fill="${textColor}" text-anchor="middle">${text}</text></svg>`;
-  const base64 = btoa(svg);
+  // Use Buffer for universal base64 encoding (works in Node.js and browser)
+  const base64 = Buffer.from(svg).toString('base64');
   return `data:image/svg+xml;base64,${base64}`;
 };
 
