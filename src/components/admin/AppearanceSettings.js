@@ -36,12 +36,18 @@ export function AppearanceProvider({ children, initialAppearance }) {
 
   const saveAppearance = async (newAppearance) => {
     try {
-      await fetch('/api/cms/appearance', {
+      const res = await fetch('/api/cms/appearance', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ appearance: newAppearance }),
       });
-      setAppearance(newAppearance);
+
+      if (res.ok) {
+        setAppearance(newAppearance);
+      } else {
+        console.error('Failed to save appearance settings:', await res.text());
+        // Optionally: add state to show an error message to the user
+      }
     } catch (error) {
       console.error('Failed to save appearance settings:', error);
     }
