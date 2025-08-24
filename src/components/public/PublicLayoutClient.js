@@ -8,7 +8,7 @@ import SinglePage from "@/components/public/SinglePage";
 
 // This new component will be the consumer of the context
 // and can safely call the useAppearance hook.
-function AppBody({ lang, t, children }) {
+function AppBody({ lang, t, trips, articles, children }) {
   const { appearance, isLoading } = useAppearance();
 
   // We can show a loading state or a default state while the theme is being determined client-side
@@ -28,7 +28,7 @@ function AppBody({ lang, t, children }) {
   if (appearance === 'single-page') {
     return (
       <body className={`bg-background text-text font-body theme-single-page`}>
-        <SinglePage lang={lang} t={t} />
+        <SinglePage lang={lang} t={t} trips={trips} articles={articles} />
       </body>
     );
   }
@@ -57,7 +57,7 @@ function AppBody({ lang, t, children }) {
 }
 
 
-export default function PublicLayoutClient({ lang, t, style, initialAppearance, children }) {
+export default function PublicLayoutClient({ lang, t, style, initialAppearance, trips, articles, children }) {
   const headerFontUrl = `https://fonts.googleapis.com/css2?family=${style.headerFont.split(',')[0].replace(/"/g, '').replace(/ /g, '+')}:wght@700&display=swap`;
   const bodyFontUrl = `https://fonts.googleapis.com/css2?family=${style.bodyFont.split(',')[0].replace(/"/g, '').replace(/ /g, '+')}&display=swap`;
 
@@ -79,7 +79,7 @@ export default function PublicLayoutClient({ lang, t, style, initialAppearance, 
         `}} />
       </head>
       <AppearanceProvider initialAppearance={initialAppearance}>
-        <AppBody lang={lang} t={t}>
+        <AppBody lang={lang} t={t} trips={trips} articles={articles}>
           {children}
         </AppBody>
       </AppearanceProvider>
