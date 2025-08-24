@@ -1,19 +1,6 @@
 import { NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
 
-const PUBLIC_FILE = /\.(.*)$/;
-// ADDED change-password routes to this list
-const PROTECTED_ROUTES = [
-  '/fonok/dashboard',
-  '/fonok/trips',
-  '/fonok/articles',
-  '/fonok/settings',
-  '/fonok/change-password', // Page route
-  '/api/cms',
-  '/api/auth/change-password', // API route
-  '/api/uploads' // Added uploads API route
-];
-
 export async function middleware(req) {
   const { pathname } = req.nextUrl;
 
@@ -22,10 +9,17 @@ export async function middleware(req) {
     return NextResponse.redirect(new URL('/en', req.url));
   }
 
-  // Check if the route is a protected admin route
-  const isProtectedRoute = PROTECTED_ROUTES.some(route => pathname.startsWith(route));
+  // Define protected path prefixes
+  const protectedApiPrefixes = ['/api/cms', '/api/auth/change-password', '/api/uploads'];
+  const protectedPagePrefix = '/fonok/';
 
-  if (!isProtectedRoute) {
+  // Determine if the route is protected
+  const isProtectedApiRoute = protectedApiPrefixes.some(prefix => pathname.startsWith(prefix));
+  const isProtectedPageRoute = pathname.startsWith(protectedPagePrefix) &&
+                               pathname !== '/fonok' &&
+                               !pathname.startsWith('/fonok/password');
+
+  if (!isProtectedApiRoute && !isProtectedPageRoute) {
     return NextResponse.next();
   }
 
