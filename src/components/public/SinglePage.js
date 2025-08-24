@@ -36,8 +36,10 @@ function PricingSection({ t }) {
     <section id="pricing" className="min-h-screen py-20 bg-white">
       <div className="container mx-auto px-6">
         <h2 className="text-4xl font-bold text-center mb-12">{t.pricingPage.title}</h2>
-        <p className="text-center text-xl">{t.pricingPage.subtitle}</p>
-        <p className="text-center mt-4">{t.pricingPage.viewTrips}</p>
+        <div className="prose lg:prose-xl mx-auto text-center">
+          <p>{t.pricingPage.body1}</p>
+          <p>{t.pricingPage.body2}</p>
+        </div>
       </div>
     </section>
   );
@@ -123,10 +125,12 @@ function AboutSection({ t }) {
     <section id="about" className="min-h-screen py-20 bg-gray-50">
       <div className="container mx-auto px-6">
         <h2 className="text-4xl font-bold text-center mb-12">{t.aboutPage.title}</h2>
-        <div className="prose lg:prose-xl mx-auto">
-          <p>{t.aboutPage.intro}</p>
-          <p>{t.aboutPage.mission}</p>
-          <p>{t.aboutPage.team}</p>
+        <div className="prose lg:prose-xl mx-auto text-center">
+          <p>{t.aboutPage.subtitle}</p>
+          <p>{t.aboutPage.body1}</p>
+          <p>{t.aboutPage.body2}</p>
+          <h3 className="text-3xl font-bold mt-8">{t.aboutPage.missionTitle}</h3>
+          <p>{t.aboutPage.missionText}</p>
         </div>
       </div>
     </section>
@@ -134,14 +138,17 @@ function AboutSection({ t }) {
 }
 
 function ContactSection({ t }) {
+  // NOTE: The original page has a contact form. This is a simplified version for the single-page view.
   return (
     <section id="contact" className="min-h-screen py-20 bg-white">
       <div className="container mx-auto px-6">
         <h2 className="text-4xl font-bold text-center mb-12">{t.contactPage.title}</h2>
         <div className="max-w-lg mx-auto text-center">
-          <p className="text-lg">{t.contactPage.intro}</p>
-          <p className="mt-4 font-semibold text-primary">{t.contactPage.email}: <a href={`mailto:${t.contactPage.emailAddress}`}>{t.contactPage.emailAddress}</a></p>
-          <p className="font-semibold text-primary">{t.contactPage.phone}: {t.contactPage.phoneNumber}</p>
+          <p className="text-lg">{t.contactPage.subtitle}</p>
+          <div className="mt-8 text-xl">
+            <p><span className="font-semibold">{t.contactPage.emailHeader}:</span> <a href={`mailto:contact@train.travel`} className="text-primary hover:underline">contact@train.travel</a></p>
+            <p className="mt-2"><span className="font-semibold">{t.contactPage.phoneHeader}:</span> +1 (555) 123-4567</p>
+          </div>
         </div>
       </div>
     </section>
