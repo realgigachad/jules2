@@ -5,7 +5,7 @@ import Link from 'next/link';
 import TrainLogo from './TrainLogo';
 import LanguageSelector from './LanguageSelector';
 
-export default function Header({ lang, t, appearance }) {
+export default function Header({ lang, t }) {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -16,10 +16,8 @@ export default function Header({ lang, t, appearance }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const headerPadding = appearance === 'compact' ? 'py-2' : (isScrolled ? 'py-2' : 'py-4');
-
   return (
-    <header className={`bg-white shadow-md sticky top-0 z-50 transition-all duration-300 ${headerPadding}`}>
+    <header className={`bg-white shadow-md sticky top-0 z-50 transition-all duration-300 ${isScrolled ? 'py-2' : 'py-4'}`}>
       <div className="container mx-auto px-6 flex justify-between items-center">
         <TrainLogo lang={lang} />
 

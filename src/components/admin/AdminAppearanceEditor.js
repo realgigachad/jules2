@@ -39,11 +39,11 @@ export default function AdminAppearanceEditor() {
             Default
           </button>
           <button
-            onClick={() => handleThemeChange('compact')}
+            onClick={() => handleThemeChange('single-page')}
             disabled={isSaving}
-            className={`px-4 py-2 border rounded-lg ${appearance === 'compact' ? 'bg-primary text-white' : 'hover:bg-gray-100'}`}
+            className={`px-4 py-2 border rounded-lg ${appearance === 'single-page' ? 'bg-primary text-white' : 'hover:bg-gray-100'}`}
           >
-            Compact
+            Single Page
           </button>
           <button
             onClick={() => handleThemeChange('playful')}
