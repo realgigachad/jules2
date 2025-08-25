@@ -7,6 +7,7 @@ import { TripsSection } from '../trips/page.js';
 import { ArticlesSection } from '../articles/page.js';
 import { SettingsSection } from '../settings/page.js';
 import { StylingSection } from '../styling/page.js';
+import { ChangePasswordSection } from '../change-password/page.js';
 
 function DashboardWelcome() {
   const { t } = useAdminTranslations();
@@ -65,6 +66,10 @@ export default function DashboardPage() {
       <hr />
       <section id="styling">
         <StylingSection />
+      </section>
+      <hr />
+      <section id="password">
+        <ChangePasswordSection isSection={true} />
       </section>
     </div>
   );

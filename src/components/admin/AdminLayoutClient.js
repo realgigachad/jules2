@@ -159,9 +159,6 @@ export default function AdminLayoutClient({ children }) {
   const Topbar = () => {
     const navContent = navLinks.map(link => {
         if (appearance === 'single-page') {
-            if (link.id === 'password') {
-                return <Link key={link.id} href={link.href} className={`text-sm ${pathname.startsWith(link.href) ? 'text-primary font-bold' : 'text-gray-600'}`}>{link.label}</Link>;
-            }
             return <a key={link.id} href={`/fonok/dashboard#${link.id}`} onClick={(e) => handleScrollTo(e, link.id)} className="text-sm text-gray-600 hover:text-primary">{link.label}</a>
         }
         // Logic for 'compact' theme
