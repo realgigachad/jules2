@@ -119,12 +119,21 @@ export default function AdminLayoutClient({ children }) {
   /**
    * The sidebar component, used in 'default' and 'playful' themes.
    */
-  const Sidebar = () => (
+  const Sidebar = () => {
+    const playfulLinkClasses = "block px-4 py-2 rounded hover:bg-indigo-700 transition-all duration-200 hover:translate-x-2";
+    const defaultLinkClasses = (href) => {
+        const base = "block px-4 py-2 rounded";
+        const hover = "hover:bg-gray-700";
+        const active = pathname.startsWith(href) ? "bg-primary" : "";
+        return `${base} ${hover} ${active}`;
+    };
+
+    return (
     <aside className={asideClasses[appearance]}>
       <div className={`p-4 text-xl font-bold border-b ${appearance === 'playful' ? 'border-indigo-700' : 'border-gray-700'}`}>{t.layout.title}</div>
       <nav className="flex-grow p-4 space-y-2">
         {navLinks.map(link => (
-          <Link key={link.href} href={link.href} className={navLinkClasses(link.href)}>{link.label}</Link>
+          <Link key={link.href} href={link.href} className={appearance === 'playful' ? playfulLinkClasses : defaultLinkClasses(link.href)}>{link.label}</Link>
         ))}
       </nav>
       <div className={`p-4 border-t ${appearance === 'playful' ? 'border-indigo-700' : 'border-gray-700'}`}>
