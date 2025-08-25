@@ -30,7 +30,9 @@
     "delete": "Видалити",
     "deleteConfirm": "Ви впевнені, що хочете видалити цю поїздку?",
     "createTitle": "Створити нову поїздку",
-    "editTitle": "Редагувати поїздку"
+    "editTitle": "Редагувати поїздку",
+    "untitled": "Поїздка без назви",
+    "priceLabel": "Ціна:"
   },
   "articles": {
     "manageTitle": "Керування статтями",
@@ -46,13 +48,16 @@
   },
   "settings": {
     "title": "Налаштування сайту",
+    "loading": "Завантаження налаштувань...",
     "emailLabel": "Контактний email",
     "phoneLabel": "Контактний телефон",
     "addressLabel": "Адреса",
+    "addressLangLabel": "Мова адреси:",
     "saveButton": "Зберегти налаштування",
     "saving": "Збереження...",
     "success": "Налаштування успішно збережено!",
-    "error": "Помилка"
+    "error": "Помилка",
+    "errorPrefix": "Помилка:"
   },
   "login": {
     "title": "Вхід для адміністратора",
@@ -60,7 +65,8 @@
     "passwordLabel": "Пароль",
     "button": "Увійти",
     "signingIn": "Вхід...",
-    "forgotPassword": "Забули пароль?"
+    "forgotPassword": "Забули пароль?",
+    "forgotPasswordSuccess": "Якщо користувач з таким іменем існує, пароль було скинуто."
   },
   "changePassword": {
     "title": "Змініть свій пароль",

@@ -6,6 +6,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useAdminTranslations } from '@/components/admin/AdminTranslationsProvider';
 
 /**
  * The main component for the admin login page.
@@ -18,6 +19,7 @@ export default function AdminLoginPage() {
   const [success, setSuccess] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
+  const { t } = useAdminTranslations();
 
   /**
    * Handles the login form submission.
@@ -69,7 +71,7 @@ export default function AdminLoginPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Something went wrong');
       // Displays the generic success message from the API.
-      setSuccess(data.message);
+      setSuccess(t.login.forgotPasswordSuccess);
     } catch (err) {
       setError(err.message);
     }
@@ -78,14 +80,14 @@ export default function AdminLoginPage() {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
-        <h1 className="text-2xl font-bold text-center text-gray-900">Admin Login</h1>
+        <h1 className="text-2xl font-bold text-center text-gray-900">{t.login.title}</h1>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="username" className="text-sm font-medium text-gray-700">Username</label>
+            <label htmlFor="username" className="text-sm font-medium text-gray-700">{t.login.usernameLabel}</label>
             <input id="username" name="username" type="text" value={username} onChange={(e) => setUsername(e.target.value)} required className="mt-1 block w-full px-3 py-2 border rounded-md" />
           </div>
           <div>
-            <label htmlFor="password"className="text-sm font-medium text-gray-700">Password</label>
+            <label htmlFor="password"className="text-sm font-medium text-gray-700">{t.login.passwordLabel}</label>
             <input id="password" name="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required className="mt-1 block w-full px-3 py-2 border rounded-md" />
           </div>
           {/* Display error or success messages */}
@@ -93,12 +95,12 @@ export default function AdminLoginPage() {
           {success && <p className="text-sm text-green-600">{success}</p>}
           <div className="flex items-center justify-between">
             <button type="button" onClick={handleForgotPassword} className="text-sm text-cyan-600 hover:underline">
-              Forgot Password?
+              {t.login.forgotPassword}
             </button>
           </div>
           <div>
             <button type="submit" disabled={isSubmitting} className="w-full px-4 py-2 text-white bg-cyan-600 rounded-md disabled:bg-gray-400">
-              {isSubmitting ? 'Signing in...' : 'Sign in'}
+              {isSubmitting ? t.login.signingIn : t.login.button}
             </button>
           </div>
         </form>

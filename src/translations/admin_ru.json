@@ -30,7 +30,9 @@
     "delete": "Удалить",
     "deleteConfirm": "Вы уверены, что хотите удалить эту поездку?",
     "createTitle": "Создать новую поездку",
-    "editTitle": "Редактировать поездку"
+    "editTitle": "Редактировать поездку",
+    "untitled": "Поездка без названия",
+    "priceLabel": "Цена:"
   },
   "articles": {
     "manageTitle": "Управление статьями",
@@ -46,13 +48,16 @@
   },
   "settings": {
     "title": "Настройки сайта",
+    "loading": "Загрузка настроек...",
     "emailLabel": "Контактный email",
     "phoneLabel": "Контактный телефон",
     "addressLabel": "Адрес",
+    "addressLangLabel": "Язык адреса:",
     "saveButton": "Сохранить настройки",
     "saving": "Сохранение...",
     "success": "Настройки успешно сохранены!",
-    "error": "Ошибка"
+    "error": "Ошибка",
+    "errorPrefix": "Ошибка:"
   },
   "login": {
     "title": "Вход для администратора",
@@ -60,7 +65,8 @@
     "passwordLabel": "Пароль",
     "button": "Войти",
     "signingIn": "Вход...",
-    "forgotPassword": "Забыли пароль?"
+    "forgotPassword": "Забыли пароль?",
+    "forgotPasswordSuccess": "Если пользователь с таким именем существует, пароль был сброшен."
   },
   "changePassword": {
     "title": "Измените свой пароль",

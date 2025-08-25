@@ -30,7 +30,9 @@
     "delete": "Usuń",
     "deleteConfirm": "Czy na pewno chcesz usunąć tę podróż?",
     "createTitle": "Utwórz nową podróż",
-    "editTitle": "Edytuj podróż"
+    "editTitle": "Edytuj podróż",
+    "untitled": "Podróż bez tytułu",
+    "priceLabel": "Cena:"
   },
   "articles": {
     "manageTitle": "Zarządzaj artykułami",
@@ -46,13 +48,16 @@
   },
   "settings": {
     "title": "Ustawienia witryny",
+    "loading": "Ładowanie ustawień...",
     "emailLabel": "Kontaktowy adres e-mail",
     "phoneLabel": "Telefon kontaktowy",
     "addressLabel": "Adres",
+    "addressLangLabel": "Język adresu:",
     "saveButton": "Zapisz ustawienia",
     "saving": "Zapisywanie...",
     "success": "Ustawienia zapisane pomyślnie!",
-    "error": "Błąd"
+    "error": "Błąd",
+    "errorPrefix": "Błąd:"
   },
   "login": {
     "title": "Logowanie administratora",
@@ -60,7 +65,8 @@
     "passwordLabel": "Hasło",
     "button": "Zaloguj się",
     "signingIn": "Logowanie...",
-    "forgotPassword": "Nie pamiętasz hasła?"
+    "forgotPassword": "Nie pamiętasz hasła?",
+    "forgotPasswordSuccess": "Jeśli użytkownik o tej nazwie istnieje, hasło zostało zresetowane."
   },
   "changePassword": {
     "title": "Zmień swoje hasło",

@@ -30,7 +30,9 @@
     "delete": "Smazat",
     "deleteConfirm": "Opravdu chcete smazat tuto cestu?",
     "createTitle": "Vytvořit novou cestu",
-    "editTitle": "Upravit cestu"
+    "editTitle": "Upravit cestu",
+    "untitled": "Cesta bez názvu",
+    "priceLabel": "Cena:"
   },
   "articles": {
     "manageTitle": "Spravovat články",
@@ -46,13 +48,16 @@
   },
   "settings": {
     "title": "Nastavení stránky",
+    "loading": "Načítání nastavení...",
     "emailLabel": "Kontaktní email",
     "phoneLabel": "Kontaktní telefon",
     "addressLabel": "Adresa",
+    "addressLangLabel": "Jazyk adresy:",
     "saveButton": "Uložit nastavení",
     "saving": "Ukládání...",
     "success": "Nastavení úspěšně uloženo!",
-    "error": "Chyba"
+    "error": "Chyba",
+    "errorPrefix": "Chyba:"
   },
   "login": {
     "title": "Admin Přihlášení",
@@ -60,7 +65,8 @@
     "passwordLabel": "Heslo",
     "button": "Přihlásit se",
     "signingIn": "Přihlašování...",
-    "forgotPassword": "Zapomněli jste heslo?"
+    "forgotPassword": "Zapomněli jste heslo?",
+    "forgotPasswordSuccess": "Pokud uživatel s tímto jménem existuje, heslo bylo resetováno."
   },
   "changePassword": {
     "title": "Změňte si heslo",
