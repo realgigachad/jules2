@@ -1,33 +1,37 @@
 /**
- * @fileoverview This file provides a simple in-memory rate limiter.
- * It's a basic implementation and might not be suitable for a large-scale production environment,
- * but it's a good first step to prevent brute-force attacks.
+ * @fileoverview This file configures a production-ready rate limiter using the `rate-limiter-flexible` package.
+ * It provides a middleware-compatible function to protect the application against DoS/DDoS attacks.
  */
 
-const attempts = new Map();
+import { RateLimiterMemory } from 'rate-limiter-flexible';
+import { NextResponse } from 'next/server';
+
+// Create a new rate limiter instance.
+// It allows 100 requests per 1 minute per IP address.
+const rateLimiter = new RateLimiterMemory({
+  points: 100, // Number of points
+  duration: 60, // Per 60 seconds
+});
 
 /**
- * Checks if a given key (e.g., an IP address or username) has exceeded the rate limit.
- * @param {string} key - The key to check.
- * @param {number} maxAttempts - The maximum number of attempts allowed within the window.
- * @param {number} windowMs - The time window in milliseconds.
- * @returns {boolean} - True if the key is rate-limited, false otherwise.
+ * The rate limiting middleware function.
+ * It consumes a point for each request and checks if the client has exceeded the limit.
+ * @param {import('next/server').NextRequest} req - The incoming request.
+ * @returns {Promise<NextResponse | null>} - A response object if the client is rate-limited, otherwise null.
  */
-export const isRateLimited = (key, maxAttempts = 5, windowMs = 15 * 60 * 1000) => {
-  const now = Date.now();
-  const windowStart = now - windowMs;
+export const limit = async (req) => {
+  const ip = req.ip ?? '127.0.0.1';
 
-  // Get the attempts for this key, filtering out old ones.
-  const userAttempts = (attempts.get(key) || []).filter(timestamp => timestamp > windowStart);
-
-  if (userAttempts.length >= maxAttempts) {
-    // If the user has made too many attempts, they are rate-limited.
-    return true;
+  try {
+    await rateLimiter.consume(ip);
+    return null; // Not rate-limited
+  } catch (rateLimiterRes) {
+    const headers = {
+      'X-RateLimit-Limit': rateLimiter.points,
+      'X-RateLimit-Remaining': rateLimiterRes.remainingPoints,
+      'X-RateLimit-Reset': new Date(Date.now() + rateLimiterRes.msBeforeNext).toISOString(),
+      'Retry-After': Math.ceil(rateLimiterRes.msBeforeNext / 1000),
+    };
+    return new NextResponse('Too Many Requests', { status: 429, headers });
   }
-
-  // Record the new attempt.
-  userAttempts.push(now);
-  attempts.set(key, userAttempts);
-
-  return false;
 };

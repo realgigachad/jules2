@@ -4,6 +4,7 @@
  */
 import { NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
+import { limit } from './lib/rateLimiter';
 
 /**
  * The main middleware function.
@@ -11,6 +12,11 @@ import { jwtVerify } from 'jose';
  * @returns {Promise<NextResponse>} The response to send back.
  */
 export async function middleware(req) {
+  const rateLimitResponse = await limit(req);
+  if (rateLimitResponse) {
+    return rateLimitResponse;
+  }
+
   const { pathname } = req.nextUrl;
 
   // 1. Redirect the root path ('/') to the default language ('/en').
