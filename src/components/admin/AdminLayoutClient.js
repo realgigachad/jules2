@@ -61,6 +61,12 @@ export default function AdminLayoutClient({ children }) {
 
   const handleScrollTo = (e, id) => {
     e.preventDefault();
+    // If not on the dashboard, navigate first, then the browser will handle the hash scroll.
+    if (!pathname.startsWith('/fonok/dashboard')) {
+        window.location.href = `/fonok/dashboard#${id}`;
+        return;
+    }
+    // If already on the dashboard, smooth scroll.
     document.getElementById(id)?.scrollIntoView({
       behavior: 'smooth'
     });
@@ -74,12 +80,12 @@ export default function AdminLayoutClient({ children }) {
     default: "flex h-screen bg-gray-100 text-black",
     compact: "flex flex-col h-screen bg-gray-50 text-black",
     playful: "flex h-screen bg-yellow-50 text-black overflow-hidden",
+    'single-page': "flex flex-col h-screen bg-gray-50 text-black",
   };
 
   // CSS classes for the sidebar in different themes.
   const asideClasses = {
     default: "w-64 bg-gray-800 text-white flex flex-col",
-    compact: "hidden", // Sidebar is hidden in compact view
     playful: "w-72 bg-indigo-800 text-white flex flex-col transform -rotate-6 -ml-56 origin-top-left transition-all duration-300 ease-in-out group-hover:rotate-0 group-hover:ml-0",
   };
 
@@ -129,25 +135,13 @@ export default function AdminLayoutClient({ children }) {
   const Sidebar = () => {
     const playfulLinkClasses = "block px-4 py-2 rounded hover:bg-indigo-700 transition-all duration-200 hover:translate-x-2";
 
-    let navContent;
-    if (appearance === 'single-page') {
-      navContent = navLinks.map(link => {
-        if (link.id === 'password') {
-          return <Link key={link.id} href={link.href} className={navLinkClasses(link.href)}>{link.label}</Link>;
-        }
-        return <a key={link.id} href={`/fonok/dashboard#${link.id}`} onClick={(e) => handleScrollTo(e, link.id)} className={navLinkClasses(link.href)}>{link.label}</a>;
-      });
-    } else {
-      navContent = navLinks.map(link => (
-        <Link key={link.href} href={link.href} className={appearance === 'playful' ? playfulLinkClasses : navLinkClasses(link.href)}>{link.label}</Link>
-      ));
-    }
-
     return (
       <aside className={asideClasses[appearance]}>
         <div className={`p-4 text-xl font-bold border-b ${appearance === 'playful' ? 'border-indigo-700' : 'border-gray-700'}`}>{t.layout.title}</div>
         <nav className="flex-grow p-4 space-y-2">
-          {navContent}
+            {navLinks.map(link => (
+                <Link key={link.href} href={link.href} className={appearance === 'playful' ? playfulLinkClasses : navLinkClasses(link.href)}>{link.label}</Link>
+            ))}
         </nav>
         <div className={`p-4 border-t ${appearance === 'playful' ? 'border-indigo-700' : 'border-gray-700'}`}>
           <AdminLangSelector />
@@ -160,26 +154,37 @@ export default function AdminLayoutClient({ children }) {
   };
 
   /**
-   * The topbar component, used in the 'compact' theme.
+   * The topbar component, used in the 'compact' and 'single-page' themes.
    */
-  const Topbar = () => (
-    <header className="bg-white shadow-md p-4 flex justify-between items-center">
-      <h1 className="text-xl font-bold">{t.layout.title}</h1>
-      <nav className="flex gap-4 items-center">
-        {navLinks.map(link => (
-          <Link key={link.href} href={link.href} className={`text-sm ${pathname.startsWith(link.href) ? 'text-primary font-bold' : 'text-gray-600'}`}>{link.label}</Link>
-        ))}
-        <AdminLangSelector />
-        <button onClick={handleLogout} className="text-sm text-gray-600 hover:text-primary">{t.layout.logout}</button>
-      </nav>
-    </header>
-  );
+  const Topbar = () => {
+    const navContent = navLinks.map(link => {
+        if (appearance === 'single-page') {
+            if (link.id === 'password') {
+                return <Link key={link.id} href={link.href} className={`text-sm ${pathname.startsWith(link.href) ? 'text-primary font-bold' : 'text-gray-600'}`}>{link.label}</Link>;
+            }
+            return <a key={link.id} href={`/fonok/dashboard#${link.id}`} onClick={(e) => handleScrollTo(e, link.id)} className="text-sm text-gray-600 hover:text-primary">{link.label}</a>
+        }
+        // Logic for 'compact' theme
+        return <Link key={link.href} href={link.href} className={`text-sm ${pathname.startsWith(link.href) ? 'text-primary font-bold' : 'text-gray-600'}`}>{link.label}</Link>
+    });
+
+    return (
+        <header className="bg-white shadow-md p-4 flex justify-between items-center">
+            <h1 className="text-xl font-bold">{t.layout.title}</h1>
+            <nav className="flex gap-4 items-center">
+                {navContent}
+                <AdminLangSelector />
+                <button onClick={handleLogout} className="text-sm text-gray-600 hover:text-primary">{t.layout.logout}</button>
+            </nav>
+        </header>
+    );
+  };
 
   // Render the appropriate layout based on the appearance setting.
   return (
     <div className={layoutClasses[appearance]}>
-      {appearance !== 'compact' && <div className="group"><Sidebar /></div>}
-      {appearance === 'compact' && <Topbar />}
+      {(appearance === 'default' || appearance === 'playful') && <div className="group"><Sidebar /></div>}
+      {(appearance === 'compact' || appearance === 'single-page') && <Topbar />}
       {mainContent}
     </div>
   );

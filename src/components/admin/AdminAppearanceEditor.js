@@ -109,12 +109,24 @@ export default function AdminAppearanceEditor() {
     if (success) {
       const successMsg = t.appearance.success.replace('{themeName}', themeName).replace('{target}', target);
       setMessage(successMsg);
+
+      // If the admin theme was changed to single-page, reload to the dashboard
+      if ((target === 'admin' || target === 'both') && selectedTheme === 'single-page') {
+        setTimeout(() => {
+            window.location.href = '/fonok/dashboard';
+        }, 1000);
+      } else {
+        // Clear the message after 5 seconds if not redirecting
+        setTimeout(() => setMessage(''), 5000);
+      }
     } else {
       setMessage(t.appearance.error);
+      setIsSaving(false);
     }
-    setIsSaving(false);
-    // Clear the message after 5 seconds.
-    setTimeout(() => setMessage(''), 5000);
+    // We only set isSaving to false here for the success case if we are not redirecting
+    if (!((target === 'admin' || target === 'both') && selectedTheme === 'single-page')) {
+      setIsSaving(false);
+    }
   };
 
   const themeName = themes.find(t => t.id === selectedTheme)?.name || 'N/A';
