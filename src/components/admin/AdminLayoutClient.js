@@ -127,45 +127,28 @@ export default function AdminLayoutClient({ children }) {
    * The sidebar component, used in 'default' and 'playful' themes.
    */
   const Sidebar = () => {
-    // This is the navigation for the 'single-page' theme.
-    // It renders `<a>` tags with a scroll handler.
-    const SinglePageNav = () => (
-      <nav className="flex-grow p-4 space-y-2">
-        {navLinks.map(link => {
-          // The "Change Password" link is a normal link, not a scroll link.
-          if (link.id === 'password') {
-            return <Link key={link.id} href={link.href} className={navLinkClasses(link.href)}>{link.label}</Link>;
-          }
-          // All other links scroll to sections on the dashboard page.
-          return (
-            <a key={link.id} href={`/fonok/dashboard#${link.id}`} onClick={(e) => handleScrollTo(e, link.id)} className={navLinkClasses(link.href)}>
-              {link.label}
-            </a>
-          );
-        })}
-      </nav>
-    );
+    const playfulLinkClasses = "block px-4 py-2 rounded hover:bg-indigo-700 transition-all duration-200 hover:translate-x-2";
 
-    // This is the navigation for all other themes ('default', 'playful').
-    // It renders standard Next.js <Link> components for page navigation.
-    const MultiPageNav = () => {
-        const playfulLinkClasses = "block px-4 py-2 rounded hover:bg-indigo-700 transition-all duration-200 hover:translate-x-2";
-        return (
-            <nav className="flex-grow p-4 space-y-2">
-                {navLinks.map(link => (
-                    <Link key={link.href} href={link.href} className={appearance === 'playful' ? playfulLinkClasses : navLinkClasses(link.href)}>{link.label}</Link>
-                ))}
-            </nav>
-        );
-    };
+    let navContent;
+    if (appearance === 'single-page') {
+      navContent = navLinks.map(link => {
+        if (link.id === 'password') {
+          return <Link key={link.id} href={link.href} className={navLinkClasses(link.href)}>{link.label}</Link>;
+        }
+        return <a key={link.id} href={`/fonok/dashboard#${link.id}`} onClick={(e) => handleScrollTo(e, link.id)} className={navLinkClasses(link.href)}>{link.label}</a>;
+      });
+    } else {
+      navContent = navLinks.map(link => (
+        <Link key={link.href} href={link.href} className={appearance === 'playful' ? playfulLinkClasses : navLinkClasses(link.href)}>{link.label}</Link>
+      ));
+    }
 
     return (
       <aside className={asideClasses[appearance]}>
-        <div className="p-2 bg-red-500 text-white text-xs font-mono">Debug: appearance=&quot;{appearance}&quot;</div>
         <div className={`p-4 text-xl font-bold border-b ${appearance === 'playful' ? 'border-indigo-700' : 'border-gray-700'}`}>{t.layout.title}</div>
-
-        {appearance === 'single-page' ? <SinglePageNav /> : <MultiPageNav />}
-
+        <nav className="flex-grow p-4 space-y-2">
+          {navContent}
+        </nav>
         <div className={`p-4 border-t ${appearance === 'playful' ? 'border-indigo-700' : 'border-gray-700'}`}>
           <AdminLangSelector />
         </div>
