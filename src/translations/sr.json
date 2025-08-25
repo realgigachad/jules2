@@ -1,0 +1,77 @@
+{
+  "header": {
+    "home": "Početna",
+    "pricing": "Cene",
+    "trips": "Nadolazeća putovanja",
+    "articles": "Članci",
+    "about": "O nama",
+    "contact": "Kontakt"
+  },
+  "footer": {
+    "slogan": "Vaše putovanje počinje ovde.",
+    "rights": "Sva prava zadržana."
+  },
+  "homePage": {
+    "heroTitle": "Vaše sledeće putovanje, vozom",
+    "heroSubtitle": "Otkrijte svet iz drugačije perspektive. Očekuju vas nezaboravni pejzaži, udobna putovanja i vanvremenske uspomene.",
+    "heroButton": "Istražite nadolazeća putovanja",
+    "journalTitle": "Iz našeg dnevnika putovanja",
+    "readMore": "Pročitajte više",
+    "noArticles": "Još uvek nema članaka za prikaz. Kreirajte jedan u admin panelu!"
+  },
+  "pricingPage": {
+    "title": "Naša filozofija cena",
+    "body1": "U Train.Travel verujemo u transparentne i jednostavne cene. Troškovi svakog putovanja su sveobuhvatni, pokrivajući vaše putovanje, smeštaj u vozu i odabrana iskustva. Trudimo se da pružimo izuzetnu vrednost, kombinujući luksuz i avanturu u svakom paketu.",
+    "standardClass": "Standardna klasa",
+    "standardDesc": "Udobna sedišta i panoramski prozori za uživanje u pogledu.",
+    "firstClass": "Prva klasa",
+    "firstDesc": "Dodatni prostor za noge, besplatna osveženja i prioritetna usluga.",
+    "sleeperCabin": "Spavaća kabina",
+    "sleeperDesc": "Privatne kabine za noćna putovanja, obezbeđujući miran san.",
+    "body2": "Cene variraju u zavisnosti od destinacije, trajanja i klase putovanja. Za detaljne cene naših odabranih putovanja, posetite našu stranicu Nadolazeća putovanja.",
+    "button": "Pogledajte nadolazeća putovanja i cene"
+  },
+  "tripsPage": {
+    "title": "Nadolazeća putovanja",
+    "subtitle": "Krenite u svoju sledeću veliku avanturu.",
+    "viewDetails": "Pogledajte detalje",
+    "noTrips": "Trenutno nema nadolazećih putovanja. Molimo proverite ponovo uskoro!"
+  },
+  "articlesPage": {
+    "title": "Dnevnik putovanja",
+    "subtitle": "Priče i uvidi sa naših putovanja."
+  },
+  "aboutPage": {
+    "title": "O Train.Travel",
+    "subtitle": "Povezujemo ljude sa mestima, jedna slikovita ruta u isto vreme.",
+    "body1": "Train.Travel je osnovan na jednostavnoj premisi: putovanje je jednako važno kao i destinacija. U svetu koji žuri od tačke A do tačke B, nudimo priliku da usporite, da vidite lepotu pejzaža kako se odvija i da doživite putovanje na značajniji i održiviji način.",
+    "body2": "Naš tim se sastoji od strastvenih putnika, stručnjaka za logistiku i ljubitelja železnice koji neumorno rade na kreiranju jedinstvenih putovanja vozom širom sveta. Od veličanstvenih planina Švajcarske do prostranih pejzaža Transsibirske železnice, biramo rute koje nude predivne poglede i nezaboravna iskustva.",
+    "missionTitle": "Naša misija",
+    "missionText": "Pružanje udobnih, slikovitih i ekološki prihvatljivih putničkih iskustava koja stvaraju trajne uspomene i podstiču dublje poštovanje prema svetu oko nas.",
+    "body3": "Sarađujemo sa najboljim svetskim železničkim operaterima kako bismo osigurali najviše standarde udobnosti, bezbednosti i usluge. Bilo da ste solo avanturista, par koji traži romantični odmor ili porodica koja traži jedinstven odmor, imamo putovanje koje je savršeno za vas.",
+    "body4": "Hvala vam što ste razmotrili Train.Travel. Radujemo se što ćemo vas ugostiti."
+  },
+  "contactPage": {
+    "title": "Kontaktirajte nas",
+    "subtitle": "Voleli bismo da čujemo vaše mišljenje. Obratite nam se sa bilo kakvim pitanjima.",
+    "formTitle": "Pošaljite nam poruku",
+    "nameLabel": "Puno ime i prezime",
+    "emailLabel": "Email adresa",
+    "messageLabel": "Poruka",
+    "submitButton": "Pošalji",
+    "infoTitle": "Naše informacije",
+    "emailHeader": "Email",
+    "phoneHeader": "Telefon",
+    "addressHeader": "Adresa"
+  },
+  "tripDetailPage": {
+    "bookingTitle": "Rezervišite svoje putovanje",
+    "inquireButton": "Raspitajte se sada",
+    "from": "Od",
+    "to": "Do"
+  },
+  "articleDetailPage": {
+    "publishedOn": "Objavljeno",
+    "by": "od"
+  }
+}

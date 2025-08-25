@@ -18,14 +18,16 @@ const languages = [
   { code: 'sk', name: 'Slovenčina' },
   { code: 'cs', name: 'Čeština' },
   { code: 'uk', name: 'Українська' },
+  { code: 'pl', name: 'Polski' },
+  { code: 'sr', name: 'Srpski' },
 ];
 
-const currencies = ['eur', 'gbp', 'huf', 'rub', 'czk', 'uah'];
-const emptyMultilingual = { en: '', de: '', hu: '', ru: '', sk: '', cs: '', uk: '' };
-const emptyPrices = { eur: 0, gbp: 0, huf: 0, rub: 0, czk: 0, uah: 0 };
+const currencies = ['eur', 'gbp', 'huf', 'rub', 'czk', 'uah', 'pln', 'rsd'];
+const emptyMultilingual = { en: '', de: '', hu: '', ru: '', sk: '', cs: '', uk: '', pl: '', sr: '' };
+const emptyPrices = { eur: 0, gbp: 0, huf: 0, rub: 0, czk: 0, uah: 0, pln: 0, rsd: 0 };
 
 // Approximate conversion rates relative to EUR for the price conversion feature.
-const conversionRates = { eur: 1, gbp: 0.85, huf: 400, rub: 90, czk: 25, uah: 42 };
+const conversionRates = { eur: 1, gbp: 0.85, huf: 400, rub: 90, czk: 25, uah: 42, pln: 4.3, rsd: 117 };
 
 // Rules for formatting prices to common marketing conventions (e.g., ending in .99).
 const priceFormatRules = {
@@ -35,6 +37,8 @@ const priceFormatRules = {
   rub: (p) => Math.floor(p / 100) * 100 + 99, // e.g., 1234 -> 1200 -> 1299
   czk: (p) => Math.floor(p) + 0.99,
   uah: (p) => Math.floor(p) + 0.99,
+  pln: (p) => Math.floor(p) + 0.99,
+  rsd: (p) => Math.round(p / 10) * 10, // e.g. 1234 -> 1230
 };
 
 /**

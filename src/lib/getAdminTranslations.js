@@ -13,6 +13,8 @@ const translations = {
   sk: () => import('@/translations/admin_sk.json').then((module) => module.default),
   cs: () => import('@/translations/admin_cs.json').then((module) => module.default),
   uk: () => import('@/translations/admin_uk.json').then((module) => module.default),
+  pl: () => import('@/translations/admin_pl.json').then((module) => module.default),
+  sr: () => import('@/translations/admin_sr.json').then((module) => module.default),
 };
 
 /**

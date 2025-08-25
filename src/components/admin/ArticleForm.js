@@ -16,10 +16,12 @@ const languages = [
   { code: 'sk', name: 'Slovenčina' },
   { code: 'cs', name: 'Čeština' },
   { code: 'uk', name: 'Українська' },
+  { code: 'pl', name: 'Polski' },
+  { code: 'sr', name: 'Srpski' },
 ];
 
 // An object representing an empty set of multilingual fields.
-const emptyMultilingual = { en: '', de: '', hu: '', ru: '', sk: '', cs: '', uk: '' };
+const emptyMultilingual = { en: '', de: '', hu: '', ru: '', sk: '', cs: '', uk: '', pl: '', sr: '' };
 
 /**
  * A form for creating or updating an article.

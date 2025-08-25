@@ -92,5 +92,17 @@
     "titleLabel": "Заголовок статьи",
     "contentLabel": "Содержание",
     "saveButton": "Сохранить статью"
+  },
+  "appearance": {
+    "title": "Внешний вид",
+    "globalThemes": "Глобальные темы",
+    "currentPublicTheme": "Текущая публичная тема:",
+    "currentAdminTheme": "Текущая тема админ-панели:",
+    "setThemeFor": "Установить тему '{themeName}' для:",
+    "publicSite": "Публичный сайт",
+    "adminPanel": "Админ-панель",
+    "both": "Оба",
+    "success": "Тема '{themeName}' установлена для '{target}'.",
+    "error": "Ошибка: Не удалось сохранить тему. Пожалуйста, проверьте логи сервера или консоль браузера."
   }
 }

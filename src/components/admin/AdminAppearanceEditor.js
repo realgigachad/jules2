@@ -7,6 +7,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAppearance } from '@/components/admin/AppearanceSettings';
+import { useAdminTranslations } from './AdminTranslationsProvider';
 
 // --- SVG Illustration Generators ---
 // These functions create simplified SVG representations of the site layouts
@@ -17,7 +18,7 @@ import { useAppearance } from '@/components/admin/AppearanceSettings';
  * @param {string} theme - The theme ID ('playful' or 'default').
  * @returns {string} A base64-encoded data URI for the SVG image.
  */
-const createAdminSvg = (theme) => {
+const createAdminSvg = (theme, t) => {
   const bgColor = '#1f2937';
   const primaryColor = '#4f46e5';
   const contentBg = '#E5E7EB';
@@ -33,7 +34,7 @@ const createAdminSvg = (theme) => {
       break;
   }
   const mainContent = `<g><rect x="150" y="15" width="435" height="370" fill="${contentBg}" rx="8" /><rect x="170" y="35" width="150" height="15" fill="#9CA3AF" rx="5" /><path d="M170 80 h395 M170 100 h395 M170 120 h250" stroke="#CBD5E1" stroke-width="8" stroke-linecap="round"/></g>`;
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400"><rect width="100%" height="100%" fill="#F9FAFB"/><g>${sidebar}${mainContent}</g><text x="50%" y="95%" font-family="Arial" font-size="16" fill="#6B7280" text-anchor="middle">Admin Panel</text></svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400"><rect width="100%" height="100%" fill="#F9FAFB"/><g>${sidebar}${mainContent}</g><text x="50%" y="95%" font-family="Arial" font-size="16" fill="#6B7280" text-anchor="middle">${t.appearance.adminPanel}</text></svg>`;
   return `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`;
 };
 
@@ -42,7 +43,7 @@ const createAdminSvg = (theme) => {
  * @param {string} theme - The theme ID ('playful', 'single-page', or 'default').
  * @returns {string} A base64-encoded data URI for the SVG image.
  */
-const createPublicSvg = (theme) => {
+const createPublicSvg = (theme, t) => {
   const headerColor = '#FFFFFF';
   const contentBg = '#F3F4F6';
   const primaryColor = '#0891b2';
@@ -64,7 +65,7 @@ const createPublicSvg = (theme) => {
       break;
   }
   const footer = `<rect x="15" y="350" width="570" height="35" fill="${footerColor}" rx="8" />`;
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400"><rect width="100%" height="100%" fill="#E5E7EB"/><g>${header}${mainContent}${footer}</g><text x="50%" y="95%" font-family="Arial" font-size="16" fill="#6B7280" text-anchor="middle">Public Site</text></svg>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400"><rect width="100%" height="100%" fill="#E5E7EB"/><g>${header}${mainContent}${footer}</g><text x="50%" y="95%" font-family="Arial" font-size="16" fill="#6B7280" text-anchor="middle">${t.appearance.publicSite}</text></svg>`;
   return `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`;
 };
 
@@ -81,6 +82,7 @@ const themes = [
  */
 export default function AdminAppearanceEditor() {
   const { adminAppearance, publicAppearance, setAppearance, isLoading } = useAppearance();
+  const { t } = useAdminTranslations();
   const [selectedTheme, setSelectedTheme] = useState('default');
   const [message, setMessage] = useState('');
   const [isSaving, setIsSaving] = useState(false);
@@ -103,21 +105,25 @@ export default function AdminAppearanceEditor() {
     setIsSaving(true);
     setMessage('');
     const success = await setAppearance(selectedTheme, target);
+    const themeName = themes.find(t => t.id === selectedTheme)?.name || selectedTheme;
     if (success) {
-      const themeName = themes.find(t => t.id === selectedTheme)?.name || selectedTheme;
-      setMessage(`Theme set to '${themeName}' for '${target}' target.`);
+      const successMsg = t.appearance.success.replace('{themeName}', themeName).replace('{target}', target);
+      setMessage(successMsg);
     } else {
-      setMessage(`Error: Failed to save theme. Please check server logs or browser console.`);
+      setMessage(t.appearance.error);
     }
     setIsSaving(false);
     // Clear the message after 5 seconds.
     setTimeout(() => setMessage(''), 5000);
   };
 
+  const themeName = themes.find(t => t.id === selectedTheme)?.name || 'N/A';
+  const setThemeForText = t.appearance.setThemeFor.replace('{themeName}', themeName);
+
   return (
     <div className="mt-8">
-      <h1 className="text-2xl font-bold mb-6">Appearance</h1>
-      <h2 className="text-xl font-semibold mb-4">Global Themes</h2>
+      <h1 className="text-2xl font-bold mb-6">{t.appearance.title}</h1>
+      <h2 className="text-xl font-semibold mb-4">{t.appearance.globalThemes}</h2>
       <div className="space-y-6">
 
         {/* Theme selection grid */}
@@ -132,8 +138,8 @@ export default function AdminAppearanceEditor() {
                 <h3 className="font-bold text-lg text-center">{theme.name}</h3>
               </div>
               <div className="p-4 bg-gray-100 rounded-b-md space-y-4">
-                <img src={createPublicSvg(theme.id)} alt={`${theme.name} Public Preview`} className="w-full rounded shadow-inner" />
-                <img src={createAdminSvg(theme.id)} alt={`${theme.name} Admin Preview`} className="w-full rounded shadow-inner" />
+                <img src={createPublicSvg(theme.id, t)} alt={`${theme.name} Public Preview`} className="w-full rounded shadow-inner" />
+                <img src={createAdminSvg(theme.id, t)} alt={`${theme.name} Admin Preview`} className="w-full rounded shadow-inner" />
               </div>
             </div>
           ))}
@@ -141,20 +147,20 @@ export default function AdminAppearanceEditor() {
 
         {/* Display the currently active themes */}
         <div className="text-center text-sm text-gray-600 p-4 bg-blue-50 rounded-lg">
-          <p>Current Public Theme: <span className="font-bold">{themes.find(t => t.id === publicAppearance)?.name || 'N/A'}</span></p>
-          <p>Current Admin Theme: <span className="font-bold">{themes.find(t => t.id === adminAppearance)?.name || 'N/A'}</span></p>
+          <p>{t.appearance.currentPublicTheme} <span className="font-bold">{themes.find(t => t.id === publicAppearance)?.name || 'N/A'}</span></p>
+          <p>{t.appearance.currentAdminTheme} <span className="font-bold">{themes.find(t => t.id === adminAppearance)?.name || 'N/A'}</span></p>
         </div>
 
         {/* Action buttons to apply the selected theme */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 border-t">
-            <p className="font-semibold">Set '<span className="text-primary">{themes.find(t => t.id === selectedTheme)?.name}</span>' as the theme for:</p>
-            <button onClick={() => handleSetTheme('public')} disabled={isSaving} className="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300 disabled:opacity-50">Public Site</button>
-            <button onClick={() => handleSetTheme('admin')} disabled={isSaving} className="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300 disabled:opacity-50">Admin Panel</button>
-            <button onClick={() => handleSetTheme('both')} disabled={isSaving} className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 disabled:opacity-50">Both</button>
+            <p className="font-semibold">{setThemeForText}</p>
+            <button onClick={() => handleSetTheme('public')} disabled={isSaving} className="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300 disabled:opacity-50">{t.appearance.publicSite}</button>
+            <button onClick={() => handleSetTheme('admin')} disabled={isSaving} className="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300 disabled:opacity-50">{t.appearance.adminPanel}</button>
+            <button onClick={() => handleSetTheme('both')} disabled={isSaving} className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 disabled:opacity-50">{t.appearance.both}</button>
         </div>
 
         {/* Display success or error messages */}
-        {message && <p className={`mt-4 text-sm text-center ${message.startsWith('Error') ? 'text-red-600' : 'text-green-600'}`}>{message}</p>}
+        {message && <p className={`mt-4 text-sm text-center ${message.includes('Error') ? 'text-red-600' : 'text-green-600'}`}>{message}</p>}
       </div>
     </div>
   );

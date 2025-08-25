@@ -92,5 +92,17 @@
     "titleLabel": "Cikk címe",
     "contentLabel": "Tartalom",
     "saveButton": "Cikk mentése"
+  },
+  "appearance": {
+    "title": "Megjelenés",
+    "globalThemes": "Globális témák",
+    "currentPublicTheme": "Jelenlegi publikus téma:",
+    "currentAdminTheme": "Jelenlegi admin téma:",
+    "setThemeFor": "'{themeName}' téma beállítása a következőhöz:",
+    "publicSite": "Publikus oldal",
+    "adminPanel": "Admin panel",
+    "both": "Mindkettő",
+    "success": "A téma '{themeName}' lett beállítva a(z) '{target}' számára.",
+    "error": "Hiba: A téma mentése sikertelen. Kérjük, ellenőrizze a szerver naplókat vagy a böngésző konzolt."
   }
 }

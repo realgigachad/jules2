@@ -1,0 +1,108 @@
+{
+  "layout": {
+    "title": "Panel admina",
+    "dashboard": "Pulpit",
+    "trips": "Podróże",
+    "articles": "Artykuły",
+    "settings": "Ustawienia witryny",
+    "styling": "Wygląd",
+    "changePassword": "Zmień hasło",
+    "logout": "Wyloguj"
+  },
+  "dashboard": {
+    "title": "Pulpit",
+    "welcome": "Witaj w panelu administracyjnym.",
+    "manageTrips": "Zarządzaj podróżami",
+    "manageTripsDesc": "Twórz, edytuj i usuwaj nadchodzące podróże. Ustawiaj ceny i daty podróży.",
+    "manageArticles": "Zarządzaj artykułami",
+    "manageArticlesDesc": "Pisz i publikuj artykuły na blogu na stronie głównej.",
+    "updateSettings": "Aktualizuj ustawienia",
+    "updateSettingsDesc": "Zmieniaj globalne informacje o witrynie, takie jak dane kontaktowe.",
+    "updateStyling": "Dostosuj styl",
+    "updateStylingDesc": "Zmieniaj kolory, czcionki i układ witryny."
+  },
+  "trips": {
+    "manageTitle": "Zarządzaj podróżami",
+    "createButton": "Utwórz nową podróż",
+    "loading": "Ładowanie podróży...",
+    "noTrips": "Nie znaleziono podróży.",
+    "edit": "Edytuj",
+    "delete": "Usuń",
+    "deleteConfirm": "Czy na pewno chcesz usunąć tę podróż?",
+    "createTitle": "Utwórz nową podróż",
+    "editTitle": "Edytuj podróż"
+  },
+  "articles": {
+    "manageTitle": "Zarządzaj artykułami",
+    "createButton": "Napisz nowy artykuł",
+    "loading": "Ładowanie artykułów...",
+    "noArticles": "Nie znaleziono artykułów.",
+    "edit": "Edytuj",
+    "delete": "Usuń",
+    "deleteConfirm": "Czy na pewno chcesz usunąć ten artykuł?",
+    "createTitle": "Napisz nowy artykuł",
+    "editTitle": "Edytuj artykuł",
+    "publishedOn": "Opublikowano"
+  },
+  "settings": {
+    "title": "Ustawienia witryny",
+    "emailLabel": "Kontaktowy adres e-mail",
+    "phoneLabel": "Telefon kontaktowy",
+    "addressLabel": "Adres",
+    "saveButton": "Zapisz ustawienia",
+    "saving": "Zapisywanie...",
+    "success": "Ustawienia zapisane pomyślnie!",
+    "error": "Błąd"
+  },
+  "login": {
+    "title": "Logowanie administratora",
+    "usernameLabel": "Nazwa użytkownika",
+    "passwordLabel": "Hasło",
+    "button": "Zaloguj się",
+    "signingIn": "Logowanie...",
+    "forgotPassword": "Nie pamiętasz hasła?"
+  },
+  "changePassword": {
+    "title": "Zmień swoje hasło",
+    "titleLoggedIn": "Zmień hasło",
+    "intro": "Ze względów bezpieczeństwa musisz zmienić domyślne hasło.",
+    "newPasswordLabel": "Nowe hasło",
+    "confirmPasswordLabel": "Potwierdź nowe hasło",
+    "button": "Ustaw nowe hasło",
+    "success": "Hasło zaktualizowane pomyślnie!",
+    "errorMatch": "Hasła nie pasują do siebie.",
+    "errorLength": "Hasło musi mieć co najmniej 6 znaków."
+  },
+  "tripForm": {
+    "language": "Język",
+    "titleLabel": "Tytuł podróży",
+    "descriptionLabel": "Opis",
+    "pricingTitle": "Cennik",
+    "convertButton": "Konw.",
+    "convertTitle": "Konwertuj z",
+    "priceReminder": "Przypomnienie: W celach marketingowych najlepiej, aby ceny były zgodne z lokalną konwencją (np. kończyły się na .99).",
+    "priceSourceError": "Najpierw wprowadź prawidłową cenę w walucie źródłowej.",
+    "imageUrlLabel": "URL obrazu",
+    "startDateLabel": "Data rozpoczęcia",
+    "endDateLabel": "Data zakończenia",
+    "saveButton": "Zapisz podróż"
+  },
+  "articleForm": {
+    "language": "Język",
+    "titleLabel": "Tytuł artykułu",
+    "contentLabel": "Treść",
+    "saveButton": "Zapisz artykuł"
+  },
+  "appearance": {
+    "title": "Wygląd",
+    "globalThemes": "Globalne motywy",
+    "currentPublicTheme": "Aktualny motyw publiczny:",
+    "currentAdminTheme": "Aktualny motyw panelu admina:",
+    "setThemeFor": "Ustaw motyw '{themeName}' dla:",
+    "publicSite": "Strona publiczna",
+    "adminPanel": "Panel admina",
+    "both": "Oba",
+    "success": "Motyw '{themeName}' został ustawiony dla '{target}'.",
+    "error": "Błąd: Nie udało się zapisać motywu. Sprawdź logi serwera lub konsolę przeglądarki."
+  }
+}

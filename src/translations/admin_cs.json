@@ -92,5 +92,17 @@
     "titleLabel": "Název článku",
     "contentLabel": "Obsah",
     "saveButton": "Uložit článek"
+  },
+  "appearance": {
+    "title": "Vzhled",
+    "globalThemes": "Globální motivy",
+    "currentPublicTheme": "Aktuální veřejný motiv:",
+    "currentAdminTheme": "Aktuální motiv administrace:",
+    "setThemeFor": "Nastavit motiv '{themeName}' pro:",
+    "publicSite": "Veřejná stránka",
+    "adminPanel": "Admin panel",
+    "both": "Obě",
+    "success": "Motiv '{themeName}' byl nastaven pro '{target}'.",
+    "error": "Chyba: Nepodařilo se uložit motiv. Zkontrolujte prosím logy serveru nebo konzoli prohlížeče."
   }
 }
