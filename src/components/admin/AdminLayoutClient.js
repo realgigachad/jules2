@@ -84,6 +84,19 @@ export default function AdminLayoutClient({ children }) {
     return `${base} ${hover} ${active}`;
   };
 
+  // Centralized language configuration for the admin panel UI.
+  const adminLanguages = [
+    { code: 'en', name: 'English' },
+    { code: 'de', name: 'Deutsch' },
+    { code: 'hu', name: 'Magyar' },
+    { code: 'ru', name: 'Русский' },
+    { code: 'sk', name: 'Slovenčina' },
+    { code: 'cs', name: 'Čeština' },
+    { code: 'uk', name: 'Українська' },
+    { code: 'pl', name: 'Polski' },
+    { code: 'sr', name: 'Srpski' },
+  ];
+
   /**
    * A dropdown component for changing the admin UI language.
    */
@@ -96,13 +109,9 @@ export default function AdminLayoutClient({ children }) {
         value={lang}
         className="bg-gray-700 text-white p-1 rounded w-full mt-1 text-sm"
       >
-        <option value="en">English</option>
-        <option value="de">Deutsch</option>
-        <option value="hu">Magyar</option>
-        <option value="ru">Русский</option>
-        <option value="sk">Slovenčina</option>
-        <option value="cs">Čeština</option>
-        <option value="uk">Українська</option>
+        {adminLanguages.map(langInfo => (
+          <option key={langInfo.code} value={langInfo.code}>{langInfo.name}</option>
+        ))}
       </select>
     </div>
   );
