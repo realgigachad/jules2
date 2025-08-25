@@ -21,7 +21,7 @@ const emptyMultilingual = languages.reduce((acc, lang) => {
 }, {});
 
 
-export default function SettingsPage() {
+export function SettingsSection() {
   const [settings, setSettings] = useState({
     contactEmail: '',
     contactPhone: '',

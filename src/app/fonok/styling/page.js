@@ -60,7 +60,7 @@ function LivePreview({ styleSettings }) {
 }
 
 
-export default function StylingPage() {
+export function StylingSection() {
   const [styleSettings, setStyleSettings] = useState(newDefaultStyle);
   const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(true);

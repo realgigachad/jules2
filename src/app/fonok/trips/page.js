@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAdminTranslations } from '@/components/admin/AdminTranslationsProvider';
 
-export default function TripsListPage() {
+export function TripsSection() {
   const [trips, setTrips] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
