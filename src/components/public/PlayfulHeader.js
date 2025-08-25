@@ -49,5 +49,6 @@ export default function PlayfulHeader({ lang, t }) {
         <LanguageSelector />
       </div>
     </aside>
+    </div>
   );
 }
