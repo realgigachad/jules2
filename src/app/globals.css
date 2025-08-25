@@ -73,3 +73,16 @@
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
   border-radius: 8px;
 }
+
+.theme-playful .playful-card {
+  transition: all 0.3s ease-out;
+}
+
+.theme-playful .playful-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.theme-playful .playful-button:hover {
+  transform: scale(1.1) rotate(-2deg);
+}
