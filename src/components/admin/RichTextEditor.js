@@ -10,7 +10,8 @@ import TextAlign from '@tiptap/extension-text-align'
 import { Color } from '@tiptap/extension-color'
 import TextStyle from '@tiptap/extension-text-style'
 import Image from '@tiptap/extension-image'
-import { useRef } from 'react'
+import { useState } from 'react'
+import MediaLibrary from './MediaLibrary' // Import the MediaLibrary component
 
 /**
  * The toolbar component for the Tiptap editor.
@@ -18,61 +19,40 @@ import { useRef } from 'react'
  * @param {{editor: object}} props - The component props, containing the Tiptap editor instance.
  */
 const MenuBar = ({ editor }) => {
-  if (!editor) return null
-  const fileInputRef = useRef(null);
+  if (!editor) return null;
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
   /**
-   * Inserts media into the editor based on its file type.
-   * @param {string} url - The URL of the uploaded media.
-   * @param {File} file - The original file object, used to determine the file type.
+   * Inserts media into the editor based on its file extension from the URL.
+   * @param {string} url - The URL of the media file.
    */
-  const addMedia = (url, file) => {
-    if (url) {
-      if (file.type.startsWith('image/')) {
-        editor.chain().focus().setImage({ src: url }).run();
-      } else if (file.type.startsWith('video/')) {
-        const videoHtml = `<video controls src="${url}" width="100%"></video>`;
-        editor.chain().focus().insertContent(videoHtml).run();
-      } else if (file.type === 'application/pdf') {
-        const pdfHtml = `<a href="${url}" target="_blank" rel="noopener noreferrer" class="pdf-embed">${file.name}</a>`;
-        editor.chain().focus().insertContent(pdfHtml).run();
-      } else {
-        const linkHtml = `<a href="${url}" target="_blank" rel="noopener noreferrer">Download ${file.name}</a>`;
-        editor.chain().focus().insertContent(linkHtml).run();
-      }
+  const addMediaFromUrl = (url) => {
+    if (!url) return;
+    const extension = url.split('.').pop().toLowerCase();
+    const imageName = url.split('/').pop();
+
+    if (['jpg', 'jpeg', 'png', 'gif', 'svg', 'webp'].includes(extension)) {
+      editor.chain().focus().setImage({ src: url }).run();
+    } else if (['mp4', 'webm', 'ogg'].includes(extension)) {
+      const videoHtml = `<video controls src="${url}" width="100%"></video>`;
+      editor.chain().focus().insertContent(videoHtml).run();
+    } else if (extension === 'pdf') {
+      const pdfHtml = `<a href="${url}" target="_blank" rel="noopener noreferrer" class="pdf-embed">${imageName}</a>`;
+      editor.chain().focus().insertContent(pdfHtml).run();
+    } else {
+      const linkHtml = `<a href="${url}" target="_blank" rel="noopener noreferrer">Download ${imageName}</a>`;
+      editor.chain().focus().insertContent(linkHtml).run();
     }
   };
 
-  /**
-   * Handles the file input change event. It uploads the selected file to the server
-   * via the '/api/uploads' endpoint and then calls `addMedia` to insert it into the editor.
-   * @param {React.ChangeEvent<HTMLInputElement>} event - The file input change event.
-   */
-  const handleFileChange = async (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const formData = new FormData();
-    formData.append('file', file);
-
-    try {
-      const res = await fetch('/api/uploads', { method: 'POST', body: formData });
-      const data = await res.json();
-      if (data.success) {
-        addMedia(data.url, file);
-      } else {
-        throw new Error(data.message || 'File upload failed');
-      }
-    } catch (error) {
-      console.error(error);
-      alert(error.message);
-    }
+  const handleSelectFileFromGallery = (url) => {
+    addMediaFromUrl(url);
   };
 
   /**
    * Prompts the user for an image URL and inserts it into the editor.
    */
-  const addImageFromUrl = () => {
+  const addImageFromPrompt = () => {
     const url = window.prompt('URL');
     if (url) {
       editor.chain().focus().setImage({ src: url }).run();
@@ -80,39 +60,45 @@ const MenuBar = ({ editor }) => {
   };
 
   return (
-    <div className="border border-gray-300 rounded-t-lg p-2 bg-gray-50 flex flex-wrap gap-2">
-      {/* Formatting buttons */}
-      <button type="button" onClick={() => editor.chain().focus().toggleBold().run()} className={editor.isActive('bold') ? 'is-active' : ''}>Bold</button>
-      <button type="button" onClick={() => editor.chain().focus().toggleItalic().run()} className={editor.isActive('italic') ? 'is-active' : ''}>Italic</button>
-      <button type="button" onClick={() => editor.chain().focus().toggleBlockquote().run()} className={editor.isActive('blockquote') ? 'is-active' : ''}>Quote</button>
-      <button type="button" onClick={() => editor.chain().focus().toggleBulletList().run()} className={editor.isActive('bulletList') ? 'is-active' : ''}>Bullets</button>
-      <button type="button" onClick={() => editor.chain().focus().toggleOrderedList().run()} className={editor.isActive('orderedList') ? 'is-active' : ''}>Numbers</button>
-      <button type="button" onClick={() => editor.chain().focus().sinkListItem('listItem').run()} disabled={!editor.can().sinkListItem('listItem')}>Indent</button>
-      <button type="button" onClick={() => editor.chain().focus().liftListItem('listItem').run()} disabled={!editor.can().liftListItem('listItem')}>Outdent</button>
+    <>
+      <MediaLibrary
+        isOpen={isGalleryOpen}
+        onClose={() => setIsGalleryOpen(false)}
+        onSelectFile={handleSelectFileFromGallery}
+      />
+      <div className="border border-gray-300 rounded-t-lg p-2 bg-gray-50 flex flex-wrap gap-2">
+        {/* Formatting buttons */}
+        <button type="button" onClick={() => editor.chain().focus().toggleBold().run()} className={editor.isActive('bold') ? 'is-active' : ''}>Bold</button>
+        <button type="button" onClick={() => editor.chain().focus().toggleItalic().run()} className={editor.isActive('italic') ? 'is-active' : ''}>Italic</button>
+        <button type="button" onClick={() => editor.chain().focus().toggleBlockquote().run()} className={editor.isActive('blockquote') ? 'is-active' : ''}>Quote</button>
+        <button type="button" onClick={() => editor.chain().focus().toggleBulletList().run()} className={editor.isActive('bulletList') ? 'is-active' : ''}>Bullets</button>
+        <button type="button" onClick={() => editor.chain().focus().toggleOrderedList().run()} className={editor.isActive('orderedList') ? 'is-active' : ''}>Numbers</button>
+        <button type="button" onClick={() => editor.chain().focus().sinkListItem('listItem').run()} disabled={!editor.can().sinkListItem('listItem')}>Indent</button>
+        <button type="button" onClick={() => editor.chain().focus().liftListItem('listItem').run()} disabled={!editor.can().liftListItem('listItem')}>Outdent</button>
 
-      {/* Text alignment buttons */}
-      <button type="button" onClick={() => editor.chain().focus().setTextAlign('left').run()} className={editor.isActive({ textAlign: 'left' }) ? 'is-active' : ''}>Left</button>
-      <button type="button" onClick={() => editor.chain().focus().setTextAlign('center').run()} className={editor.isActive({ textAlign: 'center' }) ? 'is-active' : ''}>Center</button>
-      <button type="button" onClick={() => editor.chain().focus().setTextAlign('right').run()} className={editor.isActive({ textAlign: 'right' }) ? 'is-active' : ''}>Right</button>
+        {/* Text alignment buttons */}
+        <button type="button" onClick={() => editor.chain().focus().setTextAlign('left').run()} className={editor.isActive({ textAlign: 'left' }) ? 'is-active' : ''}>Left</button>
+        <button type="button" onClick={() => editor.chain().focus().setTextAlign('center').run()} className={editor.isActive({ textAlign: 'center' }) ? 'is-active' : ''}>Center</button>
+        <button type="button" onClick={() => editor.chain().focus().setTextAlign('right').run()} className={editor.isActive({ textAlign: 'right' }) ? 'is-active' : ''}>Right</button>
 
-      {/* Heading and color buttons */}
-      <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} className={editor.isActive('heading', { level: 1 }) ? 'is-active' : ''}>H1</button>
-      <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} className={editor.isActive('heading', { level: 2 }) ? 'is-active' : ''}>H2</button>
-      <input type="color" onInput={event => editor.chain().focus().setColor(event.target.value).run()} value={editor.getAttributes('textStyle').color || '#000000'} />
+        {/* Heading and color buttons */}
+        <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} className={editor.isActive('heading', { level: 1 }) ? 'is-active' : ''}>H1</button>
+        <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} className={editor.isActive('heading', { level: 2 }) ? 'is-active' : ''}>H2</button>
+        <input type="color" onInput={event => editor.chain().focus().setColor(event.target.value).run()} value={editor.getAttributes('textStyle').color || '#000000'} />
 
-      {/* Media buttons */}
-      <button type="button" onClick={addImageFromUrl}>Image URL</button>
-      <input type="file" ref={fileInputRef} onChange={handleFileChange} className="hidden" accept="image/*,video/*,.pdf" />
-      <button type="button" onClick={() => fileInputRef.current.click()}>Upload File</button>
+        {/* Media buttons */}
+        <button type="button" onClick={addImageFromPrompt}>Image URL</button>
+        <button type="button" onClick={() => setIsGalleryOpen(true)}>Media Library</button>
 
-      {/* Scoped styles for the menu bar buttons */}
-      <style jsx>{`
-        button { padding: 4px 8px; border-radius: 4px; border: 1px solid #ccc; background: white; font-size: 0.875rem; }
-        button.is-active { background-color: #0891b2; color: white; border-color: #06b6d4; }
-        button:disabled { opacity: 0.5; }
-        input[type="color"] { width: 2.5rem; padding: 2px; border-radius: 4px; border: 1px solid #ccc; background: white; }
-      `}</style>
-    </div>
+        {/* Scoped styles for the menu bar buttons */}
+        <style jsx>{`
+          button { padding: 4px 8px; border-radius: 4px; border: 1px solid #ccc; background: white; font-size: 0.875rem; }
+          button.is-active { background-color: #0891b2; color: white; border-color: #06b6d4; }
+          button:disabled { opacity: 0.5; }
+          input[type="color"] { width: 2.5rem; padding: 2px; border-radius: 4px; border: 1px solid #ccc; background: white; }
+        `}</style>
+      </div>
+    </>
   )
 }
 

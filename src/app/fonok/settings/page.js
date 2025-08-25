@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAdminTranslations } from '@/components/admin/AdminTranslationsProvider';
+import MediaLibrary from '@/components/admin/MediaLibrary';
 
 const languages = [
     { code: 'en', name: 'English' },
@@ -35,6 +36,8 @@ export function SettingsSection() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const { t } = useAdminTranslations();
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+  const [galleryTarget, setGalleryTarget] = useState('');
 
   useEffect(() => {
     const fetchSettings = async () => {
@@ -44,7 +47,8 @@ export function SettingsSection() {
         if (!res.ok) throw new Error('Failed to fetch settings');
         const data = await res.json();
         const address = { ...emptyMultilingual, ...(data.data.address || {}) };
-        setSettings({ ...data.data, address });
+        // Ensure logoUrl and bannerUrl are part of the state
+        setSettings({ logoUrl: '', bannerUrl: '', ...data.data, address });
       } catch (err) {
         setError(err.message);
       } finally {
@@ -66,40 +70,18 @@ export function SettingsSection() {
     }
   };
 
-  const handleFileUpload = async (e, targetField) => {
-    const file = e.target.files[0];
-    if (!file) return;
+  const openGallery = (target) => {
+    setGalleryTarget(target);
+    setIsGalleryOpen(true);
+  };
 
-    const formData = new FormData();
-    formData.append('file', file);
+  const handleSelectFile = (url) => {
+    setSettings(prev => ({ ...prev, [galleryTarget]: url }));
+    // No need to close the gallery here, the gallery component does it
+  };
 
-    // Display a temporary saving state
-    setSuccess('');
-    setError('');
-    setIsSaving(true);
-
-    try {
-      const res = await fetch('/api/uploads', {
-        method: 'POST',
-        body: formData,
-      });
-
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.message || 'File upload failed');
-      }
-
-      setSettings(prev => ({ ...prev, [targetField]: data.url }));
-      setSuccess('Image uploaded! Remember to save all settings.');
-
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      // We can turn off the main saving indicator, as this was just for the upload
-      setIsSaving(false);
-      // Clear the file input value so the user can upload the same file again if they need to
-      e.target.value = null;
-    }
+  const handleClearImage = (targetField) => {
+    setSettings(prev => ({ ...prev, [targetField]: '' }));
   };
 
   const handleSubmit = async (e) => {
@@ -130,15 +112,20 @@ export function SettingsSection() {
   return (
     <div>
       <h1 className="text-3xl font-bold text-gray-900 mb-8">{t.settings.title}</h1>
+      <MediaLibrary
+        isOpen={isGalleryOpen}
+        onClose={() => setIsGalleryOpen(false)}
+        onSelectFile={handleSelectFile}
+      />
       <form onSubmit={handleSubmit} className="space-y-8 bg-white p-8 rounded-lg shadow-md">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label htmlFor="contactEmail" className="block text-sm font-medium text-gray-700">{t.settings.emailLabel}</label>
-            <input type="email" name="contactEmail" id="contactEmail" value={settings.contactEmail} onChange={handleChange} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" />
+            <input type="email" name="contactEmail" id="contactEmail" value={settings.contactEmail || ''} onChange={handleChange} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" />
           </div>
           <div>
             <label htmlFor="contactPhone" className="block text-sm font-medium text-gray-700">{t.settings.phoneLabel}</label>
-            <input type="tel" name="contactPhone" id="contactPhone" value={settings.contactPhone} onChange={handleChange} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" />
+            <input type="tel" name="contactPhone" id="contactPhone" value={settings.contactPhone || ''} onChange={handleChange} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" />
           </div>
         </div>
 
@@ -178,48 +165,56 @@ export function SettingsSection() {
             <div>
               <label className="block text-sm font-medium text-gray-700">Logo</label>
               {settings.logoUrl && (
-                <div className="mt-2">
-                  <img src={settings.logoUrl} alt="Current logo" className="h-16 w-auto bg-gray-100 p-2 rounded-md" />
+                <div className="mt-2 p-2 border rounded-md inline-block">
+                  <img src={settings.logoUrl} alt="Current logo" className="h-16 w-auto bg-gray-100" />
                 </div>
               )}
-              <input
-                type="file"
-                id="logo-upload"
-                className="hidden"
-                accept="image/png, image/jpeg, image/gif, image/svg+xml"
-                onChange={(e) => handleFileUpload(e, 'logoUrl')}
-              />
-              <button
-                type="button"
-                onClick={() => document.getElementById('logo-upload').click()}
-                className="mt-2 px-4 py-2 text-sm text-white bg-gray-600 rounded-md hover:bg-gray-700"
-              >
-                Upload New Logo
-              </button>
+              <div className="mt-2 flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => openGallery('logoUrl')}
+                  className="px-4 py-2 text-sm text-white bg-gray-600 rounded-md hover:bg-gray-700"
+                >
+                  Choose from Library
+                </button>
+                {settings.logoUrl && (
+                  <button
+                    type="button"
+                    onClick={() => handleClearImage('logoUrl')}
+                    className="px-4 py-2 text-sm text-red-700 bg-red-100 rounded-md hover:bg-red-200"
+                  >
+                    Clear
+                  </button>
+                )}
+              </div>
             </div>
 
             {/* Banner Upload */}
             <div>
               <label className="block text-sm font-medium text-gray-700">Front Page Banner</label>
               {settings.bannerUrl && (
-                <div className="mt-2">
-                  <img src={settings.bannerUrl} alt="Current banner" className="h-32 w-full object-cover bg-gray-100 p-2 rounded-md" />
+                <div className="mt-2 p-2 border rounded-md">
+                  <img src={settings.bannerUrl} alt="Current banner" className="h-32 w-full object-cover bg-gray-100" />
                 </div>
               )}
-              <input
-                type="file"
-                id="banner-upload"
-                className="hidden"
-                accept="image/png, image/jpeg, image/gif"
-                onChange={(e) => handleFileUpload(e, 'bannerUrl')}
-              />
-              <button
-                type="button"
-                onClick={() => document.getElementById('banner-upload').click()}
-                className="mt-2 px-4 py-2 text-sm text-white bg-gray-600 rounded-md hover:bg-gray-700"
-              >
-                Upload New Banner
-              </button>
+              <div className="mt-2 flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => openGallery('bannerUrl')}
+                  className="px-4 py-2 text-sm text-white bg-gray-600 rounded-md hover:bg-gray-700"
+                >
+                  Choose from Library
+                </button>
+                {settings.bannerUrl && (
+                  <button
+                    type="button"
+                    onClick={() => handleClearImage('bannerUrl')}
+                    className="px-4 py-2 text-sm text-red-700 bg-red-100 rounded-md hover:bg-red-200"
+                  >
+                    Clear
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
