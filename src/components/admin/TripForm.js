@@ -32,13 +32,13 @@ const conversionRates = { eur: 1, gbp: 0.85, huf: 400, rub: 90, czk: 25, uah: 42
 // Rules for formatting prices to common marketing conventions (e.g., ending in .99).
 const priceFormatRules = {
   huf: (p) => Math.round(p / 1000) * 1000 - 10, // e.g., 12345 -> 12000 -> 11990
-  eur: (p) => Math.floor(p) + 0.99,
-  gbp: (p) => Math.floor(p) + 0.99,
-  rub: (p) => Math.floor(p / 100) * 100 + 99, // e.g., 1234 -> 1200 -> 1299
-  czk: (p) => Math.floor(p) + 0.99,
-  uah: (p) => Math.floor(p) + 0.99,
-  pln: (p) => Math.floor(p) + 0.99,
-  rsd: (p) => Math.round(p / 10) * 10, // e.g. 1234 -> 1230
+  eur: (p) => Math.round(p / 10) * 10 - 0.01, // e.g. 123.45 -> 120 -> 119.99
+  gbp: (p) => Math.round(p / 10) * 10 - 0.01, // e.g. 89.50 -> 90 -> 89.99
+  rub: (p) => Math.round(p / 1000) * 1000 - 0.01, // e.g. 12345.67 -> 12000 -> 11999.99
+  czk: (p) => Math.round(p / 100) * 100 - 0.01, // e.g. 1234.56 -> 1200 -> 1199.99
+  uah: (p) => Math.round(p / 100) * 100 - 0.01, // e.g. 1234.56 -> 1200 -> 1199.99
+  pln: (p) => Math.floor(p) + 0.99, // Unchanged
+  rsd: (p) => Math.round(p / 1000) * 1000 - 0.01, // e.g. 12345.67 -> 12000 -> 11999.99
 };
 
 /**
