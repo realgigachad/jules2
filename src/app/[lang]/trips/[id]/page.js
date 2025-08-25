@@ -1,4 +1,5 @@
 import { getTranslations } from '@/lib/getTranslations';
+import DOMPurify from 'isomorphic-dompurify';
 
 async function getTrip(id) {
   try {
@@ -45,7 +46,7 @@ export default async function TripDetailPage({ params: { lang, id } }) {
           <h1 className="text-4xl font-extrabold font-header">{trip.title[lang] || trip.title.en}</h1>
           <div
             className="prose lg:prose-xl mt-6 max-w-none"
-            dangerouslySetInnerHTML={{ __html: trip.description[lang] || trip.description.en }}
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(trip.description[lang] || trip.description.en) }}
           />
         </div>
         <div className="md:col-span-1">

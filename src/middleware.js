@@ -26,8 +26,7 @@ export async function middleware(req) {
   const isProtectedApiRoute = protectedApiPrefixes.some(prefix => pathname.startsWith(prefix));
   // The `/fonok` login page and `/fonok/password` forgot password page are not protected.
   const isProtectedPageRoute = pathname.startsWith(protectedPagePrefix) &&
-                               pathname !== '/fonok' &&
-                               !pathname.startsWith('/fonok/password');
+                               pathname !== '/fonok';
 
   // If the route is not protected, continue to the requested page or API route.
   if (!isProtectedApiRoute && !isProtectedPageRoute) {

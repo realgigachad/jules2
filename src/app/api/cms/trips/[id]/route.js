@@ -7,6 +7,7 @@
 import dbConnect from '@/lib/dbConnect';
 import Trip from '@/models/Trip';
 import { NextResponse } from 'next/server';
+import DOMPurify from 'isomorphic-dompurify';
 
 /**
  * Handles GET requests to fetch a single trip by its ID.
@@ -38,6 +39,16 @@ export async function PUT(request, { params }) {
   await dbConnect();
   try {
     const body = await request.json();
+
+    // Sanitize the 'description' field before saving to prevent Stored XSS.
+    if (body.description && typeof body.description === 'object') {
+      for (const lang in body.description) {
+        if (typeof body.description[lang] === 'string') {
+          body.description[lang] = DOMPurify.sanitize(body.description[lang]);
+        }
+      }
+    }
+
     const updatedTrip = await Trip.findByIdAndUpdate(params.id, body, {
       new: true,
       runValidators: true,
