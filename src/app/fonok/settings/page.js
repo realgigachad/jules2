@@ -26,6 +26,8 @@ export default function SettingsPage() {
     contactEmail: '',
     contactPhone: '',
     address: { ...emptyMultilingual },
+    logoUrl: '',
+    bannerUrl: '',
   });
   const [currentLang, setCurrentLang] = useState('en');
   const [isLoading, setIsLoading] = useState(true);
@@ -61,6 +63,42 @@ export default function SettingsPage() {
       }));
     } else {
       setSettings(prev => ({ ...prev, [name]: value }));
+    }
+  };
+
+  const handleFileUpload = async (e, targetField) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    // Display a temporary saving state
+    setSuccess('');
+    setError('');
+    setIsSaving(true);
+
+    try {
+      const res = await fetch('/api/uploads', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || 'File upload failed');
+      }
+
+      setSettings(prev => ({ ...prev, [targetField]: data.url }));
+      setSuccess('Image uploaded! Remember to save all settings.');
+
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      // We can turn off the main saving indicator, as this was just for the upload
+      setIsSaving(false);
+      // Clear the file input value so the user can upload the same file again if they need to
+      e.target.value = null;
     }
   };
 
@@ -130,6 +168,59 @@ export default function SettingsPage() {
               onChange={handleChange}
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
             />
+          </div>
+        </div>
+
+        <div className="border-t border-gray-200 pt-8">
+          <h2 className="text-xl font-semibold text-gray-800 mb-4">Site Assets</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Logo Upload */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Logo</label>
+              {settings.logoUrl && (
+                <div className="mt-2">
+                  <img src={settings.logoUrl} alt="Current logo" className="h-16 w-auto bg-gray-100 p-2 rounded-md" />
+                </div>
+              )}
+              <input
+                type="file"
+                id="logo-upload"
+                className="hidden"
+                accept="image/png, image/jpeg, image/gif, image/svg+xml"
+                onChange={(e) => handleFileUpload(e, 'logoUrl')}
+              />
+              <button
+                type="button"
+                onClick={() => document.getElementById('logo-upload').click()}
+                className="mt-2 px-4 py-2 text-sm text-white bg-gray-600 rounded-md hover:bg-gray-700"
+              >
+                Upload New Logo
+              </button>
+            </div>
+
+            {/* Banner Upload */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Front Page Banner</label>
+              {settings.bannerUrl && (
+                <div className="mt-2">
+                  <img src={settings.bannerUrl} alt="Current banner" className="h-32 w-full object-cover bg-gray-100 p-2 rounded-md" />
+                </div>
+              )}
+              <input
+                type="file"
+                id="banner-upload"
+                className="hidden"
+                accept="image/png, image/jpeg, image/gif"
+                onChange={(e) => handleFileUpload(e, 'bannerUrl')}
+              />
+              <button
+                type="button"
+                onClick={() => document.getElementById('banner-upload').click()}
+                className="mt-2 px-4 py-2 text-sm text-white bg-gray-600 rounded-md hover:bg-gray-700"
+              >
+                Upload New Banner
+              </button>
+            </div>
           </div>
         </div>
 

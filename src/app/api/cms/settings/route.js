@@ -42,7 +42,7 @@ export async function POST(request) {
     const body = await request.json();
 
     // To prevent mass assignment vulnerabilities, we explicitly build the update object.
-    const allowedFields = ['contactEmail', 'contactPhone', 'address', 'style'];
+    const allowedFields = ['contactEmail', 'contactPhone', 'address', 'style', 'logoUrl', 'bannerUrl'];
     const updateData = {};
 
     for (const field of allowedFields) {

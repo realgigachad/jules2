@@ -60,7 +60,14 @@ export default function AdminLayoutClient({ children }) {
   ];
 
   // The main content area where the page-specific content will be rendered.
-  const mainContent = <main className="flex-1 p-8 overflow-y-auto">{children}</main>;
+  const isPasswordPage = pathname.startsWith('/fonok/password');
+  const mainContentClasses = [
+    "flex-1",
+    "p-8",
+    "overflow-y-auto",
+    isPasswordPage && appearance === 'single-page' ? "flex items-center justify-center" : ""
+  ].join(" ");
+  const mainContent = <main className={mainContentClasses}>{children}</main>;
 
   // CSS classes for different layout themes.
   const layoutClasses = {
