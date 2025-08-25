@@ -2,11 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useAdminTranslations } from '@/components/admin/AdminTranslationsProvider';
 
 export default function ArticlesListPage() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const { t } = useAdminTranslations();
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -25,7 +27,7 @@ export default function ArticlesListPage() {
   }, []);
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this article?')) {
+    if (window.confirm(t.articles.deleteConfirm)) {
       try {
         const res = await fetch(`/api/cms/articles/${id}`, {
           method: 'DELETE',
@@ -38,15 +40,15 @@ export default function ArticlesListPage() {
     }
   };
 
-  if (loading) return <p>Loading articles...</p>;
+  if (loading) return <p>{t.articles.loading}</p>;
   if (error) return <p className="text-red-500">Error: {error}</p>;
 
   return (
     <div>
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">Manage Articles</h1>
+        <h1 className="text-3xl font-bold text-gray-900">{t.articles.manageTitle}</h1>
         <Link href="/fonok/articles/new" className="px-4 py-2 text-white bg-cyan-600 rounded-md hover:bg-cyan-700">
-          + Write New Article
+          + {t.articles.createButton}
         </Link>
       </div>
       <div className="bg-white rounded-lg shadow-md">

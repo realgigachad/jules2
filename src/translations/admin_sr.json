@@ -30,7 +30,9 @@
     "delete": "Obriši",
     "deleteConfirm": "Da li ste sigurni da želite da obrišete ovo putovanje?",
     "createTitle": "Kreiraj novo putovanje",
-    "editTitle": "Uredi putovanje"
+    "editTitle": "Uredi putovanje",
+    "untitled": "Putovanje bez naslova",
+    "priceLabel": "Cena:"
   },
   "articles": {
     "manageTitle": "Upravljajte člancima",
@@ -46,13 +48,16 @@
   },
   "settings": {
     "title": "Podešavanja sajta",
+    "loading": "Učitavanje podešavanja...",
     "emailLabel": "Kontakt email",
     "phoneLabel": "Kontakt telefon",
     "addressLabel": "Adresa",
+    "addressLangLabel": "Jezik adrese:",
     "saveButton": "Sačuvaj podešavanja",
     "saving": "Čuvanje...",
     "success": "Podešavanja uspešno sačuvana!",
-    "error": "Greška"
+    "error": "Greška",
+    "errorPrefix": "Greška:"
   },
   "login": {
     "title": "Admin prijava",
@@ -60,7 +65,8 @@
     "passwordLabel": "Lozinka",
     "button": "Prijavi se",
     "signingIn": "Prijavljivanje...",
-    "forgotPassword": "Zaboravili ste lozinku?"
+    "forgotPassword": "Zaboravili ste lozinku?",
+    "forgotPasswordSuccess": "Ako korisnik sa tim imenom postoji, lozinka je resetovana."
   },
   "changePassword": {
     "title": "Promenite Vašu lozinku",

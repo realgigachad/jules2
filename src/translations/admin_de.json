@@ -30,7 +30,9 @@
     "delete": "Löschen",
     "deleteConfirm": "Möchten Sie diese Reise wirklich löschen?",
     "createTitle": "Neue Reise erstellen",
-    "editTitle": "Reise bearbeiten"
+    "editTitle": "Reise bearbeiten",
+    "untitled": "Unbenannte Reise",
+    "priceLabel": "Preis:"
   },
   "articles": {
     "manageTitle": "Artikel verwalten",
@@ -46,13 +48,16 @@
   },
   "settings": {
     "title": "Seiteneinstellungen",
+    "loading": "Einstellungen werden geladen...",
     "emailLabel": "Kontakt-E-Mail",
     "phoneLabel": "Kontakt-Telefon",
     "addressLabel": "Adresse",
+    "addressLangLabel": "Adresssprache:",
     "saveButton": "Einstellungen speichern",
     "saving": "Speichern...",
     "success": "Einstellungen erfolgreich gespeichert!",
-    "error": "Fehler"
+    "error": "Fehler",
+    "errorPrefix": "Fehler:"
   },
   "login": {
     "title": "Admin-Anmeldung",
@@ -60,7 +65,8 @@
     "passwordLabel": "Passwort",
     "button": "Anmelden",
     "signingIn": "Anmelden...",
-    "forgotPassword": "Passwort vergessen?"
+    "forgotPassword": "Passwort vergessen?",
+    "forgotPasswordSuccess": "Wenn ein Benutzer mit diesem Namen existiert, wurde das Passwort zurückgesetzt."
   },
   "changePassword": {
     "title": "Ändern Sie Ihr Passwort",

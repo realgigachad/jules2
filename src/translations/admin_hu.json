@@ -30,7 +30,9 @@
     "delete": "Törlés",
     "deleteConfirm": "Biztosan törölni szeretné ezt az utazást?",
     "createTitle": "Új utazás létrehozása",
-    "editTitle": "Utazás szerkesztése"
+    "editTitle": "Utazás szerkesztése",
+    "untitled": "Névtelen utazás",
+    "priceLabel": "Ár:"
   },
   "articles": {
     "manageTitle": "Cikkek kezelése",
@@ -46,13 +48,16 @@
   },
   "settings": {
     "title": "Oldalbeállítások",
+    "loading": "Beállítások betöltése...",
     "emailLabel": "Kapcsolati e-mail",
     "phoneLabel": "Kapcsolati telefon",
     "addressLabel": "Cím",
+    "addressLangLabel": "Cím nyelve:",
     "saveButton": "Beállítások mentése",
     "saving": "Mentés...",
     "success": "Beállítások sikeresen mentve!",
-    "error": "Hiba"
+    "error": "Hiba",
+    "errorPrefix": "Hiba:"
   },
   "login": {
     "title": "Admin Bejelentkezés",
@@ -60,7 +65,8 @@
     "passwordLabel": "Jelszó",
     "button": "Bejelentkezés",
     "signingIn": "Bejelentkezés...",
-    "forgotPassword": "Elfelejtette a jelszavát?"
+    "forgotPassword": "Elfelejtette a jelszavát?",
+    "forgotPasswordSuccess": "Ha létezik felhasználó ezzel a névvel, a jelszó visszaállításra került."
   },
   "changePassword": {
     "title": "Változtassa meg a jelszavát",
