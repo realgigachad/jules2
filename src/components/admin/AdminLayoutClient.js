@@ -73,7 +73,7 @@ export default function AdminLayoutClient({ children }) {
   const asideClasses = {
     default: "w-64 bg-gray-800 text-white flex flex-col",
     compact: "hidden", // Sidebar is hidden in compact view
-    playful: "w-72 bg-indigo-800 text-white flex flex-col transform -rotate-6 -ml-20 origin-top-left transition-all duration-300 ease-in-out group-hover:rotate-0 group-hover:ml-0",
+    playful: "w-72 bg-indigo-800 text-white flex flex-col transform -rotate-6 -ml-56 origin-top-left transition-all duration-300 ease-in-out group-hover:rotate-0 group-hover:ml-0",
   };
 
   // Helper function to determine the CSS classes for a navigation link.

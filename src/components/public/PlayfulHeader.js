@@ -32,7 +32,7 @@ export default function PlayfulHeader({ lang, t }) {
     // The `aside` element is used for the sidebar, which is fixed and rotated.
     // We wrap it in a div with the `group` class to control hover effects on children.
     <div className="group fixed top-0 left-0 h-full z-50">
-      <aside className="bg-indigo-800 text-white w-64 h-full p-6 flex flex-col transform -rotate-6 -ml-16 origin-top-left transition-all duration-300 ease-in-out group-hover:rotate-0 group-hover:ml-0">
+      <aside className="bg-indigo-800 text-white w-64 h-full p-6 flex flex-col transform -rotate-6 -ml-48 origin-top-left transition-all duration-300 ease-in-out group-hover:rotate-0 group-hover:ml-0">
         <div className="flex-shrink-0 mb-8">
           <TrainLogo lang={lang} />
         </div>
@@ -45,7 +45,7 @@ export default function PlayfulHeader({ lang, t }) {
         ))}
       </nav>
 
-      <div className="flex-shrink-0 mt-8 w-full">
+      <div className="playful-lang-selector flex-shrink-0 mt-8 w-full">
         <LanguageSelector />
       </div>
     </aside>
