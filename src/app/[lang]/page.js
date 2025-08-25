@@ -38,7 +38,7 @@ export default async function HomePage({ params: { lang } }) {
     <div className="space-y-16">
       {/* Hero Section */}
       <AnimatedSection>
-        <section className="text-center bg-white p-12 rounded-lg shadow-lg">
+        <section className="playful-card text-center bg-white p-12 rounded-lg shadow-lg">
           <h1 className="text-5xl font-extrabold text-gray-900 font-header">{t.homePage.heroTitle}</h1>
           <p className="mt-4 text-xl text-text/80 max-w-2xl mx-auto">{t.homePage.heroSubtitle}</p>
           <div className="mt-8">

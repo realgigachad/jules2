@@ -5,7 +5,7 @@ export default async function PricingPage({ params: { lang } }) {
   const t = await getTranslations(lang);
 
   return (
-    <div className="bg-white p-12 rounded-lg shadow-lg">
+    <div className="playful-card bg-white p-12 rounded-lg shadow-lg">
       <h1 className="text-4xl font-extrabold text-center text-gray-900 font-header">{t.pricingPage.title}</h1>
 
       <div className="max-w-4xl mx-auto mt-8 space-y-8 text-lg text-text/90">
