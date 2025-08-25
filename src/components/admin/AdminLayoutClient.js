@@ -143,7 +143,8 @@ export default function AdminLayoutClient({ children }) {
         <button onClick={handleLogout} className="w-full px-4 py-2 text-left rounded hover:bg-gray-700">{t.layout.logout}</button>
       </div>
     </aside>
-  );
+    );
+  };
 
   /**
    * The topbar component, used in the 'compact' theme.
