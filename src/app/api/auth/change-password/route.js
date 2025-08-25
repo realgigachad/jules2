@@ -9,6 +9,7 @@ import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
+import { isRateLimited } from '@/lib/rateLimiter';
 
 /**
  * Handles the POST request to change a user's password.
@@ -33,6 +34,10 @@ export async function POST(req) {
 
     if (!userId) {
       return NextResponse.json({ message: 'Unauthorized: Invalid token' }, { status: 401 });
+    }
+
+    if (isRateLimited(userId)) {
+        return NextResponse.json({ message: 'Too many requests' }, { status: 429 });
     }
 
     const { oldPassword, newPassword } = await req.json();
