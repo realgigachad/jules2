@@ -27,7 +27,8 @@ async function getStyleSettings() {
         headerFont: 'Georgia, serif',
         bodyFont: 'Arial, sans-serif',
       },
-      appearance: settings?.appearance || 'default'
+      // Specifically return the publicAppearance for the public site
+      publicAppearance: settings?.publicAppearance || 'default'
     };
   } catch (error) {
     console.error("Failed to fetch style settings:", error);
@@ -41,7 +42,7 @@ async function getStyleSettings() {
         headerFont: 'Georgia, serif',
         bodyFont: 'Arial, sans-serif',
       },
-      appearance: 'default'
+      publicAppearance: 'default'
     };
   }
 }
@@ -85,7 +86,7 @@ export default async function RootLayout({ children, params }) {
       lang={params.lang}
       t={t}
       style={settings.style}
-      initialAppearance={settings.appearance}
+      initialAppearance={settings.publicAppearance}
       trips={trips}
       articles={articles}
     >
