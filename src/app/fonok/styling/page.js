@@ -184,3 +184,5 @@ export function StylingSection() {
     </div>
   );
 }
+
+export default StylingSection;

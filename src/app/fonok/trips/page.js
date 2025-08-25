@@ -76,3 +76,5 @@ export function TripsSection() {
     </div>
   );
 }
+
+export default TripsSection;

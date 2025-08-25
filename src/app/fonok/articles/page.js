@@ -13,7 +13,7 @@ export function ArticlesSection() {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        const res = await fetch('/api/cms/articles'); // No headers
+        const res = await fetch('/api/cms/articles');
         if (!res.ok) throw new Error('Failed to fetch articles');
         const data = await res.json();
         setArticles(data.data);
@@ -31,7 +31,7 @@ export function ArticlesSection() {
       try {
         const res = await fetch(`/api/cms/articles/${id}`, {
           method: 'DELETE',
-        }); // No headers
+        });
         if (!res.ok) throw new Error('Failed to delete article');
         setArticles(articles.filter(article => article._id !== id));
       } catch (err) {
@@ -41,7 +41,7 @@ export function ArticlesSection() {
   };
 
   if (loading) return <p>{t.articles.loading}</p>;
-  if (error) return <p className="text-red-500">Error: {error}</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <div>
@@ -53,28 +53,32 @@ export function ArticlesSection() {
       </div>
       <div className="bg-white rounded-lg shadow-md">
         <ul className="divide-y divide-gray-200">
-          {articles.length > 0 ? articles.map(article => (
-            <li key={article._id} className="p-4 flex justify-between items-center">
-              <div>
-                <h3 className="font-semibold text-lg">{article.title.en || 'Untitled Article'}</h3>
-                <p className="text-sm text-gray-500">
-                  Published on: {new Date(article.createdAt).toLocaleDateString()}
-                </p>
-              </div>
-              <div className="flex items-center gap-4">
-                <Link href={`/fonok/articles/edit/${article._id}`} className="text-sm text-cyan-600 hover:underline">
-                  Edit
-                </Link>
-                <button onClick={() => handleDelete(article._id)} className="text-sm text-red-600 hover:underline">
-                  Delete
-                </button>
-              </div>
-            </li>
-          )) : (
-            <li className="p-4 text-center text-gray-500">No articles found.</li>
+          {articles.length > 0 ? (
+            articles.map(article => (
+              <li key={article._id} className="p-4 flex justify-between items-center">
+                <div>
+                  <h3 className="font-semibold text-lg">{article.title.en || 'Untitled Article'}</h3>
+                  <p className="text-sm text-gray-500">
+                    {t.articles.publishedOn}: {new Date(article.createdAt).toLocaleDateString()}
+                  </p>
+                </div>
+                <div className="flex items-center gap-4">
+                  <Link href={`/fonok/articles/edit/${article._id}`} className="text-sm text-cyan-600 hover:underline">
+                    {t.articles.edit}
+                  </Link>
+                  <button onClick={() => handleDelete(article._id)} className="text-sm text-red-600 hover:underline">
+                    {t.articles.delete}
+                  </button>
+                </div>
+              </li>
+            ))
+          ) : (
+            <li className="p-4 text-center text-gray-500">{t.articles.noArticles}</li>
           )}
         </ul>
       </div>
     </div>
   );
 }
+
+export default ArticlesSection;

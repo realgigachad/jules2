@@ -148,3 +148,5 @@ export function SettingsSection() {
     </div>
   );
 }
+
+export default SettingsSection;
