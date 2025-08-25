@@ -6,47 +6,48 @@ import { useAppearance } from '@/components/admin/AppearanceSettings';
 // --- SVG Illustration Generators ---
 
 const createAdminSvg = (theme) => {
-  let header, mainContent;
-  const bgColor = '#1f2937'; // Admin background
-  const primaryColor = '#4f46e5'; // A generic primary for previews
-  const textColor = '#FFFFFF';
+  const bgColor = '#1f2937';
+  const primaryColor = '#4f46e5';
+  const contentBg = '#E5E7EB';
+  const text = '#FFFFFF';
 
+  let sidebar;
   switch (theme) {
     case 'playful':
-      header = `<rect x="5" y="15" width="90" height="370" fill="${primaryColor}" rx="8" transform="rotate(-2 50 185)" />`;
-      mainContent = `<rect x="110" y="15" width="475" height="370" fill="#E5E7EB" rx="8" />`;
+      sidebar = `<g transform="rotate(-2 50 185)"><rect x="10" y="15" width="90" height="370" fill="${primaryColor}" rx="8" /><rect x="25" y="35" width="60" height="10" fill="${text}" rx="3"/><path d="M25 70 h60 M25 90 h60 M25 110 h60" stroke="${text}" stroke-width="4" stroke-linecap="round"/></g>`;
       break;
-    case 'single-page': // In admin, single-page (formerly compact) has no sidebar
-    default: // Default also has a sidebar
-      header = `<rect x="15" y="15" width="120" height="370" fill="${bgColor}" rx="8" />`;
-      mainContent = `<rect x="150" y="15" width="435" height="370" fill="#E5E7EB" rx="8" />`;
+    default:
+      sidebar = `<g><rect x="15" y="15" width="120" height="370" fill="${bgColor}" rx="8" /><rect x="30" y="35" width="90" height="12" fill="${primaryColor}" rx="4"/><path d="M30 80 h90 M30 105 h90 M30 130 h90" stroke="${text}" stroke-width="5" stroke-linecap="round"/></g>`;
       break;
   }
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400"><rect width="100%" height="100%" fill="#F3F4F6"/><g>${header}${mainContent}</g><text x="50%" y="90%" font-family="Arial" font-size="20" fill="#6B7280" text-anchor="middle">Admin Panel</text></svg>`;
+  const mainContent = `<g><rect x="150" y="15" width="435" height="370" fill="${contentBg}" rx="8" /><rect x="170" y="35" width="150" height="15" fill="#9CA3AF" rx="5" /><path d="M170 80 h395 M170 100 h395 M170 120 h250" stroke="#CBD5E1" stroke-width="8" stroke-linecap="round"/></g>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400"><rect width="100%" height="100%" fill="#F9FAFB"/><g>${sidebar}${mainContent}</g><text x="50%" y="95%" font-family="Arial" font-size="16" fill="#6B7280" text-anchor="middle">Admin Panel</text></svg>`;
   return `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`;
 };
 
 const createPublicSvg = (theme) => {
-  let header, mainContent;
-  const bgColor = '#FFFFFF';
+  const headerColor = '#FFFFFF';
+  const contentBg = '#F3F4F6';
   const primaryColor = '#0891b2';
-  const textColor = '#374151';
+  const footerColor = '#1f2937';
 
+  let header, mainContent;
   switch (theme) {
     case 'playful':
-       header = `<rect x="5" y="15" width="90" height="370" fill="${primaryColor}" rx="8" transform="rotate(-2 50 185)" />`;
-       mainContent = `<rect x="110" y="15" width="475" height="370" fill="${bgColor}" rx="8" />`;
-       break;
+      header = `<g transform="rotate(-2 50 185)"><rect x="10" y="15" width="90" height="370" fill="${primaryColor}" rx="8" /><rect x="25" y="35" width="60" height="10" fill="white" rx="3"/><path d="M25 80 h60 M25 100 h60 M25 120 h60" stroke="white" stroke-width="4" stroke-linecap="round"/></g>`;
+      mainContent = `<rect x="115" y="15" width="470" height="370" fill="${headerColor}" rx="8" />`;
+      break;
     case 'single-page':
-      header = `<rect x="15" y="15" width="570" height="50" fill="${bgColor}" rx="8" />`;
-      mainContent = `<g><rect x="15" y="80" width="570" height="80" fill="#F3F4F6" rx="8" /><rect x="15" y="175" width="570" height="80" fill="#F3F4F6" rx="8" /><rect x="15" y="270" width="570" height="80" fill="#F3F4F6" rx="8" /></g>`;
+      header = `<rect x="15" y="15" width="570" height="40" fill="${headerColor}" rx="8" /><rect x="30" y="25" width="80" height="10" fill="${primaryColor}" rx="3" /><path d="M400 30 h150" stroke="#9CA3AF" stroke-width="6" stroke-linecap="round"/>`;
+      mainContent = `<g><rect x="15" y="70" width="570" height="315" fill="${contentBg}" rx="8" /><rect x="40" y="90" width="520" height="15" fill="#E5E7EB" rx="4" /><rect x="40" y="120" width="480" height="15" fill="#E5E7EB" rx="4" /><rect x="40" y="150" width="500" height="15" fill="#E5E7EB" rx="4" /></g>`;
       break;
     default:
-      header = `<rect x="15" y="15" width="570" height="50" fill="${bgColor}" rx="8" />`;
-      mainContent = `<rect x="15" y="80" width="570" height="305" fill="#F3F4F6" rx="8" />`;
+      header = `<rect x="15" y="15" width="570" height="50" fill="${headerColor}" rx="8" /><rect x="30" y="28" width="80" height="15" fill="${primaryColor}" rx="4" /><path d="M400 35 h30 M450 35 h30 M500 35 h30" stroke="#6B7280" stroke-width="5" stroke-linecap="round"/>`;
+      mainContent = `<rect x="15" y="80" width="570" height="255" fill="${contentBg}" rx="8" />`;
       break;
   }
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400"><rect width="100%" height="100%" fill="#E5E7EB"/><g>${header}${mainContent}</g><text x="50%" y="90%" font-family="Arial" font-size="20" fill="#6B7280" text-anchor="middle">Public Site</text></svg>`;
+  const footer = `<rect x="15" y="350" width="570" height="35" fill="${footerColor}" rx="8" />`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400"><rect width="100%" height="100%" fill="#E5E7EB"/><g>${header}${mainContent}${footer}</g><text x="50%" y="95%" font-family="Arial" font-size="16" fill="#6B7280" text-anchor="middle">Public Site</text></svg>`;
   return `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`;
 };
 
