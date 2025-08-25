@@ -29,6 +29,37 @@ const defaultSchemes = {
   "Plum": { primaryColor: '#a78bfa', backgroundColor: '#f5f3ff', textColor: '#1f2937' },
 };
 
+// Live Preview Component
+function LivePreview({ styleSettings }) {
+  const { primaryColor, backgroundColor, textColor, headerFont, bodyFont } = styleSettings;
+
+  const previewStyle = {
+    backgroundColor: backgroundColor,
+    color: textColor,
+    fontFamily: bodyFont,
+    borderColor: primaryColor,
+  };
+
+  const headerStyle = {
+    fontFamily: headerFont,
+    color: primaryColor,
+  };
+
+  return (
+    <div>
+      <h3 className="text-lg font-semibold mb-2">Live Preview</h3>
+      <div className="border-4 rounded-lg p-6" style={previewStyle}>
+        <h4 className="text-2xl font-bold mb-2" style={headerStyle}>A Sample Header</h4>
+        <p className="text-sm">This is some sample body text to demonstrate the selected fonts and colors. The quick brown fox jumps over the lazy dog.</p>
+        <button className="mt-4 px-4 py-2 rounded-md text-white" style={{ backgroundColor: primaryColor }}>
+          A Button
+        </button>
+      </div>
+    </div>
+  );
+}
+
+
 export default function StylingPage() {
   const [styleSettings, setStyleSettings] = useState(newDefaultStyle);
   const [isSaving, setIsSaving] = useState(false);
@@ -43,7 +74,6 @@ export default function StylingPage() {
         const res = await fetch('/api/cms/settings');
         const data = await res.json();
         if (data.success && data.data.style) {
-          // Ensure all fields are present, falling back to new defaults
           setStyleSettings({ ...newDefaultStyle, ...data.data.style });
         }
       } catch (err) {
@@ -93,14 +123,24 @@ export default function StylingPage() {
     <div className="bg-white p-8 rounded-lg shadow-md">
       <h1 className="text-2xl font-bold mb-6">Site Styling</h1>
       <div className="space-y-8">
-        <div>
-          <h3 className="text-lg font-semibold mb-2">Color Schemes</h3>
-          <div className="flex gap-4 flex-wrap">
-            {Object.keys(defaultSchemes).map(name => (
-              <button key={name} onClick={() => applyScheme(name)} className="px-4 py-2 border rounded-lg hover:bg-gray-100">{name}</button>
-            ))}
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div>
+            <h3 className="text-lg font-semibold mb-2">Color scheme presets</h3>
+            <div className="flex gap-4 flex-wrap">
+              {Object.keys(defaultSchemes).map(name => (
+                <button key={name} onClick={() => applyScheme(name)} className="px-4 py-2 border rounded-lg hover:bg-gray-100">{name}</button>
+              ))}
+            </div>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold mb-2">Background Presets</h3>
+            <select name="backgroundColor" value={styleSettings.backgroundColor} onChange={handleChange} className="p-2 border rounded-md bg-white w-full">
+              <option value="#FFFFFF">White</option><option value="#f3f4f6">Light Gray</option><option value="#4b5563">Dark Gray</option><option value="#111827">Black</option>
+            </select>
           </div>
         </div>
+
         <div>
           <h3 className="text-lg font-semibold mb-2">Custom Colors</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -109,12 +149,9 @@ export default function StylingPage() {
             <div className="flex items-center gap-2"><label htmlFor="textColor">Text:</label><input type="color" id="textColor" name="textColor" value={styleSettings.textColor} onChange={handleChange} /></div>
           </div>
         </div>
-        <div>
-          <h3 className="text-lg font-semibold mb-2">Background Presets</h3>
-          <select name="backgroundColor" value={styleSettings.backgroundColor} onChange={handleChange} className="p-2 border rounded-md bg-white">
-            <option value="#FFFFFF">White</option><option value="#f3f4f6">Light Gray</option><option value="#4b5563">Dark Gray</option><option value="#111827">Black</option>
-          </select>
-        </div>
+
+        <LivePreview styleSettings={styleSettings} />
+
         <div>
           <h3 className="text-lg font-semibold mb-2">Fonts</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -141,7 +178,7 @@ export default function StylingPage() {
         </button>
       </div>
 
-      <hr className="my-12" />
+      <hr className="my-12 border-t-2 border-gray-200" />
 
       <AdminAppearanceEditor />
     </div>
