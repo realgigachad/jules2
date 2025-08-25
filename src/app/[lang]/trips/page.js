@@ -39,7 +39,7 @@ export default async function TripsPage({ params: { lang } }) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {trips.map(trip => (
-          <Link href={`/${lang}/trips/${trip._id}`} key={trip._id} className="block bg-white rounded-lg shadow-lg overflow-hidden group">
+            <Link key={trip._id} href={`/${lang}/trips/${trip._id}`} className="playful-card block bg-white rounded-lg shadow-lg overflow-hidden group">
             <div className="relative">
               <img src={trip.imageUrl || 'https://images.unsplash.com/photo-1505923984062-552e3a4734d5?q=80&w=2070&auto=format&fit=crop'} alt={trip.title[lang] || trip.title.en} className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105" />
               <div className="absolute inset-0 bg-black bg-opacity-20 group-hover:bg-opacity-40 transition-all duration-300 flex items-center justify-center">

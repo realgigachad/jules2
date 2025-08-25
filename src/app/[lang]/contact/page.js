@@ -25,7 +25,7 @@ export default async function ContactPage({ params: { lang } }) {
       </div>
 
       <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-12">
-        <div className="bg-white p-8 rounded-lg shadow-lg">
+        <div className="playful-card bg-white p-8 rounded-lg shadow-lg">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">{t.contactPage.formTitle}</h2>
           <form className="space-y-6">
             <div>
@@ -48,7 +48,7 @@ export default async function ContactPage({ params: { lang } }) {
           </form>
         </div>
 
-        <div className="bg-gray-800 text-white p-8 rounded-lg shadow-lg">
+        <div className="playful-card bg-gray-800 text-white p-8 rounded-lg shadow-lg">
           <h2 className="text-2xl font-bold mb-6">{t.contactPage.infoTitle}</h2>
           <div className="space-y-4">
             <div>

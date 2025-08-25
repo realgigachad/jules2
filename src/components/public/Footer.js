@@ -25,7 +25,7 @@ export default function Footer({ t }) {
   };
 
   return (
-    <footer className={footerClasses[appearance] || footerClasses.default}>
+    <footer className={`playful-card ${footerClasses[appearance] || footerClasses.default}`}>
       <div className="container mx-auto px-6 py-8">
         <div className="flex flex-col items-center text-center">
           <h2 className="text-2xl font-bold">TRAIN.TRAVEL</h2>
