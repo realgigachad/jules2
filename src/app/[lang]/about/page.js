@@ -4,7 +4,7 @@ export default async function AboutUsPage({ params: { lang } }) {
   const t = await getTranslations(lang);
 
   return (
-    <div className="bg-white p-12 rounded-lg shadow-lg">
+    <div className="playful-card bg-white p-12 rounded-lg shadow-lg">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-extrabold text-center text-gray-900">{t.aboutPage.title}</h1>
         <p className="mt-4 text-center text-xl text-gray-600">{t.aboutPage.subtitle}</p>
