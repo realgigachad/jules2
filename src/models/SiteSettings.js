@@ -56,6 +56,20 @@ const SiteSettingsSchema = new mongoose.Schema({
     type: MultilingualStringSchema,
   },
   /**
+   * The URL for the site's logo.
+   */
+  logoUrl: {
+    type: String,
+    default: '',
+  },
+  /**
+   * The URL for the site's main banner image.
+   */
+  bannerUrl: {
+    type: String,
+    default: '',
+  },
+  /**
    * The styling settings for the site.
    */
   style: {
