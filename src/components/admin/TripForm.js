@@ -1,7 +1,14 @@
+/**
+ * @fileoverview This file defines the TripForm component, a comprehensive form for
+ * creating and editing trips. It includes multilingual fields, a rich text editor,
+ * and a multi-currency pricing section with conversion and formatting helpers.
+ */
 'use client';
 
 import { useState } from 'react';
 import RichTextEditor from './RichTextEditor';
+
+// --- Form Configuration Constants ---
 
 const languages = [
   { code: 'en', name: 'English (British/International)' },
@@ -17,19 +24,24 @@ const currencies = ['eur', 'gbp', 'huf', 'rub', 'czk', 'uah'];
 const emptyMultilingual = { en: '', de: '', hu: '', ru: '', sk: '', cs: '', uk: '' };
 const emptyPrices = { eur: 0, gbp: 0, huf: 0, rub: 0, czk: 0, uah: 0 };
 
+// Approximate conversion rates relative to EUR for the price conversion feature.
 const conversionRates = { eur: 1, gbp: 0.85, huf: 400, rub: 90, czk: 25, uah: 42 };
 
+// Rules for formatting prices to common marketing conventions (e.g., ending in .99).
 const priceFormatRules = {
-  huf: (p) => Math.round(p / 1000) * 1000 - 10, // e.g. 12345 -> 12000 -> 11990
+  huf: (p) => Math.round(p / 1000) * 1000 - 10, // e.g., 12345 -> 12000 -> 11990
   eur: (p) => Math.floor(p) + 0.99,
   gbp: (p) => Math.floor(p) + 0.99,
-  rub: (p) => Math.floor(p / 100) * 100 + 99, // e.g. 1234 -> 1200 -> 1299
+  rub: (p) => Math.floor(p / 100) * 100 + 99, // e.g., 1234 -> 1200 -> 1299
   czk: (p) => Math.floor(p) + 0.99,
-  uah: (p) => Math.floor(p) + 0.99, // UAH uses ,99 formatting, but the logic is the same as EUR
+  uah: (p) => Math.floor(p) + 0.99,
 };
 
+/**
+ * The main form component for creating and editing trips.
+ */
 export default function TripForm({ initialData, onSubmit, isSaving }) {
-  // Defensive state initialization to handle legacy data without a 'prices' object
+  // Defensively initialize state to handle legacy data that might not have a 'prices' object.
   const [trip, setTrip] = useState({
     title: { ...emptyMultilingual },
     description: { ...emptyMultilingual },
@@ -41,25 +53,33 @@ export default function TripForm({ initialData, onSubmit, isSaving }) {
 
   const [currentLang, setCurrentLang] = useState('en');
 
+  // Generic handler for simple, non-multilingual fields like dates and image URL.
   const handleChange = (e) => {
     const { name, value } = e.target;
     setTrip(prev => ({ ...prev, [name]: value }));
   };
 
+  // Handler for multilingual text inputs (e.g., title).
   const handleMultilingualChange = (e) => {
     const { name, value } = e.target;
     setTrip(prev => ({ ...prev, [name]: { ...prev[name], [currentLang]: value } }));
   };
 
+  // Handler for changes from the RichTextEditor for the description.
   const handleDescriptionChange = (content) => {
     setTrip(prev => ({ ...prev, description: { ...prev.description, [currentLang]: content } }));
   };
 
+  // Handler for changes to the price input fields.
   const handlePriceChange = (e) => {
     const { name, value } = e.target;
     setTrip(prev => ({ ...prev, prices: { ...prev.prices, [name]: parseFloat(value) || 0 } }));
   };
 
+  /**
+   * On blur, checks if the entered price follows local marketing conventions
+   * and shows a reminder if it doesn't.
+   */
   const handlePriceBlur = (e) => {
     const { name, value } = e.target;
     const rule = priceFormatRules[name];
@@ -69,6 +89,10 @@ export default function TripForm({ initialData, onSubmit, isSaving }) {
     }
   };
 
+  /**
+   * Converts all prices based on the value entered in a single currency field.
+   * @param {string} sourceCurrency - The currency code (e.g., 'eur') to use as the base for conversion.
+   */
   const handleConvertPrices = (sourceCurrency) => {
     const baseValue = trip.prices[sourceCurrency];
     if (baseValue <= 0) {
@@ -86,6 +110,7 @@ export default function TripForm({ initialData, onSubmit, isSaving }) {
     setTrip(prev => ({ ...prev, prices: newPrices }));
   };
 
+  // Handles the final form submission.
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(trip);
@@ -93,6 +118,7 @@ export default function TripForm({ initialData, onSubmit, isSaving }) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8 bg-white p-8 rounded-lg shadow-md">
+      {/* Language switcher */}
       <div className="flex items-center border-b border-gray-200 pb-4">
         <label className="mr-4 font-medium">Language:</label>
         <div className="flex gap-2 flex-wrap">
@@ -104,6 +130,7 @@ export default function TripForm({ initialData, onSubmit, isSaving }) {
         </div>
       </div>
 
+      {/* Title and Description fields */}
       <div className="space-y-4">
         <div>
           <label htmlFor="title" className="block text-sm font-medium text-gray-700">Trip Title ({languages.find(l => l.code === currentLang).name})</label>
@@ -122,6 +149,7 @@ export default function TripForm({ initialData, onSubmit, isSaving }) {
 
       <div className="pt-8"></div>
 
+      {/* Pricing section */}
       <div className="border-t pt-8">
         <h3 className="text-xl font-bold mb-4">Pricing</h3>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -137,6 +165,7 @@ export default function TripForm({ initialData, onSubmit, isSaving }) {
         </div>
       </div>
 
+      {/* Image and Date fields */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 border-t pt-8">
         <div>
           <label htmlFor="imageUrl" className="block text-sm font-medium text-gray-700">Image URL</label>
@@ -153,6 +182,7 @@ export default function TripForm({ initialData, onSubmit, isSaving }) {
         </div>
       </div>
 
+      {/* Submit button */}
       <div className="flex justify-end">
         <button type="submit" disabled={isSaving} className="px-6 py-2 text-white bg-cyan-600 rounded-md hover:bg-cyan-700 disabled:bg-gray-400">
           {isSaving ? 'Saving...' : 'Save Trip'}

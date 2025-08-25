@@ -1,10 +1,22 @@
+/**
+ * @fileoverview This file defines the AdminAppearanceEditor component, which allows
+ * administrators to change the visual theme for both the public-facing site and
+ * the admin panel itself.
+ */
 'use client';
 
 import { useState, useEffect } from 'react';
 import { useAppearance } from '@/components/admin/AppearanceSettings';
 
 // --- SVG Illustration Generators ---
+// These functions create simplified SVG representations of the site layouts
+// to provide a visual preview of each theme.
 
+/**
+ * Creates a data URI for an SVG preview of the admin panel layout.
+ * @param {string} theme - The theme ID ('playful' or 'default').
+ * @returns {string} A base64-encoded data URI for the SVG image.
+ */
 const createAdminSvg = (theme) => {
   const bgColor = '#1f2937';
   const primaryColor = '#4f46e5';
@@ -25,6 +37,11 @@ const createAdminSvg = (theme) => {
   return `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`;
 };
 
+/**
+ * Creates a data URI for an SVG preview of the public site layout.
+ * @param {string} theme - The theme ID ('playful', 'single-page', or 'default').
+ * @returns {string} A base64-encoded data URI for the SVG image.
+ */
 const createPublicSvg = (theme) => {
   const headerColor = '#FFFFFF';
   const contentBg = '#F3F4F6';
@@ -51,19 +68,24 @@ const createPublicSvg = (theme) => {
   return `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`;
 };
 
-
+// Available themes for selection.
 const themes = [
   { id: 'default', name: 'Default' },
   { id: 'single-page', name: 'Single Page' },
   { id: 'playful', name: 'Playful' },
 ];
 
+/**
+ * The main component for the appearance editor.
+ * It allows selecting a theme and applying it to the public site, admin panel, or both.
+ */
 export default function AdminAppearanceEditor() {
   const { adminAppearance, publicAppearance, setAppearance, isLoading } = useAppearance();
   const [selectedTheme, setSelectedTheme] = useState('default');
   const [message, setMessage] = useState('');
   const [isSaving, setIsSaving] = useState(false);
 
+  // When the component loads or the public appearance changes, update the selected theme.
   useEffect(() => {
     setSelectedTheme(publicAppearance || 'default');
   }, [publicAppearance]);
@@ -72,6 +94,11 @@ export default function AdminAppearanceEditor() {
     return <p>Loading appearance settings...</p>;
   }
 
+  /**
+   * Handles the click event for setting a new theme.
+   * It calls the `setAppearance` function from the context and displays a success or error message.
+   * @param {'public' | 'admin' | 'both'} target - The target area to apply the theme to.
+   */
   const handleSetTheme = async (target) => {
     setIsSaving(true);
     setMessage('');
@@ -83,6 +110,7 @@ export default function AdminAppearanceEditor() {
       setMessage(`Error: Failed to save theme. Please check server logs or browser console.`);
     }
     setIsSaving(false);
+    // Clear the message after 5 seconds.
     setTimeout(() => setMessage(''), 5000);
   };
 
@@ -92,6 +120,7 @@ export default function AdminAppearanceEditor() {
       <h2 className="text-xl font-semibold mb-4">Global Themes</h2>
       <div className="space-y-6">
 
+        {/* Theme selection grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {themes.map((theme) => (
             <div
@@ -110,11 +139,13 @@ export default function AdminAppearanceEditor() {
           ))}
         </div>
 
+        {/* Display the currently active themes */}
         <div className="text-center text-sm text-gray-600 p-4 bg-blue-50 rounded-lg">
           <p>Current Public Theme: <span className="font-bold">{themes.find(t => t.id === publicAppearance)?.name || 'N/A'}</span></p>
           <p>Current Admin Theme: <span className="font-bold">{themes.find(t => t.id === adminAppearance)?.name || 'N/A'}</span></p>
         </div>
 
+        {/* Action buttons to apply the selected theme */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 border-t">
             <p className="font-semibold">Set '<span className="text-primary">{themes.find(t => t.id === selectedTheme)?.name}</span>' as the theme for:</p>
             <button onClick={() => handleSetTheme('public')} disabled={isSaving} className="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300 disabled:opacity-50">Public Site</button>
@@ -122,6 +153,7 @@ export default function AdminAppearanceEditor() {
             <button onClick={() => handleSetTheme('both')} disabled={isSaving} className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 disabled:opacity-50">Both</button>
         </div>
 
+        {/* Display success or error messages */}
         {message && <p className={`mt-4 text-sm text-center ${message.startsWith('Error') ? 'text-red-600' : 'text-green-600'}`}>{message}</p>}
       </div>
     </div>

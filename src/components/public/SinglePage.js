@@ -1,10 +1,20 @@
+/**
+ * @fileoverview This file defines the SinglePage component, which renders the entire
+ * public site as a single, scrollable page. It is composed of multiple sub-components,
+ * each representing a section of the site (e.g., Hero, Pricing, Trips).
+ */
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import LoadingSpinner from './LoadingSpinner';
 
-// A reusable component to animate sections as they scroll into view
+/**
+ * A reusable component that wraps its children in a motion.div to animate them
+ * as they scroll into view.
+ * @param {{children: React.ReactNode}} props - The component props.
+ * @returns {JSX.Element} The animated section.
+ */
 function AnimatedSection({ children }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px 0px" });
@@ -21,6 +31,9 @@ function AnimatedSection({ children }) {
   );
 }
 
+/**
+ * The full-screen hero section at the top of the single-page layout.
+ */
 function HeroSection() {
   return (
     <section id="home" className="h-screen flex items-center justify-center bg-gray-100">
@@ -32,6 +45,10 @@ function HeroSection() {
   );
 }
 
+/**
+ * The pricing section, displaying translated content about pricing.
+ * @param {{t: object}} props - The component props, containing translations.
+ */
 function PricingSection({ t }) {
   return (
     <section id="pricing" className="min-h-screen py-20 bg-white">
@@ -46,7 +63,12 @@ function PricingSection({ t }) {
   );
 }
 
+/**
+ * The trips section, displaying a grid of available trips.
+ * @param {{trips: Array, lang: string, t: object}} props - The component props.
+ */
 function TripsSection({ trips, lang, t }) {
+  // Helper function to format the price based on the current language.
   const getPriceDisplay = (prices) => {
     if (!prices) return 'Price not set';
     if (lang === 'en') {
@@ -94,6 +116,10 @@ function TripsSection({ trips, lang, t }) {
   );
 }
 
+/**
+ * The articles section, displaying a grid of recent articles.
+ * @param {{articles: Array, lang: string, t: object}} props - The component props.
+ */
 function ArticlesSection({ articles, lang, t }) {
   return (
     <section id="articles" className="min-h-screen py-20 bg-white">
@@ -122,6 +148,10 @@ function ArticlesSection({ articles, lang, t }) {
   );
 }
 
+/**
+ * The about section, displaying translated content about the company.
+ * @param {{t: object}} props - The component props.
+ */
 function AboutSection({ t }) {
   return (
     <section id="about" className="min-h-screen py-20 bg-gray-50">
@@ -139,6 +169,10 @@ function AboutSection({ t }) {
   );
 }
 
+/**
+ * The contact section, displaying contact information.
+ * @param {{t: object}} props - The component props.
+ */
 function ContactSection({ t }) {
   // NOTE: The original page has a contact form. This is a simplified version for the single-page view.
   return (
@@ -157,12 +191,18 @@ function ContactSection({ t }) {
   );
 }
 
-
+/**
+ * The sticky header for the single-page layout. It appears after scrolling past the hero section
+ * and provides smooth-scrolling navigation links to other sections.
+ * @param {{t: object}} props - The component props.
+ */
 function SinglePageHeader({ t }) {
   const [isVisible, setIsVisible] = useState(false);
 
+  // Effect to show/hide the header based on scroll position.
   useEffect(() => {
     const toggleVisibility = () => {
+      // Show header after scrolling 80% of the viewport height.
       if (window.pageYOffset > window.innerHeight * 0.8) {
         setIsVisible(true);
       } else {
@@ -173,6 +213,7 @@ function SinglePageHeader({ t }) {
     return () => window.removeEventListener('scroll', toggleVisibility);
   }, []);
 
+  // Handler for smooth scrolling to a section.
   const handleScrollTo = (e, id) => {
     e.preventDefault();
     document.getElementById(id)?.scrollIntoView({
@@ -209,6 +250,11 @@ function SinglePageHeader({ t }) {
   );
 }
 
+/**
+ * The main component that assembles the entire single-page layout.
+ * @param {{lang: string, t: object, trips: Array, articles: Array}} props - The component props.
+ * @returns {JSX.Element} The complete single-page layout.
+ */
 export default function SinglePage({ lang, t, trips, articles }) {
   return (
     <div className="bg-white">

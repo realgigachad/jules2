@@ -1,3 +1,8 @@
+/**
+ * @fileoverview This file defines the AdminLayoutClient component, which serves as the
+ * main layout for the administrative ("fonok") section of the site. It uses contexts
+ * for translations and appearance settings to dynamically render the UI.
+ */
 'use client';
 
 import { usePathname } from 'next/navigation';
@@ -5,12 +10,21 @@ import Link from 'next/link';
 import { useAdminTranslations } from './AdminTranslationsProvider';
 import { useAppearance } from './AppearanceSettings';
 
+/**
+ * The main layout component for the admin panel.
+ * It wraps the page content with a sidebar or topbar depending on the chosen appearance theme.
+ * @param {{children: React.ReactNode}} props - The component props.
+ * @returns {JSX.Element} The rendered admin layout.
+ */
 export default function AdminLayoutClient({ children }) {
   const pathname = usePathname();
   const { t, setLang, lang } = useAdminTranslations();
   const { adminAppearance, isLoading } = useAppearance();
-  const appearance = adminAppearance; // for minimal changes below
+  const appearance = adminAppearance;
 
+  /**
+   * Handles user logout by calling the logout API endpoint and redirecting to the login page.
+   */
   const handleLogout = async () => {
     try {
       await fetch('/api/auth/logout', { method: 'POST' });
@@ -20,10 +34,13 @@ export default function AdminLayoutClient({ children }) {
     }
   };
 
+  // On the login and change-password pages, we don't want to show the admin layout,
+  // so we just render the children directly.
   if (pathname === '/fonok' || pathname.startsWith('/fonok/change-password')) {
     return <>{children}</>;
   }
 
+  // Show a loading indicator while translations or appearance settings are being fetched.
   if (isLoading || !t) {
     return (
       <div className="flex h-screen items-center justify-center">
@@ -32,6 +49,7 @@ export default function AdminLayoutClient({ children }) {
     );
   }
 
+  // Define the navigation links for the admin panel.
   const navLinks = [
     { href: "/fonok/dashboard", label: t.layout.dashboard },
     { href: "/fonok/trips", label: t.layout.trips },
@@ -41,20 +59,24 @@ export default function AdminLayoutClient({ children }) {
     { href: "/fonok/password", label: t.layout.changePassword },
   ];
 
+  // The main content area where the page-specific content will be rendered.
   const mainContent = <main className="flex-1 p-8 overflow-y-auto">{children}</main>;
 
+  // CSS classes for different layout themes.
   const layoutClasses = {
     default: "flex h-screen bg-gray-100 text-black",
     compact: "flex flex-col h-screen bg-gray-50 text-black",
     playful: "flex h-screen bg-yellow-50 text-black overflow-hidden",
   };
 
+  // CSS classes for the sidebar in different themes.
   const asideClasses = {
     default: "w-64 bg-gray-800 text-white flex flex-col",
     compact: "hidden", // Sidebar is hidden in compact view
     playful: "w-72 bg-indigo-800 text-white flex flex-col transform -rotate-3 -ml-4",
   };
 
+  // Helper function to determine the CSS classes for a navigation link.
   const navLinkClasses = (href) => {
     const base = "block px-4 py-2 rounded";
     const hover = "hover:bg-gray-700";
@@ -62,6 +84,9 @@ export default function AdminLayoutClient({ children }) {
     return `${base} ${hover} ${active}`;
   };
 
+  /**
+   * A dropdown component for changing the admin UI language.
+   */
   const AdminLangSelector = () => (
     <div className={appearance === 'playful' ? "text-white" : "text-white"}>
       <label htmlFor="admin-lang" className="text-xs">UI Language</label>
@@ -82,6 +107,9 @@ export default function AdminLayoutClient({ children }) {
     </div>
   );
 
+  /**
+   * The sidebar component, used in 'default' and 'playful' themes.
+   */
   const Sidebar = () => (
     <aside className={asideClasses[appearance]}>
       <div className={`p-4 text-xl font-bold border-b ${appearance === 'playful' ? 'border-indigo-700' : 'border-gray-700'}`}>{t.layout.title}</div>
@@ -99,6 +127,9 @@ export default function AdminLayoutClient({ children }) {
     </aside>
   );
 
+  /**
+   * The topbar component, used in the 'compact' theme.
+   */
   const Topbar = () => (
     <header className="bg-white shadow-md p-4 flex justify-between items-center">
       <h1 className="text-xl font-bold">{t.layout.title}</h1>
@@ -112,6 +143,7 @@ export default function AdminLayoutClient({ children }) {
     </header>
   );
 
+  // Render the appropriate layout based on the appearance setting.
   return (
     <div className={layoutClasses[appearance]}>
       {appearance !== 'compact' && <Sidebar />}

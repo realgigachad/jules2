@@ -1,10 +1,23 @@
+/**
+ * @fileoverview This file defines the Footer component for the public-facing site.
+ * The appearance of the footer can be dynamically changed based on the site's appearance settings.
+ */
 'use client';
 
 import { useAppearance } from '@/components/admin/AppearanceSettings';
 
+/**
+ * A footer component that displays the site name, slogan, and copyright information.
+ * Its style changes based on the selected public appearance theme.
+ *
+ * @param {object} props - The component props.
+ * @param {object} props.t - The translation object for UI strings.
+ * @returns {JSX.Element} The rendered footer component.
+ */
 export default function Footer({ t }) {
   const { appearance } = useAppearance();
 
+  // Defines the CSS classes for each footer appearance style.
   const footerClasses = {
     default: "bg-gray-800 text-white mt-auto",
     compact: "bg-gray-800 text-white mt-auto py-4",
