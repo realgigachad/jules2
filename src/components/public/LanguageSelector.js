@@ -91,7 +91,7 @@ export default function LanguageSelector() {
       {/* The button that shows the current language and toggles the dropdown */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-between w-64 px-3 py-2 text-gray-700 bg-white border rounded-md shadow-sm"
+        className="flex items-center justify-between w-full px-3 py-2 text-gray-700 bg-white border rounded-md shadow-sm"
       >
         <div className="flex items-center gap-2 overflow-hidden">
           <FlagGroup codes={currentLang.flags} />
