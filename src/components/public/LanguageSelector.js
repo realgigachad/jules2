@@ -6,7 +6,6 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { createPortal } from 'react-dom';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 
@@ -25,6 +24,8 @@ const languages = [
 
 /**
  * A small component to display a single flag image.
+ * It uses a special URL for the UN flag.
+ * @param {{code: string}} props - The component props.
  */
 const Flag = ({ code }) => {
   const flagUrl = code === 'un'
@@ -35,6 +36,7 @@ const Flag = ({ code }) => {
 
 /**
  * A component to display one or two flags, separated by a slash.
+ * @param {{codes: string[]}} props - The component props.
  */
 const FlagGroup = ({ codes }) => (
   <div className="flex items-center gap-1">
@@ -49,70 +51,22 @@ const FlagGroup = ({ codes }) => (
 );
 
 /**
- * The dropdown menu component. It's rendered inside a portal.
- */
-function DropdownMenu({ targetRef, onclose, getLocalizedPath }) {
-    const [position, setPosition] = useState({ top: 0, left: 0, width: 0 });
-
-    useEffect(() => {
-        if (targetRef.current) {
-            const rect = targetRef.current.getBoundingClientRect();
-            setPosition({
-                top: rect.bottom + window.scrollY,
-                left: rect.left + window.scrollX,
-                width: rect.width,
-            });
-        }
-    }, [targetRef]);
-
-    return (
-        <div
-            style={{
-                position: 'absolute',
-                top: `${position.top + 5}px`,
-                left: `${position.left}px`,
-                width: `${position.width}px`,
-            }}
-            className="origin-top-left bg-white rounded-md shadow-lg z-50">
-            <div className="py-1">
-                {languages.map(lang => (
-                    <Link
-                        key={lang.code}
-                        href={getLocalizedPath(lang.code)}
-                        onClick={onclose}
-                        className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                    >
-                        <FlagGroup codes={lang.flags} />
-                        <span>{lang.native}</span>
-                    </Link>
-                ))}
-            </div>
-        </div>
-    );
-}
-
-
-/**
  * The main LanguageSelector component. It's a dropdown that shows the current language
  * and allows the user to select a different one.
  */
 export default function LanguageSelector() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
   const pathname = usePathname();
-  const buttonRef = useRef(null);
+  const wrapperRef = useRef(null);
 
   // Determines the current language from the first segment of the URL path.
   const currentLangCode = pathname.split('/')[1] || 'en';
   const currentLang = languages.find(l => l.code === currentLangCode) || languages[0];
 
-  // We need to ensure the component is mounted on the client before rendering the portal.
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
   /**
    * Generates a new URL path for a given language code, preserving the rest of the path.
+   * @param {string} langCode - The target language code.
+   * @returns {string} The new, localized URL path.
    */
   const getLocalizedPath = (langCode) => {
     const pathSegments = pathname.split('/');
@@ -123,24 +77,19 @@ export default function LanguageSelector() {
   // This effect adds a click-outside listener to close the dropdown when the user clicks away.
   useEffect(() => {
     function handleClickOutside(event) {
-      if (buttonRef.current && !buttonRef.current.contains(event.target)) {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
         setIsOpen(false);
       }
     }
-    if (isOpen) {
-        document.addEventListener("mousedown", handleClickOutside);
-    }
-    return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen]);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [wrapperRef]);
 
 
   return (
-    <div className="relative">
+    <div className="relative" ref={wrapperRef}>
       {/* The button that shows the current language and toggles the dropdown */}
       <button
-        ref={buttonRef}
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center justify-between w-full px-3 py-2 text-gray-700 bg-white border rounded-md shadow-sm"
       >
@@ -153,14 +102,23 @@ export default function LanguageSelector() {
         </svg>
       </button>
 
-      {/* The dropdown menu is rendered into a portal to escape the parent's transform context. */}
-      {isMounted && isOpen && createPortal(
-        <DropdownMenu
-            targetRef={buttonRef}
-            onclose={() => setIsOpen(false)}
-            getLocalizedPath={getLocalizedPath}
-        />,
-        document.body
+      {/* The dropdown menu with the list of available languages */}
+      {isOpen && (
+        <div className="language-dropdown absolute left-0 w-full mt-2 origin-top-left bg-white rounded-md shadow-lg z-50">
+          <div className="py-1">
+            {languages.map(lang => (
+              <Link
+                key={lang.code}
+                href={getLocalizedPath(lang.code)}
+                onClick={() => setIsOpen(false)}
+                className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              >
+                <FlagGroup codes={lang.flags} />
+                <span>{lang.native}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
       )}
     </div>
   );

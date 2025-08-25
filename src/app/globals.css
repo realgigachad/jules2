@@ -86,3 +86,8 @@
 .theme-playful .playful-button:hover {
   transform: scale(1.1) rotate(-2deg);
 }
+
+.theme-playful .group:not(:hover) .language-dropdown {
+  transform: rotate(6deg);
+  transform-origin: top left;
+}
