@@ -161,6 +161,7 @@ export default function AdminLayoutClient({ children }) {
 
     return (
       <aside className={asideClasses[appearance]}>
+        <div className="p-2 bg-red-500 text-white text-xs font-mono">Debug: appearance=&quot;{appearance}&quot;</div>
         <div className={`p-4 text-xl font-bold border-b ${appearance === 'playful' ? 'border-indigo-700' : 'border-gray-700'}`}>{t.layout.title}</div>
 
         {appearance === 'single-page' ? <SinglePageNav /> : <MultiPageNav />}
