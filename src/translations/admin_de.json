@@ -92,5 +92,17 @@
     "titleLabel": "Artikeltitel",
     "contentLabel": "Inhalt",
     "saveButton": "Artikel speichern"
+  },
+  "appearance": {
+    "title": "Erscheinungsbild",
+    "globalThemes": "Globale Themes",
+    "currentPublicTheme": "Aktuelles öffentliches Theme:",
+    "currentAdminTheme": "Aktuelles Admin-Theme:",
+    "setThemeFor": "Theme '{themeName}' festlegen für:",
+    "publicSite": "Öffentliche Seite",
+    "adminPanel": "Admin-Panel",
+    "both": "Beide",
+    "success": "Theme für '{target}' auf '{themeName}' gesetzt.",
+    "error": "Fehler: Theme konnte nicht gespeichert werden. Bitte Server-Logs oder Browser-Konsole prüfen."
   }
 }

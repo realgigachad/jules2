@@ -1,0 +1,77 @@
+{
+  "header": {
+    "home": "Strona główna",
+    "pricing": "Cennik",
+    "trips": "Nadchodzące podróże",
+    "articles": "Artykuły",
+    "about": "O nas",
+    "contact": "Kontakt"
+  },
+  "footer": {
+    "slogan": "Twoja podróż zaczyna się tutaj.",
+    "rights": "Wszelkie prawa zastrzeżone."
+  },
+  "homePage": {
+    "heroTitle": "Twoja następna podróż, koleją",
+    "heroSubtitle": "Odkryj świat z innej perspektywy. Czekają na Ciebie niezapomniane krajobrazy, komfortowe podróże i ponadczasowe wspomnienia.",
+    "heroButton": "Przeglądaj nadchodzące podróże",
+    "journalTitle": "Z naszego dziennika podróży",
+    "readMore": "Czytaj więcej",
+    "noArticles": "Brak artykułów do wyświetlenia. Utwórz jeden w panelu administracyjnym!"
+  },
+  "pricingPage": {
+    "title": "Nasza filozofia cenowa",
+    "body1": "W Train.Travel wierzymy w przejrzyste i proste ceny. Koszt każdej podróży jest kompleksowy i obejmuje podróż, zakwaterowanie na pokładzie oraz wyselekcjonowane atrakcje. Staramy się zapewniać wyjątkową wartość, łącząc luksus i przygodę w każdym pakiecie.",
+    "standardClass": "Klasa standardowa",
+    "standardDesc": "Wygodne siedzenia i panoramiczne okna, aby cieszyć się widokiem.",
+    "firstClass": "Pierwsza klasa",
+    "firstDesc": "Dodatkowa przestrzeń na nogi, bezpłatne napoje i priorytetowa obsługa.",
+    "sleeperCabin": "Kabina sypialna",
+    "sleeperDesc": "Prywatne kabiny na nocne podróże, zapewniające spokojny sen.",
+    "body2": "Ceny różnią się w zależności od miejsca docelowego, czasu trwania i klasy podróży. Aby uzyskać szczegółowe ceny naszych wyselekcjonowanych podróży, odwiedź naszą stronę Nadchodzące podróże.",
+    "button": "Zobacz nadchodzące podróże i ceny"
+  },
+  "tripsPage": {
+    "title": "Nadchodzące podróże",
+    "subtitle": "Wyrusz w swoją następną wielką przygodę.",
+    "viewDetails": "Zobacz szczegóły",
+    "noTrips": "W tej chwili nie ma żadnych nadchodzących podróży. Prosimy sprawdzić ponownie wkrótce!"
+  },
+  "articlesPage": {
+    "title": "Dziennik podróży",
+    "subtitle": "Historie i spostrzeżenia z naszych podróży."
+  },
+  "aboutPage": {
+    "title": "O Train.Travel",
+    "subtitle": "Łączymy ludzi z miejscami, jedna malownicza trasa na raz.",
+    "body1": "Train.Travel powstało w oparciu o proste założenie: podróż jest równie ważna jak cel. W świecie, który pędzi z punktu A do punktu B, oferujemy szansę na zwolnienie tempa, zobaczenie piękna krajobrazu i doświadczenie podróży w bardziej znaczący i zrównoważony sposób.",
+    "body2": "Nasz zespół składa się z pasjonatów podróży, ekspertów logistyki i entuzjastów kolei, którzy niestrudzenie pracują nad tworzeniem unikalnych podróży pociągiem po całym świecie. Od majestatycznych gór Szwajcarii po rozległe krajobrazy Kolei Transsyberyjskiej, wybieramy trasy, które oferują zapierające dech w piersiach widoki i niezapomniane wrażenia.",
+    "missionTitle": "Nasza misja",
+    "missionText": "Zapewnianie komfortowych, malowniczych i przyjaznych dla środowiska podróży, które tworzą trwałe wspomnienia i promują głębsze docenienie otaczającego nas świata.",
+    "body3": "Współpracujemy z najlepszymi operatorami kolejowymi na świecie, aby zapewnić najwyższe standardy komfortu, bezpieczeństwa i obsługi. Niezależnie od tego, czy jesteś samotnym poszukiwaczem przygód, parą szukającą romantycznego wypadu, czy rodziną szukającą wyjątkowych wakacji, mamy podróż idealną для Ciebie.",
+    "body4": "Dziękujemy za zainteresowanie Train.Travel. Z niecierpliwością czekamy na powitanie Cię na pokładzie."
+  },
+  "contactPage": {
+    "title": "Skontaktuj się z nami",
+    "subtitle": "Chętnie Cię wysłuchamy. Skontaktuj się z nami w razie jakichkolwiek pytań.",
+    "formTitle": "Wyślij nam wiadomość",
+    "nameLabel": "Imię i nazwisko",
+    "emailLabel": "Adres e-mail",
+    "messageLabel": "Wiadomość",
+    "submitButton": "Wyślij",
+    "infoTitle": "Nasze informacje",
+    "emailHeader": "E-mail",
+    "phoneHeader": "Telefon",
+    "addressHeader": "Adres"
+  },
+  "tripDetailPage": {
+    "bookingTitle": "Zarezerwuj swoją podróż",
+    "inquireButton": "Zapytaj teraz",
+    "from": "Od",
+    "to": "Do"
+  },
+  "articleDetailPage": {
+    "publishedOn": "Opublikowano",
+    "by": "przez"
+  }
+}

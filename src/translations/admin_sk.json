@@ -92,5 +92,17 @@
     "titleLabel": "Názov článku",
     "contentLabel": "Obsah",
     "saveButton": "Uložiť článok"
+  },
+  "appearance": {
+    "title": "Vzhľad",
+    "globalThemes": "Globálne témy",
+    "currentPublicTheme": "Aktuálna verejná téma:",
+    "currentAdminTheme": "Aktuálna téma admina:",
+    "setThemeFor": "Nastaviť tému '{themeName}' pre:",
+    "publicSite": "Verejná stránka",
+    "adminPanel": "Admin panel",
+    "both": "Obe",
+    "success": "Téma '{themeName}' bola nastavená pre '{target}'.",
+    "error": "Chyba: Nepodarilo sa uložiť tému. Skontrolujte prosím logy servera alebo konzolu prehliadača."
   }
 }

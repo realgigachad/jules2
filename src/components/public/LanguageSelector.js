@@ -18,6 +18,8 @@ const languages = [
   { code: 'sk', name: 'Slovakian', native: 'Slovenčina', flags: ['sk'] },
   { code: 'cs', name: 'Czech', native: 'Čeština', flags: ['cz'] },
   { code: 'uk', name: 'Ukrainian', native: 'Українська', flags: ['ua'] },
+  { code: 'pl', name: 'Polish', native: 'Polski', flags: ['pl'] },
+  { code: 'sr', name: 'Serbian', native: 'Srpski', flags: ['rs'] },
 ];
 
 /**

@@ -1,0 +1,108 @@
+{
+  "layout": {
+    "title": "Admin panel",
+    "dashboard": "Kontrolna tabla",
+    "trips": "Putovanja",
+    "articles": "Članci",
+    "settings": "Podešavanja sajta",
+    "styling": "Izgled",
+    "changePassword": "Promeni lozinku",
+    "logout": "Odjavi se"
+  },
+  "dashboard": {
+    "title": "Kontrolna tabla",
+    "welcome": "Dobrodošli u admin panel.",
+    "manageTrips": "Upravljajte putovanjima",
+    "manageTripsDesc": "Kreirajte, uređujte i brišite nadolazeća putovanja. Podesite cene i datume putovanja.",
+    "manageArticles": "Upravljajte člancima",
+    "manageArticlesDesc": "Pišite i objavljujte članke za blog na glavnoj stranici.",
+    "updateSettings": "Ažurirajte podešavanja",
+    "updateSettingsDesc": "Promenite informacije o celom sajtu, kao što su kontakt podaci.",
+    "updateStyling": "Prilagodite stil",
+    "updateStylingDesc": "Promenite boje, fontove i izgled sajta."
+  },
+  "trips": {
+    "manageTitle": "Upravljajte putovanjima",
+    "createButton": "Kreiraj novo putovanje",
+    "loading": "Učitavanje putovanja...",
+    "noTrips": "Nema pronađenih putovanja.",
+    "edit": "Uredi",
+    "delete": "Obriši",
+    "deleteConfirm": "Da li ste sigurni da želite da obrišete ovo putovanje?",
+    "createTitle": "Kreiraj novo putovanje",
+    "editTitle": "Uredi putovanje"
+  },
+  "articles": {
+    "manageTitle": "Upravljajte člancima",
+    "createButton": "Napišite novi članak",
+    "loading": "Učitavanje članaka...",
+    "noArticles": "Nema pronađenih članaka.",
+    "edit": "Uredi",
+    "delete": "Obriši",
+    "deleteConfirm": "Da li ste sigurni da želite da obrišete ovaj članak?",
+    "createTitle": "Napišite novi članak",
+    "editTitle": "Uredi članak",
+    "publishedOn": "Objavljeno"
+  },
+  "settings": {
+    "title": "Podešavanja sajta",
+    "emailLabel": "Kontakt email",
+    "phoneLabel": "Kontakt telefon",
+    "addressLabel": "Adresa",
+    "saveButton": "Sačuvaj podešavanja",
+    "saving": "Čuvanje...",
+    "success": "Podešavanja uspešno sačuvana!",
+    "error": "Greška"
+  },
+  "login": {
+    "title": "Admin prijava",
+    "usernameLabel": "Korisničko ime",
+    "passwordLabel": "Lozinka",
+    "button": "Prijavi se",
+    "signingIn": "Prijavljivanje...",
+    "forgotPassword": "Zaboravili ste lozinku?"
+  },
+  "changePassword": {
+    "title": "Promenite Vašu lozinku",
+    "titleLoggedIn": "Promeni lozinku",
+    "intro": "Kao mera bezbednosti, morate promeniti podrazumevanu lozinku.",
+    "newPasswordLabel": "Nova lozinka",
+    "confirmPasswordLabel": "Potvrdite novu lozinku",
+    "button": "Postavi novu lozinku",
+    "success": "Lozinka uspešno ažurirana!",
+    "errorMatch": "Lozinke se ne podudaraju.",
+    "errorLength": "Lozinka mora imati najmanje 6 karaktera."
+  },
+  "tripForm": {
+    "language": "Jezik",
+    "titleLabel": "Naslov putovanja",
+    "descriptionLabel": "Opis",
+    "pricingTitle": "Cene",
+    "convertButton": "Konv.",
+    "convertTitle": "Konvertuj iz",
+    "priceReminder": "Podsetnik: Za marketing je najbolje da cene prate lokalnu konvenciju (npr. završavaju se na .99).",
+    "priceSourceError": "Prvo unesite važeću cenu u izvornoj valuti.",
+    "imageUrlLabel": "URL slike",
+    "startDateLabel": "Datum početka",
+    "endDateLabel": "Datum završetka",
+    "saveButton": "Sačuvaj putovanje"
+  },
+  "articleForm": {
+    "language": "Jezik",
+    "titleLabel": "Naslov članka",
+    "contentLabel": "Sadržaj",
+    "saveButton": "Sačuvaj članak"
+  },
+  "appearance": {
+    "title": "Izgled",
+    "globalThemes": "Globalne teme",
+    "currentPublicTheme": "Trenutna javna tema:",
+    "currentAdminTheme": "Trenutna admin tema:",
+    "setThemeFor": "Postavi temu '{themeName}' za:",
+    "publicSite": "Javni sajt",
+    "adminPanel": "Admin panel",
+    "both": "Oba",
+    "success": "Tema '{themeName}' je postavljena za '{target}'.",
+    "error": "Greška: Čuvanje teme nije uspelo. Proverite logove servera ili konzolu pregledača."
+  }
+}

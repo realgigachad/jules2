@@ -92,5 +92,17 @@
     "titleLabel": "Article Title",
     "contentLabel": "Content",
     "saveButton": "Save Article"
+  },
+  "appearance": {
+    "title": "Appearance",
+    "globalThemes": "Global Themes",
+    "currentPublicTheme": "Current Public Theme:",
+    "currentAdminTheme": "Current Admin Theme:",
+    "setThemeFor": "Set '{themeName}' as the theme for:",
+    "publicSite": "Public Site",
+    "adminPanel": "Admin Panel",
+    "both": "Both",
+    "success": "Theme set to '{themeName}' for '{target}' target.",
+    "error": "Error: Failed to save theme. Please check server logs or browser console."
   }
 }

@@ -92,5 +92,17 @@
     "titleLabel": "Заголовок статті",
     "contentLabel": "Зміст",
     "saveButton": "Зберегти статтю"
+  },
+  "appearance": {
+    "title": "Зовнішній вигляд",
+    "globalThemes": "Глобальні теми",
+    "currentPublicTheme": "Поточна публічна тема:",
+    "currentAdminTheme": "Поточна тема адмін-панелі:",
+    "setThemeFor": "Встановити тему '{themeName}' для:",
+    "publicSite": "Публічний сайт",
+    "adminPanel": "Адмін-панель",
+    "both": "Обидва",
+    "success": "Тему '{themeName}' встановлено для '{target}'.",
+    "error": "Помилка: Не вдалося зберегти тему. Будь ласка, перевірте логи сервера або консоль браузера."
   }
 }
