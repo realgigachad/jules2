@@ -1,3 +1,7 @@
+/**
+ * @fileoverview This file defines the RichTextEditor component, a wrapper around the
+ * Tiptap editor that provides a customized toolbar for text formatting and media uploads.
+ */
 'use client'
 
 import { useEditor, EditorContent } from '@tiptap/react'
@@ -8,10 +12,20 @@ import TextStyle from '@tiptap/extension-text-style'
 import Image from '@tiptap/extension-image'
 import { useRef } from 'react'
 
+/**
+ * The toolbar component for the Tiptap editor.
+ * It provides buttons for text formatting, alignment, and media insertion.
+ * @param {{editor: object}} props - The component props, containing the Tiptap editor instance.
+ */
 const MenuBar = ({ editor }) => {
   if (!editor) return null
   const fileInputRef = useRef(null);
 
+  /**
+   * Inserts media into the editor based on its file type.
+   * @param {string} url - The URL of the uploaded media.
+   * @param {File} file - The original file object, used to determine the file type.
+   */
   const addMedia = (url, file) => {
     if (url) {
       if (file.type.startsWith('image/')) {
@@ -29,6 +43,11 @@ const MenuBar = ({ editor }) => {
     }
   };
 
+  /**
+   * Handles the file input change event. It uploads the selected file to the server
+   * via the '/api/uploads' endpoint and then calls `addMedia` to insert it into the editor.
+   * @param {React.ChangeEvent<HTMLInputElement>} event - The file input change event.
+   */
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
@@ -50,6 +69,9 @@ const MenuBar = ({ editor }) => {
     }
   };
 
+  /**
+   * Prompts the user for an image URL and inserts it into the editor.
+   */
   const addImageFromUrl = () => {
     const url = window.prompt('URL');
     if (url) {
@@ -59,6 +81,7 @@ const MenuBar = ({ editor }) => {
 
   return (
     <div className="border border-gray-300 rounded-t-lg p-2 bg-gray-50 flex flex-wrap gap-2">
+      {/* Formatting buttons */}
       <button type="button" onClick={() => editor.chain().focus().toggleBold().run()} className={editor.isActive('bold') ? 'is-active' : ''}>Bold</button>
       <button type="button" onClick={() => editor.chain().focus().toggleItalic().run()} className={editor.isActive('italic') ? 'is-active' : ''}>Italic</button>
       <button type="button" onClick={() => editor.chain().focus().toggleBlockquote().run()} className={editor.isActive('blockquote') ? 'is-active' : ''}>Quote</button>
@@ -66,15 +89,23 @@ const MenuBar = ({ editor }) => {
       <button type="button" onClick={() => editor.chain().focus().toggleOrderedList().run()} className={editor.isActive('orderedList') ? 'is-active' : ''}>Numbers</button>
       <button type="button" onClick={() => editor.chain().focus().sinkListItem('listItem').run()} disabled={!editor.can().sinkListItem('listItem')}>Indent</button>
       <button type="button" onClick={() => editor.chain().focus().liftListItem('listItem').run()} disabled={!editor.can().liftListItem('listItem')}>Outdent</button>
+
+      {/* Text alignment buttons */}
       <button type="button" onClick={() => editor.chain().focus().setTextAlign('left').run()} className={editor.isActive({ textAlign: 'left' }) ? 'is-active' : ''}>Left</button>
       <button type="button" onClick={() => editor.chain().focus().setTextAlign('center').run()} className={editor.isActive({ textAlign: 'center' }) ? 'is-active' : ''}>Center</button>
       <button type="button" onClick={() => editor.chain().focus().setTextAlign('right').run()} className={editor.isActive({ textAlign: 'right' }) ? 'is-active' : ''}>Right</button>
+
+      {/* Heading and color buttons */}
       <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} className={editor.isActive('heading', { level: 1 }) ? 'is-active' : ''}>H1</button>
       <button type="button" onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} className={editor.isActive('heading', { level: 2 }) ? 'is-active' : ''}>H2</button>
       <input type="color" onInput={event => editor.chain().focus().setColor(event.target.value).run()} value={editor.getAttributes('textStyle').color || '#000000'} />
+
+      {/* Media buttons */}
       <button type="button" onClick={addImageFromUrl}>Image URL</button>
       <input type="file" ref={fileInputRef} onChange={handleFileChange} className="hidden" accept="image/*,video/*,.pdf" />
       <button type="button" onClick={() => fileInputRef.current.click()}>Upload File</button>
+
+      {/* Scoped styles for the menu bar buttons */}
       <style jsx>{`
         button { padding: 4px 8px; border-radius: 4px; border: 1px solid #ccc; background: white; font-size: 0.875rem; }
         button.is-active { background-color: #0891b2; color: white; border-color: #06b6d4; }
@@ -85,6 +116,12 @@ const MenuBar = ({ editor }) => {
   )
 }
 
+/**
+ * The main RichTextEditor component.
+ * It initializes the Tiptap editor with a set of extensions and provides the MenuBar and EditorContent.
+ * @param {{content: string, onChange: Function}} props - The component props.
+ * @returns {JSX.Element} The complete rich text editor component.
+ */
 const RichTextEditor = ({ content, onChange }) => {
   const editor = useEditor({
     extensions: [ StarterKit, TextAlign.configure({ types: ['heading', 'paragraph'] }), TextStyle, Color, Image ],

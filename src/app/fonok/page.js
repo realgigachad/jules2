@@ -1,9 +1,17 @@
+/**
+ * @fileoverview This file defines the client component for the admin login page.
+ * It provides a form for authentication and a link to the forgot password functionality.
+ */
 'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
+/**
+ * The main component for the admin login page.
+ */
 export default function AdminLoginPage() {
+  // State for form fields, error messages, and submission status.
   const [username, setUsername] = useState('fonok');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -11,6 +19,11 @@ export default function AdminLoginPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
+  /**
+   * Handles the login form submission.
+   * It calls the login API and redirects the user upon success.
+   * @param {React.FormEvent<HTMLFormElement>} e - The form submission event.
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
@@ -26,9 +39,11 @@ export default function AdminLoginPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Something went wrong');
 
+      // If the user's `forcePasswordChange` flag is true, redirect to the change password page.
       if (data.user.forcePasswordChange) {
         router.push('/fonok/change-password');
       } else {
+        // Otherwise, redirect to the admin dashboard.
         router.push('/fonok/dashboard');
       }
     } catch (err) {
@@ -38,6 +53,10 @@ export default function AdminLoginPage() {
     }
   };
 
+  /**
+   * Handles the "Forgot Password" action.
+   * It calls the forgot-password API and displays the result message.
+   */
   const handleForgotPassword = async () => {
     setError('');
     setSuccess('');
@@ -49,6 +68,7 @@ export default function AdminLoginPage() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Something went wrong');
+      // Displays the generic success message from the API.
       setSuccess(data.message);
     } catch (err) {
       setError(err.message);
@@ -68,6 +88,7 @@ export default function AdminLoginPage() {
             <label htmlFor="password"className="text-sm font-medium text-gray-700">Password</label>
             <input id="password" name="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required className="mt-1 block w-full px-3 py-2 border rounded-md" />
           </div>
+          {/* Display error or success messages */}
           {error && <p className="text-sm text-red-600">{error}</p>}
           {success && <p className="text-sm text-green-600">{success}</p>}
           <div className="flex items-center justify-between">

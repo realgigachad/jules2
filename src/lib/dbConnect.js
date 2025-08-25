@@ -1,3 +1,8 @@
+/**
+ * @fileoverview This file handles the connection to the MongoDB database using Mongoose.
+ * It implements a caching mechanism to reuse database connections across hot reloads in development,
+ * preventing an exponential growth of connections.
+ */
 import mongoose from 'mongoose';
 
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -19,6 +24,12 @@ if (!cached) {
   cached = global.mongoose = { conn: null, promise: null };
 }
 
+/**
+ * Connects to the MongoDB database.
+ * If a connection is already established, it returns the cached connection.
+ * Otherwise, it creates a new connection and caches it.
+ * @returns {Promise<mongoose>} A promise that resolves to the Mongoose connection object.
+ */
 async function dbConnect() {
   if (cached.conn) {
     return cached.conn;
