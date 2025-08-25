@@ -51,13 +51,20 @@ export default function AdminLayoutClient({ children }) {
 
   // Define the navigation links for the admin panel.
   const navLinks = [
-    { href: "/fonok/dashboard", label: t.layout.dashboard },
-    { href: "/fonok/trips", label: t.layout.trips },
-    { href: "/fonok/articles", label: t.layout.articles },
-    { href: "/fonok/settings", label: t.layout.settings },
-    { href: "/fonok/styling", label: t.layout.styling },
-    { href: "/fonok/password", label: t.layout.changePassword },
+    { href: "/fonok/dashboard", label: t.layout.dashboard, id: "dashboard" },
+    { href: "/fonok/trips", label: t.layout.trips, id: "trips" },
+    { href: "/fonok/articles", label: t.layout.articles, id: "articles" },
+    { href: "/fonok/settings", label: t.layout.settings, id: "settings" },
+    { href: "/fonok/styling", label: t.layout.styling, id: "styling" },
+    { href: "/fonok/password", label: t.layout.changePassword, id: "password" },
   ];
+
+  const handleScrollTo = (e, id) => {
+    e.preventDefault();
+    document.getElementById(id)?.scrollIntoView({
+      behavior: 'smooth'
+    });
+  };
 
   // The main content area where the page-specific content will be rendered.
   const mainContent = <main className="flex-1 p-8 overflow-y-auto">{children}</main>;
@@ -132,9 +139,15 @@ export default function AdminLayoutClient({ children }) {
     <aside className={asideClasses[appearance]}>
       <div className={`p-4 text-xl font-bold border-b ${appearance === 'playful' ? 'border-indigo-700' : 'border-gray-700'}`}>{t.layout.title}</div>
       <nav className="flex-grow p-4 space-y-2">
-        {navLinks.map(link => (
-          <Link key={link.href} href={link.href} className={appearance === 'playful' ? playfulLinkClasses : defaultLinkClasses(link.href)}>{link.label}</Link>
-        ))}
+        {navLinks.map(link => {
+            if (appearance === 'single-page') {
+                // If it's a single page, all links go to the dashboard but scroll to a section.
+                // The "Change Password" link still goes to its own page.
+                const href = link.id === 'password' ? link.href : `/fonok/dashboard#${link.id}`;
+                return <a key={link.id} href={href} onClick={(e) => handleScrollTo(e, link.id)} className={defaultLinkClasses(link.href)}>{link.label}</a>
+            }
+            return <Link key={link.href} href={link.href} className={appearance === 'playful' ? playfulLinkClasses : defaultLinkClasses(link.href)}>{link.label}</Link>
+        })}
       </nav>
       <div className={`p-4 border-t ${appearance === 'playful' ? 'border-indigo-700' : 'border-gray-700'}`}>
         <AdminLangSelector />

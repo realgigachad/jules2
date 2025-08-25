@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAdminTranslations } from '@/components/admin/AdminTranslationsProvider';
 
-export default function ArticlesListPage() {
+export function ArticlesSection() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
