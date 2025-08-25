@@ -4,6 +4,7 @@
  */
 import Link from 'next/link';
 import { getTranslations } from '@/lib/getTranslations';
+import AnimatedSection from '@/components/public/AnimatedSection';
 
 /**
  * Fetches the 3 most recent articles from the public API.
@@ -36,43 +37,47 @@ export default async function HomePage({ params: { lang } }) {
   return (
     <div className="space-y-16">
       {/* Hero Section */}
-      <section className="text-center bg-white p-12 rounded-lg shadow-lg">
-        <h1 className="text-5xl font-extrabold text-gray-900 font-header">{t.homePage.heroTitle}</h1>
-        <p className="mt-4 text-xl text-text/80 max-w-2xl mx-auto">{t.homePage.heroSubtitle}</p>
-        <div className="mt-8">
-          <Link href={`/${lang}/trips`} className="px-8 py-4 text-lg font-semibold text-white bg-primary rounded-lg hover:opacity-90 transition-opacity">
-            {t.homePage.heroButton}
-          </Link>
-        </div>
-      </section>
+      <AnimatedSection>
+        <section className="text-center bg-white p-12 rounded-lg shadow-lg">
+          <h1 className="text-5xl font-extrabold text-gray-900 font-header">{t.homePage.heroTitle}</h1>
+          <p className="mt-4 text-xl text-text/80 max-w-2xl mx-auto">{t.homePage.heroSubtitle}</p>
+          <div className="mt-8">
+            <Link href={`/${lang}/trips`} className="px-8 py-4 text-lg font-semibold text-white bg-primary rounded-lg hover:opacity-90 transition-opacity">
+              {t.homePage.heroButton}
+            </Link>
+          </div>
+        </section>
+      </AnimatedSection>
 
       {/* Recent Articles Section */}
-      <section>
-        <h2 className="text-3xl font-bold text-center mb-8 font-header">{t.homePage.journalTitle}</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {recentArticles.map(article => (
-            <div key={article._id} className="bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 flex flex-col group">
-              <div className="p-6 flex-grow flex flex-col">
-                <h3 className="text-xl font-semibold my-2 font-header">{article.title[lang] || article.title.en}</h3>
-                {/* The article content is rendered using dangerouslySetInnerHTML because it comes from a rich text editor. */}
-                <div
-                  className="text-text/80 line-clamp-4 flex-grow prose"
-                  dangerouslySetInnerHTML={{ __html: article.content[lang] || article.content.en }}
-                />
-                <div className="mt-4">
-                  <Link href={`/${lang}/articles/${article._id}`} className="text-primary hover:underline font-semibold">
-                    {t.homePage.readMore} &rarr;
-                  </Link>
+      <AnimatedSection>
+        <section>
+          <h2 className="text-3xl font-bold text-center mb-8 font-header">{t.homePage.journalTitle}</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {recentArticles.map(article => (
+              <div key={article._id} className="bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 flex flex-col group">
+                <div className="p-6 flex-grow flex flex-col">
+                  <h3 className="text-xl font-semibold my-2 font-header">{article.title[lang] || article.title.en}</h3>
+                  {/* The article content is rendered using dangerouslySetInnerHTML because it comes from a rich text editor. */}
+                  <div
+                    className="text-text/80 line-clamp-4 flex-grow prose"
+                    dangerouslySetInnerHTML={{ __html: article.content[lang] || article.content.en }}
+                  />
+                  <div className="mt-4">
+                    <Link href={`/${lang}/articles/${article._id}`} className="text-primary hover:underline font-semibold">
+                      {t.homePage.readMore} &rarr;
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-          {/* Display a message if there are no articles to show. */}
-          {recentArticles.length === 0 && (
-            <p className="text-center text-text/70 col-span-3">{t.homePage.noArticles}</p>
-          )}
-        </div>
-      </section>
+            ))}
+            {/* Display a message if there are no articles to show. */}
+            {recentArticles.length === 0 && (
+              <p className="text-center text-text/70 col-span-3">{t.homePage.noArticles}</p>
+            )}
+          </div>
+        </section>
+      </AnimatedSection>
     </div>
   );
 }

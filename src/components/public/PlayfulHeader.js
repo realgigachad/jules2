@@ -39,7 +39,7 @@ export default function PlayfulHeader({ lang, t }) {
 
       <nav className="flex-grow space-y-3">
         {navLinks.map(link => (
-          <Link key={link.href} href={link.href} className="block text-lg py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors duration-200">
+          <Link key={link.href} href={link.href} className="block text-lg py-2 px-4 rounded-lg hover:bg-indigo-700 transition-all duration-200 hover:translate-x-2">
             {link.label}
           </Link>
         ))}

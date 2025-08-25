@@ -104,7 +104,7 @@ export default function LanguageSelector() {
 
       {/* The dropdown menu with the list of available languages */}
       {isOpen && (
-        <div className="absolute right-0 w-full mt-2 origin-top-right bg-white rounded-md shadow-lg z-50">
+        <div className="absolute left-0 w-full mt-2 origin-top-left bg-white rounded-md shadow-lg z-50">
           <div className="py-1">
             {languages.map(lang => (
               <Link
