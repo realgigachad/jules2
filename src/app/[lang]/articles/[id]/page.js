@@ -1,4 +1,5 @@
 import { getTranslations } from '@/lib/getTranslations';
+import DOMPurify from 'isomorphic-dompurify';
 
 async function getArticle(id) {
   try {
@@ -32,7 +33,7 @@ export default async function ArticleDetailPage({ params: { lang, id } }) {
         </p>
         <div
           className="prose lg:prose-xl mt-12 mx-auto"
-          dangerouslySetInnerHTML={{ __html: article.content[lang] || article.content.en }}
+          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(article.content[lang] || article.content.en) }}
         />
       </div>
     </div>

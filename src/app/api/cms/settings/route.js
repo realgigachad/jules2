@@ -40,9 +40,20 @@ export async function POST(request) {
   await dbConnect();
   try {
     const body = await request.json();
+
+    // To prevent mass assignment vulnerabilities, we explicitly build the update object.
+    const allowedFields = ['contactEmail', 'contactPhone', 'address', 'style'];
+    const updateData = {};
+
+    for (const field of allowedFields) {
+      if (body[field] !== undefined) {
+        updateData[field] = body[field];
+      }
+    }
+
     // Use findOneAndUpdate with `upsert: true` to create the document if it doesn't exist,
-    // or update it if it does. This makes it a simple "save" operation for the admin panel.
-    const settings = await SiteSettings.findOneAndUpdate({}, body, {
+    // or update it if it does. Using $set prevents operator injection.
+    const settings = await SiteSettings.findOneAndUpdate({}, { $set: updateData }, {
       new: true,
       upsert: true,
       runValidators: true,

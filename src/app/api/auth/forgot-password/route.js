@@ -1,21 +1,30 @@
 /**
- * @fileoverview This file defines the API route for the "forgot password" functionality.
- * Note: This is not a standard password reset implementation. It's a hard-coded
- * reset specifically for the 'fonok' user to a default password.
+ * @fileoverview This file defines the API route for a development-only password reset.
+ *
+ * !!! WARNING: HIGHLY INSECURE - FOR DEVELOPMENT & TESTING ONLY !!!
+ * This endpoint provides a simple, unauthenticated way to reset the 'fonok'
+ * admin user's password to a known default ('abc123').
+ *
+ * It is INTENTIONALLY insecure to facilitate rapid testing during development.
+ *
+ * This entire endpoint is wrapped in a check for `process.env.NODE_ENV !== 'production'`
+ * and will NOT run in a production environment to prevent this backdoor from being
+ * exposed on a live site.
+ *
+ * DO NOT REMOVE THE NODE_ENV CHECK.
+ * IT IS STRONGLY RECOMMENDED TO REMOVE THIS ENTIRE FILE BEFORE DEPLOYMENT.
  */
 import dbConnect from '@/lib/dbConnect';
 import User from '@/models/User';
 import bcrypt from 'bcryptjs';
 import { NextResponse } from 'next/server';
 
-/**
- * Handles the POST request to reset the admin's password.
- * This endpoint is public. For security, it always returns a generic success
- * message to prevent attackers from discovering valid usernames.
- * @param {Request} req - The incoming request object.
- * @returns {NextResponse} A generic success response.
- */
 export async function POST(req) {
+  // !!! SECURITY: This check ensures this dangerous endpoint is NEVER active in production.
+  if (process.env.NODE_ENV === 'production') {
+    return NextResponse.json({ message: 'This endpoint is disabled in production.' }, { status: 404 });
+  }
+
   await dbConnect();
 
   try {
@@ -25,7 +34,7 @@ export async function POST(req) {
     if (username !== 'fonok') {
       // To prevent username enumeration, we send a generic success message
       // even if the username is wrong. The action simply won't happen.
-      return NextResponse.json({ success: true, message: 'If a user with that name exists, the password has been reset.' });
+      return NextResponse.json({ success: true, message: 'Password reset trigger acknowledged.' });
     }
 
     const user = await User.findOne({ username: 'fonok' });
@@ -40,7 +49,7 @@ export async function POST(req) {
     }
 
     // Return the same generic message regardless of whether the user was found.
-    return NextResponse.json({ success: true, message: 'If a user with that name exists, the password has been reset.' });
+    return NextResponse.json({ success: true, message: 'Password reset trigger acknowledged.' });
 
   } catch (error) {
     console.error('Forgot password error:', error);

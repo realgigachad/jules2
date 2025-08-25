@@ -6,6 +6,7 @@
 import dbConnect from '@/lib/dbConnect';
 import Article from '@/models/Article';
 import { NextResponse } from 'next/server';
+import DOMPurify from 'isomorphic-dompurify';
 
 /**
  * Handles GET requests to fetch all articles.
@@ -33,6 +34,16 @@ export async function POST(request) {
   await dbConnect();
   try {
     const body = await request.json();
+
+    // Sanitize the 'content' field before saving to prevent Stored XSS.
+    if (body.content && typeof body.content === 'object') {
+      for (const lang in body.content) {
+        if (typeof body.content[lang] === 'string') {
+          body.content[lang] = DOMPurify.sanitize(body.content[lang]);
+        }
+      }
+    }
+
     // Creates a new article document in the database.
     const newArticle = await Article.create(body);
     return NextResponse.json({ success: true, data: newArticle }, { status: 201 });

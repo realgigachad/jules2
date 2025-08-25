@@ -16,3 +16,7 @@ yarn-error.log*
 
 # System files
 .DS_Store
+
+# Agent-specific files
+/jules-scratch/
+/dev.log

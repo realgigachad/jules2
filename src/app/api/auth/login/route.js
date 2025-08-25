@@ -8,6 +8,7 @@ import User from '@/models/User';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { NextResponse } from 'next/server';
+import { isRateLimited } from '@/lib/rateLimiter';
 
 /**
  * Handles the POST request for user login.
@@ -15,6 +16,11 @@ import { NextResponse } from 'next/server';
  * @returns {NextResponse} A response object with user data and a cookie on success, or an error message on failure.
  */
 export async function POST(req) {
+  const ip = req.headers.get('x-forwarded-for') || '127.0.0.1';
+  if (isRateLimited(ip)) {
+    return NextResponse.json({ message: 'Too many requests' }, { status: 429 });
+  }
+
   await dbConnect();
 
   try {

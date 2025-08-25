@@ -7,6 +7,7 @@
 import dbConnect from '@/lib/dbConnect';
 import Article from '@/models/Article';
 import { NextResponse } from 'next/server';
+import DOMPurify from 'isomorphic-dompurify';
 
 /**
  * Handles GET requests to fetch a single article by its ID.
@@ -38,6 +39,16 @@ export async function PUT(request, { params }) {
   await dbConnect();
   try {
     const body = await request.json();
+
+    // Sanitize the 'content' field before saving to prevent Stored XSS.
+    if (body.content && typeof body.content === 'object') {
+      for (const lang in body.content) {
+        if (typeof body.content[lang] === 'string') {
+          body.content[lang] = DOMPurify.sanitize(body.content[lang]);
+        }
+      }
+    }
+
     // Find the article by ID and update it with the request body.
     // `new: true` returns the updated document.
     // `runValidators: true` ensures the update respects the schema's validation rules.

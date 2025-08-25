@@ -2,6 +2,7 @@
  * @fileoverview This file defines the public API route for fetching a list of all trips.
  * This endpoint is not protected and is intended for use by the public-facing website.
  */
+export const dynamic = 'force-dynamic';
 import dbConnect from '@/lib/dbConnect';
 import Trip from '@/models/Trip';
 import { NextResponse } from 'next/server';

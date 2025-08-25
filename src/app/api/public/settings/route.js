@@ -3,6 +3,7 @@
  * This endpoint is not protected and is used by the public-facing site to load
  * dynamic content like contact information and styling.
  */
+export const dynamic = 'force-dynamic';
 import dbConnect from '@/lib/dbConnect';
 import SiteSettings from '@/models/SiteSettings';
 import { NextResponse } from 'next/server';
