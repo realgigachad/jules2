@@ -92,8 +92,8 @@ export default function AdminLayoutClient({ children }) {
 
   // CSS classes for the sidebar in different themes.
   const asideClasses = {
-    default: "w-64 bg-gray-800 text-white flex flex-col",
-    playful: "w-72 bg-indigo-800 text-white flex flex-col transform -rotate-6 -ml-56 origin-top-left transition-all duration-300 ease-in-out group-hover:rotate-0 group-hover:ml-0",
+    default: "w-64 bg-gray-800 text-white flex flex-col h-full",
+    playful: "w-72 bg-indigo-800 text-white flex flex-col h-full transform -rotate-6 -ml-56 origin-top-left transition-all duration-300 ease-in-out group-hover:rotate-0 group-hover:ml-0",
   };
 
   // Helper function to determine the CSS classes for a navigation link.
